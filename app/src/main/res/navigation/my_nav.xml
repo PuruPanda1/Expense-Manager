@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/MainScreen"
-        android:name="com.example.payment.MainScreen"
+        android:name="com.example.payment.fragments.mainScreen.MainScreen"
         android:label="Home"
         tools:layout="@layout/fragment_main_screen" />
     <fragment
         android:id="@+id/Wallet"
-        android:name="com.example.payment.Wallet"
+        android:name="com.example.payment.fragments.wallet.Wallet"
         android:label="Wallet"
         tools:layout="@layout/fragment_wallet" />
     <fragment
         android:id="@+id/Stats"
-        android:name="com.example.payment.Stats"
+        android:name="com.example.payment.fragments.stats.Stats"
         android:label="Stats"
         tools:layout="@layout/fragment_stats" />
     <fragment
         android:id="@+id/Profile"
-        android:name="com.example.payment.Profile"
+        android:name="com.example.payment.fragments.profile.Profile"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment

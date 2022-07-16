@@ -10,6 +10,8 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.payment.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.time.Clock
+import java.time.Instant
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -23,8 +25,6 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavBar = findViewById<BottomNavigationView>(R.id.bottomBar)
         setupWithNavController(bottomNavBar,navController)
-
-
 
     }
 
