@@ -9,28 +9,30 @@
 
 <!--welcome back view-->
     <TextView
+        android:id="@+id/greetingMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Welcome Back!"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/userName"
-        app:layout_constraintStart_toStartOf="@+id/userName" />
+        app:layout_constraintStart_toStartOf="@+id/userName"
+        app:layout_constraintTop_toTopOf="parent" />
 <!--username view -->
     <TextView
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="56dp"
         android:drawableEnd="@drawable/ic_wolverine"
         android:drawableTint="#4F5157"
+        app:layout_constraintTop_toBottomOf="@id/greetingMsg"
         android:fontFamily="@font/autour_one"
         android:gravity="center"
         android:text="PuruPanda"
         android:textColor="@color/primaryTextColor"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="56dp" />
 <!--notification bell-->
     <ImageView
         android:id="@+id/imageView"

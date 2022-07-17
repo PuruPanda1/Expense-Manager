@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary_blue">#5F5BC8</color>
     <color name="GrayText">#B4B8C1</color>
+    <color name="buttonColor">#FFFFFFFF</color>
     <color name="background">#F8F9FD</color>
     <color name="roundImage">#dbbfd4</color>
     <color name="ivory">#FFFFF0</color>

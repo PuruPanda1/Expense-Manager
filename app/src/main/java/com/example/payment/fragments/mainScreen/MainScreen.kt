@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import com.example.payment.R
 import com.example.payment.databinding.FragmentMainScreenBinding
 
@@ -20,6 +21,10 @@ class MainScreen : Fragment() {
 
         val s = String.format(getString(R.string.monthlyExpense,(2000.29).toString(),(3000).toString()))
         binding.monthlyExpense.setText(s)
+
+        binding.addBtn.setOnClickListener {
+            Navigation.findNavController(binding.root).navigate(R.id.action_MainScreen_to_addTransaction)
+        }
 
         return binding.root
     }

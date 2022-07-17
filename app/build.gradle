@@ -3,7 +3,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id "kotlin-kapt"
 }
-apply plugin: 'kotlin-kapt'
 android {
     compileSdk 32
 
@@ -42,9 +41,10 @@ dependencies {
     def lifecycle_version = "2.6.0-alpha01"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-    kapt("androidx.room:room-compiler:$roomVersion")
+    kapt "androidx.room:room-compiler:$roomVersion"
     implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.room:room-runtime:$roomVersion")
+    implementation 'com.github.angads25:toggle:1.1.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation('androidx.emoji:emoji:1.1.0')
     implementation 'androidx.core:core-ktx:1.8.0'

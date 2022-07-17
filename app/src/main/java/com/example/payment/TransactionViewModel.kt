@@ -1,6 +1,7 @@
 package com.example.payment
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -10,7 +11,7 @@ import com.example.payment.db.TransactionRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainActivityViewModel(application: Application):AndroidViewModel(application) {
+public class TransactionViewModel(application: Application) : AndroidViewModel(application) {
     val readAllTransaction: LiveData<List<Transaction>>
     private val repository: TransactionRepository
 
@@ -20,19 +21,23 @@ class MainActivityViewModel(application: Application):AndroidViewModel(applicati
         readAllTransaction = repository.readAllData
     }
 
-    fun insertTransaction(transaction: Transaction){
+    fun insideViewModel() {
+        Log.d("ViewModel", "insideViewModel: hello")
+    }
+
+    fun insertTransaction(transaction: Transaction) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertTransaction(transaction)
         }
     }
 
-    fun updateTransaction(transaction: Transaction){
+    fun updateTransaction(transaction: Transaction) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateTransaction(transaction)
         }
     }
 
-    fun deleteTransaction(transaction: Transaction){
+    fun deleteTransaction(transaction: Transaction) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteTransaction(transaction)
         }

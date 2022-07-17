@@ -9,7 +9,11 @@
         android:id="@+id/MainScreen"
         android:name="com.example.payment.fragments.mainScreen.MainScreen"
         android:label="Home"
-        tools:layout="@layout/fragment_main_screen" />
+        tools:layout="@layout/fragment_main_screen" >
+        <action
+            android:id="@+id/action_MainScreen_to_addTransaction"
+            app:destination="@id/addTransaction" />
+    </fragment>
     <fragment
         android:id="@+id/Wallet"
         android:name="com.example.payment.fragments.wallet.Wallet"
@@ -30,4 +34,13 @@
         android:name="com.example.payment.launchPayment"
         android:label="fragment_launch_payment"
         tools:layout="@layout/fragment_launch_payment" />
+    <fragment
+        android:id="@+id/addTransaction"
+        android:name="com.example.payment.addTransaction"
+        android:label="fragment_add_transaction"
+        tools:layout="@layout/fragment_add_transaction" >
+        <action
+            android:id="@+id/action_addTransaction_to_MainScreen"
+            app:destination="@id/MainScreen" />
+    </fragment>
 </navigation>
