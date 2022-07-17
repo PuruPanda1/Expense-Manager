@@ -5,5 +5,5 @@
     <string name="monthlyExpense">$ %s/%s</string>
     <string name="monthlyDuration">Spends in %s</string>
     <string name="monthlyExpensePercentage">%s</string>
-    <string name="balanceAmount">₹ %s</string>
+    <string name="amountInRupee">₹ %s</string>
 </resources>

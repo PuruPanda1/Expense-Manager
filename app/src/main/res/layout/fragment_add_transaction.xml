@@ -72,7 +72,6 @@
             android:layout_gravity="center"
             android:background="@color/primaryBackground"
             android:inputType="numberDecimal"
-            android:text="0"
             android:textSize="40dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,6 +92,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/transactionDescription"
+            android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -114,6 +114,7 @@
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/transactionType"
+            android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>

@@ -12,13 +12,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 public class TransactionViewModel(application: Application) : AndroidViewModel(application) {
-    val readAllTransaction: LiveData<List<Transaction>>
+    var readAllTransaction: LiveData<List<Transaction>>
+    var readAllIncomeTransaction: LiveData<List<Transaction>>
     private val repository: TransactionRepository
 
     init {
         val transactionDao = TransactionDatabase.getInstance(application).transacitonDao()
         repository = TransactionRepository(transactionDao)
         readAllTransaction = repository.readAllData
+        readAllIncomeTransaction = repository.incomeData
     }
 
     fun insideViewModel() {
@@ -41,6 +43,10 @@ public class TransactionViewModel(application: Application) : AndroidViewModel(a
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteTransaction(transaction)
         }
+    }
+
+    fun changeToIncome(){
+        readAllTransaction = readAllIncomeTransaction
     }
 
 }

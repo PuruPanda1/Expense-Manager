@@ -9,11 +9,7 @@
         android:id="@+id/MainScreen"
         android:name="com.example.payment.fragments.mainScreen.MainScreen"
         android:label="Home"
-        tools:layout="@layout/fragment_main_screen" >
-        <action
-            android:id="@+id/action_MainScreen_to_addTransaction"
-            app:destination="@id/addTransaction" />
-    </fragment>
+        tools:layout="@layout/fragment_main_screen" />
     <fragment
         android:id="@+id/Wallet"
         android:name="com.example.payment.fragments.wallet.Wallet"
@@ -23,7 +19,13 @@
         android:id="@+id/Stats"
         android:name="com.example.payment.fragments.stats.Stats"
         android:label="Stats"
-        tools:layout="@layout/fragment_stats" />
+        tools:layout="@layout/fragment_stats" >
+        <action
+            android:id="@+id/action_Stats_to_addTransaction"
+            app:destination="@id/addTransaction"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/Profile"
         android:name="com.example.payment.fragments.profile.Profile"
@@ -40,7 +42,9 @@
         android:label="fragment_add_transaction"
         tools:layout="@layout/fragment_add_transaction" >
         <action
-            android:id="@+id/action_addTransaction_to_MainScreen"
-            app:destination="@id/MainScreen" />
+            android:id="@+id/action_addTransaction_to_Stats"
+            app:destination="@id/Stats"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
 </navigation>

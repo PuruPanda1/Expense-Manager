@@ -17,4 +17,7 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions ORDER by id DESC")
     fun getAllTransaction(): LiveData<List<Transaction>>
 
+    @Query("SELECT * FROM transactions WHERE isExpense=0 ORDER BY id DESC")
+    fun getIncomeTransactions(): LiveData<List<Transaction>>
+
 }

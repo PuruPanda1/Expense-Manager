@@ -22,9 +22,6 @@ class MainScreen : Fragment() {
         val s = String.format(getString(R.string.monthlyExpense,(2000.29).toString(),(3000).toString()))
         binding.monthlyExpense.setText(s)
 
-        binding.addBtn.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_MainScreen_to_addTransaction)
-        }
 
         return binding.root
     }
