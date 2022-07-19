@@ -7,14 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.payment.db.Transaction
 import com.example.payment.fragments.stats.Stats
 import com.example.payment.fragments.stats.StatsDirections
+import java.text.SimpleDateFormat
 
 class TransactionsAdapter(val fragment: Stats) : RecyclerView.Adapter<Myholder>() {
     private var data = emptyList<Transaction>()
@@ -26,13 +26,22 @@ class TransactionsAdapter(val fragment: Stats) : RecyclerView.Adapter<Myholder>(
 
     override fun onBindViewHolder(holder: Myholder, position: Int) {
         // set the values to the Views using holder variable
+        val simpleDateFormat = SimpleDateFormat("dd MMM")
         val item = data[position]
+        val dateString = simpleDateFormat.format(item.date)
         holder.description.text = item.tDescription
         val updatedAmount =
             holder.amount.getResources().getString(R.string.amountInRupee, item.tAmount.toString())
         holder.amount.text = updatedAmount
-        holder.date.text = item.date
+        holder.date.text = dateString
         holder.category.text = item.transactionType
+
+        if(item.isExpense){
+            holder.amount.setTextColor(ContextCompat.getColor(holder.amount.context,R.color.expense_color))
+        }
+        else{
+            holder.amount.setTextColor(ContextCompat.getColor(holder.amount.context,R.color.income_color))
+        }
 
         holder.layout.setOnLongClickListener {
             popupMenus(it, holder.layout.context, item)
@@ -59,7 +68,7 @@ class TransactionsAdapter(val fragment: Stats) : RecyclerView.Adapter<Myholder>(
             when (it.itemId) {
                 R.id.editOption -> {
 //                    redirecting to add transaction page for editing
-                    val action =StatsDirections.actionStatsToAddTransaction(item)
+                    val action = StatsDirections.actionStatsToAddTransaction(item)
                     Navigation.findNavController(v).navigate(action)
                     true
                 }

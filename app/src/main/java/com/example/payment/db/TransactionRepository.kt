@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 class TransactionRepository(private val transactionDao: TransactionDao) {
     val readAllData: LiveData<List<Transaction>> = transactionDao.getAllTransaction()
     val incomeData: LiveData<List<Transaction>> = transactionDao.getIncomeTransactions()
+    val expenseData:LiveData<List<Transaction>> = transactionDao.getExpenseTransactions()
     suspend fun insertTransaction(transaction: Transaction) {
         transactionDao.insertTransaction(transaction)
     }

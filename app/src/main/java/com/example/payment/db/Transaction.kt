@@ -14,7 +14,7 @@ data class Transaction(
     val tDescription:String,
     val tAmount: Float,
     val isExpense:Boolean,
-    val date: String,
+    val date: Long,
     val transactionType:String,
     val remainingAmount: Float
 ):Parcelable {
@@ -23,7 +23,7 @@ data class Transaction(
         parcel.readString()!!,
         parcel.readFloat(),
         parcel.readByte() != 0.toByte(),
-        parcel.readString()!!,
+        parcel.readLong(),
         parcel.readString()!!,
         parcel.readFloat()
     )

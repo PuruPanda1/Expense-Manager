@@ -1,6 +1,5 @@
 package com.example.payment
 
-import android.R.attr.autoText
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -20,20 +19,23 @@ import com.example.payment.db.Transaction
 
 class addTransaction : Fragment() {
     private val args by navArgs<addTransactionArgs>()
-    private val category = listOf<String>(
-        "Groceries",
-        "Stationary",
-        "Fuel",
-        "Transportation",
-        "Suspense",
-        "DineOut",
-        "Entertainment",
-        "Bills",
-        "Shopping",
+    private var date: Long = 0
+    private var isExpense = true
+    private val expenseCategory = listOf<String>(
         "Credit Crad Due",
-        "Investment"
+        "Bills",
+        "DineOut",
+        "Dividend",
+        "Entertainment",
+        "Fuel",
+        "Groceries",
+        "Investment",
+        "Profit Returns",
+        "Shopping",
+        "Stationary",
+        "Suspense",
+        "Transportation"
     )
-    private var date: String = ""
     private val months = listOf<String>(
         "January",
         "February",
@@ -65,9 +67,9 @@ class addTransaction : Fragment() {
             Navigation.findNavController(binding.root)
                 .navigate(R.id.action_addTransaction_to_Stats)
         }
-        
+
 //        edit mode
-        if(args.transaction.id != -1){
+        if (args.transaction.id != -1) {
             binding.transactionAmount.setText(args.transaction.tAmount.toString())
             binding.transactionDescription.setText(args.transaction.tDescription)
             binding.transactionType.setText(args.transaction.transactionType)
@@ -75,10 +77,8 @@ class addTransaction : Fragment() {
             binding.addExpenseBtn.setOnClickListener {
                 updateTransaction()
             }
-        }
-        else
-        {
-            binding.addExpenseBtn.setOnClickListener{
+        } else {
+            binding.addExpenseBtn.setOnClickListener {
                 insertTransaction()
             }
         }
@@ -86,7 +86,11 @@ class addTransaction : Fragment() {
 //      setting autoComplete textview for transaction type
 
         binding.transactionType.setThreshold(3)
-        val adapter: ArrayAdapter<String> =ArrayAdapter<String>(requireContext(), android.R.layout.simple_dropdown_item_1line, category)
+        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            expenseCategory
+        )
         binding.transactionType.setAdapter(adapter)
 
 
@@ -95,6 +99,10 @@ class addTransaction : Fragment() {
             datePicker()
         }
 
+//        switch for isExpense
+        binding.isExpenseSwitch.setOnCheckedChangeListener { _, isChecked ->
+            isExpense = isChecked
+        }
 
         return binding.root
     }
@@ -102,8 +110,7 @@ class addTransaction : Fragment() {
     private fun updateTransaction() {
         val tDescription = binding.transactionDescription.text.toString()
         val tAmount = binding.transactionAmount.text.toString()
-        Log.d("tAmount", "updateTransaction: "+tAmount)
-        val isExpense = true
+        Log.d("tAmount", "updateTransaction: " + tAmount)
         val transactionType = binding.transactionType.text.toString()
 //        logic left to be written for remaining Amount
         val remainingAmount = 10000
@@ -123,7 +130,7 @@ class addTransaction : Fragment() {
             Navigation.findNavController(binding.root).navigate(R.id.action_addTransaction_to_Stats)
         } else {
             Log.d("checkingDate", "insertTransaction: empty space")
-            if (date.isEmpty()) {
+            if (date == 0L) {
                 Toast.makeText(
                     requireContext(),
                     "Click on Calender to choose date",
@@ -142,14 +149,12 @@ class addTransaction : Fragment() {
         val m = cal.get(Calendar.MONTH)
         val d = cal.get(Calendar.DAY_OF_MONTH)
 
-
         val datepickerdialog: DatePickerDialog = DatePickerDialog(
             activity!!,
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-
+            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 // Display Selected date in textbox
-                date = "$dayOfMonth ${months.get(monthOfYear)} $year"
-                Log.d("checkingDate", "datePicker: $date")
+                cal.set(year,monthOfYear,dayOfMonth)
+                date = cal.timeInMillis
             },
             y,
             m,
@@ -163,7 +168,6 @@ class addTransaction : Fragment() {
     private fun insertTransaction() {
         val tDescription = binding.transactionDescription.text.toString()
         val tAmount = binding.transactionAmount.text.toString()
-        val isExpense = true
         val transactionType = binding.transactionType.text.toString()
 //        logic left to be written for remaining Amount
         val remainingAmount = 10000
@@ -183,7 +187,7 @@ class addTransaction : Fragment() {
             Navigation.findNavController(binding.root).navigate(R.id.action_addTransaction_to_Stats)
         } else {
             Log.d("checkingDate", "insertTransaction: empty space")
-            if (date.isEmpty()) {
+            if (date==0L) {
                 Toast.makeText(
                     requireContext(),
                     "Click on Calender to choose date",
@@ -199,10 +203,10 @@ class addTransaction : Fragment() {
         tDescription: String,
         tAmount: String,
         transactionType: String,
-        date: String
+        date: Long
     ): Boolean {
         Log.d("checkingDate", "check: INside check function")
-        if (tDescription.isBlank() || tAmount.isBlank() || transactionType.isBlank() || date.isBlank()) {
+        if (tDescription.isBlank() || tAmount.isBlank() || transactionType.isBlank() || date == 0L) {
             return false
         }
         return true

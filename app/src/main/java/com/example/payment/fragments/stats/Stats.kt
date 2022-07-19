@@ -33,13 +33,35 @@ class Stats : Fragment() {
 
 //          add new transaction onclick listener
         binding.addBtn.setOnClickListener {
-            val action = StatsDirections.actionStatsToAddTransaction(Transaction(-1, "", 0f, true,"","",0f))
+            val action = StatsDirections.actionStatsToAddTransaction(Transaction(-1, "", 0f, true,0L,"",0f))
             Navigation.findNavController(binding.root).navigate(action)
         }
 
 //        income button
         binding.incomeTranscations.setOnClickListener {
-            viewModel.changeToIncome()
+            viewModel.readAllTransaction.removeObservers(viewLifecycleOwner)
+            viewModel.readAllExpenseTransaction.removeObservers(viewLifecycleOwner)
+            viewModel.readAllIncomeTransaction.observe(viewLifecycleOwner, Observer {
+                adapter.setData(it)
+            })
+        }
+
+//        expense button
+        binding.expenseTransactions.setOnClickListener{
+            viewModel.readAllTransaction.removeObservers(viewLifecycleOwner)
+            viewModel.readAllIncomeTransaction.removeObservers(viewLifecycleOwner)
+            viewModel.readAllExpenseTransaction.observe(viewLifecycleOwner, Observer {
+                adapter.setData(it)
+            })
+        }
+
+//        all button
+        binding.allTransactions.setOnClickListener{
+            viewModel.readAllExpenseTransaction.removeObservers(viewLifecycleOwner)
+            viewModel.readAllIncomeTransaction.removeObservers(viewLifecycleOwner)
+            viewModel.readAllTransaction.observe(viewLifecycleOwner, Observer {
+                adapter.setData(it)
+            })
         }
 
 //        setting the viewModel
@@ -47,7 +69,6 @@ class Stats : Fragment() {
 //        setting the observer
         viewModel.readAllTransaction.observe(viewLifecycleOwner, Observer {
             adapter.setData(it)
-            Log.d("stats", "onCreateView: " + it[0].tAmount)
         })
 
         return binding.root
