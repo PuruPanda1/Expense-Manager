@@ -1,45 +1,95 @@
 package com.example.payment
 
+import android.app.AlertDialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.payment.db.Transaction
+import com.example.payment.fragments.stats.Stats
+import com.example.payment.fragments.stats.StatsDirections
 
-class TransactionsAdapter:RecyclerView.Adapter<myholder>() {
+class TransactionsAdapter(val fragment: Stats) : RecyclerView.Adapter<Myholder>() {
     private var data = emptyList<Transaction>()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myholder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Myholder {
         val l = LayoutInflater.from(parent.context)
-        val listItem = l.inflate(R.layout.transactions_row_rc,parent,false)
-        return myholder(listItem)
+        val listItem = l.inflate(R.layout.transactions_row_rc, parent, false)
+        return Myholder(listItem)
     }
 
-    override fun onBindViewHolder(holder: myholder, position: Int) {
+    override fun onBindViewHolder(holder: Myholder, position: Int) {
         // set the values to the Views using holder variable
         val item = data[position]
         holder.description.text = item.tDescription
-        val updatedAmount = holder.amount.getResources().getString(R.string.amountInRupee, item.tAmount.toString())
+        val updatedAmount =
+            holder.amount.getResources().getString(R.string.amountInRupee, item.tAmount.toString())
         holder.amount.text = updatedAmount
-        holder.date.text = "15 July"
+        holder.date.text = item.date
         holder.category.text = item.transactionType
+
+        holder.layout.setOnLongClickListener {
+            popupMenus(it, holder.layout.context, item)
+            true
+        }
+
     }
 
     override fun getItemCount(): Int {
         // return the size of the list
         return data.size
     }
-    fun setData(list:List<Transaction>)
-    {
+
+    fun setData(list: List<Transaction>) {
         data = list
         notifyDataSetChanged()
     }
+
+    //    pop up menu for edit and delete options on long click on elements
+    private fun popupMenus(v: View, c: Context, item: Transaction) {
+        val popupMenus = PopupMenu(c, v)
+        popupMenus.inflate(R.menu.pop_up_menu)
+        popupMenus.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.editOption -> {
+//                    redirecting to add transaction page for editing
+                    val action =StatsDirections.actionStatsToAddTransaction(item)
+                    Navigation.findNavController(v).navigate(action)
+                    true
+                }
+                R.id.deleteOption -> {
+//                    Alert dialog box for confirmation
+                    val builder = AlertDialog.Builder(c)
+                    builder.setPositiveButton("Yes") { _, _ ->
+//                        Toast.makeText(c, "yes", Toast.LENGTH_SHORT).show()
+                        fragment.deleteTransaction(item)
+                        notifyDataSetChanged()
+                    }
+                    builder.setNegativeButton("No") { _, _ ->
+                    }
+                    builder.setTitle("Delete Transaction")
+                    builder.setMessage("Are you sure to delete this transaction?")
+                    builder.create().show()
+                    true
+                }
+                else -> true
+            }
+        }
+        popupMenus.show()
+    }
 }
 
-class myholder(val view: View) : RecyclerView.ViewHolder(view){
+class Myholder(val view: View) : RecyclerView.ViewHolder(view) {
     // Get the views using findViewById and store it in varible to store the data
     val description: TextView = view.findViewById(R.id.descriptionShowRC)
     val category: TextView = view.findViewById(R.id.categoryShowRC)
     val amount: TextView = view.findViewById(R.id.amountShowRC)
-    val date : TextView = view.findViewById(R.id.dateShowRC)
+    val date: TextView = view.findViewById(R.id.dateShowRC)
+    val layout: CardView = view.findViewById(R.id.eachRowLayout)
 }

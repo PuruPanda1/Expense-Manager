@@ -13,11 +13,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.example.payment.databinding.FragmentAddTransactionBinding
 import com.example.payment.db.Transaction
 
 
 class addTransaction : Fragment() {
+    private val args by navArgs<addTransactionArgs>()
     private val category = listOf<String>(
         "Groceries",
         "Stationary",
@@ -63,6 +65,23 @@ class addTransaction : Fragment() {
             Navigation.findNavController(binding.root)
                 .navigate(R.id.action_addTransaction_to_Stats)
         }
+        
+//        edit mode
+        if(args.transaction.id != -1){
+            binding.transactionAmount.setText(args.transaction.tAmount.toString())
+            binding.transactionDescription.setText(args.transaction.tDescription)
+            binding.transactionType.setText(args.transaction.transactionType)
+            date = args.transaction.date
+            binding.addExpenseBtn.setOnClickListener {
+                updateTransaction()
+            }
+        }
+        else
+        {
+            binding.addExpenseBtn.setOnClickListener{
+                insertTransaction()
+            }
+        }
 
 //      setting autoComplete textview for transaction type
 
@@ -71,21 +90,49 @@ class addTransaction : Fragment() {
         binding.transactionType.setAdapter(adapter)
 
 
-
 //        datepicker
         binding.calenderPicker.setOnClickListener {
             datePicker()
         }
 
 
-//        adding expenses button
-        binding.addExpenseBtn.setOnClickListener {
-            insertTransaction()
-        }
-
-
-
         return binding.root
+    }
+
+    private fun updateTransaction() {
+        val tDescription = binding.transactionDescription.text.toString()
+        val tAmount = binding.transactionAmount.text.toString()
+        Log.d("tAmount", "updateTransaction: "+tAmount)
+        val isExpense = true
+        val transactionType = binding.transactionType.text.toString()
+//        logic left to be written for remaining Amount
+        val remainingAmount = 10000
+        if (check(tDescription, tAmount, transactionType, date)) {
+            viewModel.updateTransaction(
+                Transaction(
+                    args.transaction.id,
+                    tDescription,
+                    tAmount.toFloat(),
+                    isExpense,
+                    date,
+                    transactionType,
+                    remainingAmount.toFloat()
+                )
+            )
+            Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT).show()
+            Navigation.findNavController(binding.root).navigate(R.id.action_addTransaction_to_Stats)
+        } else {
+            Log.d("checkingDate", "insertTransaction: empty space")
+            if (date.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Click on Calender to choose date",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(requireContext(), "Fields cant be empty", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     //    datePicker function

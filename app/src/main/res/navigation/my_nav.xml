@@ -46,5 +46,8 @@
             app:destination="@id/Stats"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+        <argument
+            android:name="transaction"
+            app:argType="com.example.payment.db.Transaction" />
     </fragment>
 </navigation>

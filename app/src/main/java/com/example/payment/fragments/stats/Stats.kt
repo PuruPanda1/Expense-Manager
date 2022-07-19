@@ -14,10 +14,11 @@ import com.example.payment.R
 import com.example.payment.TransactionViewModel
 import com.example.payment.TransactionsAdapter
 import com.example.payment.databinding.FragmentStatsBinding
+import com.example.payment.db.Transaction
 
 class Stats : Fragment() {
-    private var _binding:FragmentStatsBinding? = null
-    private lateinit var viewModel:TransactionViewModel
+    private var _binding: FragmentStatsBinding? = null
+    private lateinit var viewModel: TransactionViewModel
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,17 +27,18 @@ class Stats : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentStatsBinding.inflate(inflater, container, false)
 
-        val adapter = TransactionsAdapter()
+        val adapter = TransactionsAdapter(this)
         binding.transactionsRC.layoutManager = LinearLayoutManager(requireContext())
         binding.transactionsRC.adapter = adapter
 
 //          add new transaction onclick listener
         binding.addBtn.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_Stats_to_addTransaction)
+            val action = StatsDirections.actionStatsToAddTransaction(Transaction(-1, "", 0f, true,"","",0f))
+            Navigation.findNavController(binding.root).navigate(action)
         }
 
 //        income button
-        binding.incomeTranscations.setOnClickListener{
+        binding.incomeTranscations.setOnClickListener {
             viewModel.changeToIncome()
         }
 
@@ -45,10 +47,18 @@ class Stats : Fragment() {
 //        setting the observer
         viewModel.readAllTransaction.observe(viewLifecycleOwner, Observer {
             adapter.setData(it)
-            Log.d("stats", "onCreateView: "+it[0].tAmount)
+            Log.d("stats", "onCreateView: " + it[0].tAmount)
         })
 
         return binding.root
     }
 
+    fun deleteTransaction(transaction: Transaction) {
+        viewModel.deleteTransaction(transaction)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
