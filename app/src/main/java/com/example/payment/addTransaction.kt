@@ -27,7 +27,7 @@ class addTransaction : Fragment() {
     private var date: Long = 0
     private var isExpense = true
     private val expenseCategory = listOf<String>(
-        "Credit Crad Due",
+        "Credit Card Due",
         "Bills",
         "DineOut",
         "Dividend",
@@ -36,6 +36,7 @@ class addTransaction : Fragment() {
         "Groceries",
         "Investment",
         "Profit Returns",
+        "Salary",
         "Shopping",
         "Stationary",
         "Suspense",

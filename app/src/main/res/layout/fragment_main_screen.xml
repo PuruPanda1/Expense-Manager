@@ -7,7 +7,7 @@
     android:background="@color/primaryBackground"
     tools:context=".fragments.mainScreen.MainScreen">
 
-<!--welcome back view-->
+    <!--welcome back view-->
     <TextView
         android:id="@+id/greetingMsg"
         android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/userName"
         app:layout_constraintTop_toTopOf="parent" />
-<!--username view -->
+    <!--username view -->
     <TextView
         android:id="@+id/userName"
         android:layout_width="wrap_content"
@@ -25,15 +25,15 @@
         android:layout_marginStart="16dp"
         android:drawableEnd="@drawable/ic_wolverine"
         android:drawableTint="#4F5157"
-        app:layout_constraintTop_toBottomOf="@id/greetingMsg"
         android:fontFamily="@font/autour_one"
         android:gravity="center"
         android:text="PuruPanda"
         android:textColor="@color/primaryTextColor"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/greetingMsg"
         tools:layout_editor_absoluteY="56dp" />
-<!--notification bell-->
+    <!--notification bell-->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="24dp"
@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/userName"
         app:tint="@color/primary_blue" />
-<!--balance card view-->
+    <!--balance card view-->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
@@ -104,7 +104,7 @@
 
 
     </androidx.cardview.widget.CardView>
-<!--card view for showing expenses - charts-->
+    <!--card view for showing expenses - charts-->
 
     <TextView
         android:id="@+id/textView3"
@@ -121,52 +121,74 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/monthlyBudgetCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/cardView"
         android:layout_marginTop="5dp"
         app:cardCornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="@id/cardView"
         app:layout_constraintStart_toStartOf="@id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:padding="10dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/monthlyDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/monthlyDuration"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/autour_one"
+                android:text="@string/monthlyDuration"
                 android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="5dp"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/monthlyExpense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/amountInRupee"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/autour_one"
+                android:text="@string/amountInRupee"
+                android:textColor="@color/primaryTextColor"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/primaryTextColor"
                 app:layout_constraintStart_toStartOf="@id/monthlyDuration"
-                app:layout_constraintTop_toBottomOf="@id/monthlyDuration"
-                android:layout_marginTop="8dp"
-                />
+                app:layout_constraintTop_toBottomOf="@id/monthlyDuration" />
 
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.789"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/monthlyExpense"
+                app:layout_constraintVertical_bias="0.0" />
 
+            <Button
+                android:id="@+id/checkDetailedAnalysisBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:padding="5dp"
+                android:text="Check detailed analysis"
+                android:textAllCaps="false"
+                android:textColor="@color/buttonColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pieChart" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
