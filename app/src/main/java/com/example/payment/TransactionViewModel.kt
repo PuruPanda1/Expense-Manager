@@ -15,6 +15,8 @@ public class TransactionViewModel(application: Application) : AndroidViewModel(a
     var readAllTransaction: LiveData<List<Transaction>>
     var readAllIncomeTransaction: LiveData<List<Transaction>>
     var readAllExpenseTransaction: LiveData<List<Transaction>>
+    var readDifferenceSum : LiveData<Float>
+    var readDifferenceSumMonthly : LiveData<Float>
     private val repository: TransactionRepository
 
     init {
@@ -23,6 +25,8 @@ public class TransactionViewModel(application: Application) : AndroidViewModel(a
         readAllTransaction = repository.readAllData
         readAllIncomeTransaction = repository.incomeData
         readAllExpenseTransaction = repository.expenseData
+        readDifferenceSum = repository.differenceSum
+        readDifferenceSumMonthly = repository.differenceSumMonthly
     }
 
     fun insideViewModel() {

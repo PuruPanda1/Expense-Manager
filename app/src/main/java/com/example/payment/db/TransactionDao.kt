@@ -25,4 +25,10 @@ interface TransactionDao {
 
     @Query("SELECT * FROM transactions WHERE isExpense=1 ORDER BY date DESC")
     fun getExpenseTransactions(): LiveData<List<Transaction>>
+
+    @Query("SELECT SUM(incomeAmount)-SUM(expenseAmount) FROM transactions")
+    fun getDifferenceSum(): LiveData<Float>
+
+    @Query("SELECT SUM(incomeAmount)-SUM(expenseAmount) FROM transactions WHERE month = strftime('%m', 'now')")
+    fun getDifferenceSumMonthly():LiveData<Float>
 }

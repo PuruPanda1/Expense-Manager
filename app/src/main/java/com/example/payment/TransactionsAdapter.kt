@@ -30,17 +30,21 @@ class TransactionsAdapter(val fragment: Stats) : RecyclerView.Adapter<Myholder>(
         val item = data[position]
         val dateString = simpleDateFormat.format(item.date)
         holder.description.text = item.tDescription
-        val updatedAmount =
-            holder.amount.getResources().getString(R.string.amountInRupee, item.tAmount.toString())
-        holder.amount.text = updatedAmount
+
         holder.date.text = dateString
         holder.category.text = item.transactionType
 
         if(item.isExpense){
             holder.amount.setTextColor(ContextCompat.getColor(holder.amount.context,R.color.expense_color))
+            val updatedAmount =
+                holder.amount.getResources().getString(R.string.amountInRupee, item.expenseAmount.toString())
+            holder.amount.text = updatedAmount
         }
         else{
             holder.amount.setTextColor(ContextCompat.getColor(holder.amount.context,R.color.income_color))
+            val updatedAmount =
+                holder.amount.getResources().getString(R.string.amountInRupee, item.incomeAmount.toString())
+            holder.amount.text = updatedAmount
         }
 
         holder.layout.setOnLongClickListener {

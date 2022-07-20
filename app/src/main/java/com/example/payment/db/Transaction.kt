@@ -12,11 +12,14 @@ data class Transaction(
     @PrimaryKey(autoGenerate = true)
     val id:Int,
     val tDescription:String,
-    val tAmount: Float,
+    val incomeAmount: Float,
     val isExpense:Boolean,
     val date: Long,
     val transactionType:String,
-    val remainingAmount: Float
+    val day:Int,
+    val week:Int,
+    val month:Int,
+    val expenseAmount: Float
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -25,6 +28,9 @@ data class Transaction(
         parcel.readByte() != 0.toByte(),
         parcel.readLong(),
         parcel.readString()!!,
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
         parcel.readFloat()
     )
     override fun describeContents(): Int {

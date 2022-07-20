@@ -19,6 +19,11 @@ import com.example.payment.db.Transaction
 
 class addTransaction : Fragment() {
     private val args by navArgs<addTransactionArgs>()
+    private var day: Int = 0
+    private var week: Int = 0
+    private var month: Int = 0
+    private var incomeAmount = 0f
+    private var expenseAmount = 0f
     private var date: Long = 0
     private var isExpense = true
     private val expenseCategory = listOf<String>(
@@ -61,7 +66,7 @@ class addTransaction : Fragment() {
         _binding = FragmentAddTransactionBinding.inflate(inflater, container, false)
 
 //        setting the viewmodel
-        viewModel = ViewModelProvider(this)[TransactionViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
 
         binding.backButton.setOnClickListener {
             Navigation.findNavController(binding.root)
@@ -70,7 +75,11 @@ class addTransaction : Fragment() {
 
 //        edit mode
         if (args.transaction.id != -1) {
-            binding.transactionAmount.setText(args.transaction.tAmount.toString())
+            if (isExpense) {
+                binding.transactionAmount.setText(args.transaction.expenseAmount.toString())
+            } else {
+                binding.transactionAmount.setText(args.transaction.incomeAmount.toString())
+            }
             binding.transactionDescription.setText(args.transaction.tDescription)
             binding.transactionType.setText(args.transaction.transactionType)
             date = args.transaction.date
@@ -112,18 +121,24 @@ class addTransaction : Fragment() {
         val tAmount = binding.transactionAmount.text.toString()
         Log.d("tAmount", "updateTransaction: " + tAmount)
         val transactionType = binding.transactionType.text.toString()
-//        logic left to be written for remaining Amount
-        val remainingAmount = 10000
         if (check(tDescription, tAmount, transactionType, date)) {
+            if (isExpense) {
+                expenseAmount = tAmount.toFloat()
+            } else {
+                incomeAmount = tAmount.toFloat()
+            }
             viewModel.updateTransaction(
                 Transaction(
                     args.transaction.id,
                     tDescription,
-                    tAmount.toFloat(),
+                    incomeAmount,
                     isExpense,
                     date,
                     transactionType,
-                    remainingAmount.toFloat()
+                    day,
+                    week,
+                    month,
+                    expenseAmount
                 )
             )
             Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT).show()
@@ -153,8 +168,11 @@ class addTransaction : Fragment() {
             activity!!,
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 // Display Selected date in textbox
-                cal.set(year,monthOfYear,dayOfMonth)
+                cal.set(year, monthOfYear, dayOfMonth)
                 date = cal.timeInMillis
+                day = d
+                week = cal.get(Calendar.WEEK_OF_YEAR) - 1
+                month = cal.get(Calendar.MONTH) + 1
             },
             y,
             m,
@@ -170,24 +188,31 @@ class addTransaction : Fragment() {
         val tAmount = binding.transactionAmount.text.toString()
         val transactionType = binding.transactionType.text.toString()
 //        logic left to be written for remaining Amount
-        val remainingAmount = 10000
         if (check(tDescription, tAmount, transactionType, date)) {
+            if (isExpense) {
+                expenseAmount = tAmount.toFloat()
+            } else {
+                incomeAmount = tAmount.toFloat()
+            }
             viewModel.insertTransaction(
                 Transaction(
                     0,
                     tDescription,
-                    tAmount.toFloat(),
+                    incomeAmount,
                     isExpense,
                     date,
                     transactionType,
-                    remainingAmount.toFloat()
+                    day,
+                    week,
+                    month,
+                    expenseAmount
                 )
             )
             Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
             Navigation.findNavController(binding.root).navigate(R.id.action_addTransaction_to_Stats)
         } else {
             Log.d("checkingDate", "insertTransaction: empty space")
-            if (date==0L) {
+            if (date == 0L) {
                 Toast.makeText(
                     requireContext(),
                     "Click on Calender to choose date",

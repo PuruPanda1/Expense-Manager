@@ -27,13 +27,16 @@ class Stats : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentStatsBinding.inflate(inflater, container, false)
 
+//        setting the viewModel
+        viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+
         val adapter = TransactionsAdapter(this)
         binding.transactionsRC.layoutManager = LinearLayoutManager(requireContext())
         binding.transactionsRC.adapter = adapter
 
 //          add new transaction onclick listener
         binding.addBtn.setOnClickListener {
-            val action = StatsDirections.actionStatsToAddTransaction(Transaction(-1, "", 0f, true,0L,"",0f))
+            val action = StatsDirections.actionStatsToAddTransaction(Transaction(-1, "", 0f, true,0L,"",0,0,0,0f))
             Navigation.findNavController(binding.root).navigate(action)
         }
 
@@ -64,8 +67,6 @@ class Stats : Fragment() {
             })
         }
 
-//        setting the viewModel
-        viewModel = ViewModelProvider(this)[TransactionViewModel::class.java]
 //        setting the observer
         viewModel.readAllTransaction.observe(viewLifecycleOwner, Observer {
             adapter.setData(it)
