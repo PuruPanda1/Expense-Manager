@@ -1,194 +1,540 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:scrollbarThumbVertical="@color/primaryBackground"
     android:layout_height="match_parent"
     android:background="@color/primaryBackground"
     tools:context=".fragments.mainScreen.MainScreen">
 
-    <!--welcome back view-->
-    <TextView
-        android:id="@+id/greetingMsg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Welcome Back!"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/userName"
-        app:layout_constraintTop_toTopOf="parent" />
-    <!--username view -->
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:drawableEnd="@drawable/ic_wolverine"
-        android:drawableTint="#4F5157"
-        android:fontFamily="@font/autour_one"
-        android:gravity="center"
-        android:text="PuruPanda"
-        android:textColor="@color/primaryTextColor"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/greetingMsg"
-        tools:layout_editor_absoluteY="56dp" />
-    <!--notification bell-->
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="27dp"
-        android:src="@drawable/ic_notification"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/userName"
-        app:tint="@color/primary_blue" />
-    <!--balance card view-->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="50dp"
-        app:cardPreventCornerOverlap="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/userName"
-        app:layout_constraintTop_toBottomOf="@+id/userName"
-        app:layout_goneMarginTop="32dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@color/primaryBackground"
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <!--welcome back view-->
+        <TextView
+            android:id="@+id/greetingMsg"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/homescreen_cardview_background"
-            android:elevation="20dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="24dp"
-                android:text="Current Balance"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-
-                android:textStyle="normal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/balanceAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="32dp"
-                android:fontFamily="@font/autour_one"
-                android:text="@string/amountInRupee"
-                android:textColor="@color/white"
-                android:textSize="45sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </androidx.cardview.widget.CardView>
-    <!--card view for showing expenses - charts-->
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/autour_one"
-        android:gravity="center"
-        android:text="Your Spends"
-        android:textColor="@color/primaryTextColor"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@id/cardView" />
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/monthlyBudgetCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:cardCornerRadius="8dp"
-        app:layout_constraintEnd_toEndOf="@id/cardView"
-        app:layout_constraintStart_toStartOf="@id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/textView3">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
+            android:text="Welcome Back!"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/userName"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!--username view -->
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:layout_marginStart="16dp"
+            android:drawableEnd="@drawable/ic_wolverine"
+            android:drawableTint="#4F5157"
+            android:fontFamily="@font/autour_one"
+            android:gravity="center"
+            android:text="PuruPanda"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/greetingMsg"
+            tools:layout_editor_absoluteY="56dp" />
+        <!--notification bell-->
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="27dp"
+            android:src="@drawable/ic_notification"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/userName"
+            app:tint="@color/primary_blue" />
+        <!--balance card view-->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="50dp"
+            app:cardPreventCornerOverlap="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/userName"
+            app:layout_constraintTop_toBottomOf="@+id/userName"
+            app:layout_goneMarginTop="32dp">
 
-            <TextView
-                android:id="@+id/monthlyDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/autour_one"
-                android:text="@string/monthlyDuration"
-                android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/monthlyExpense"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/autour_one"
-                android:text="@string/amountInRupee"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/monthlyDuration"
-                app:layout_constraintTop_toBottomOf="@id/monthlyDuration" />
-
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/pieChart"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.789"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/monthlyExpense"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <Button
-                android:id="@+id/checkDetailedAnalysisBtn"
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:padding="5dp"
-                android:text="Check detailed analysis"
-                android:textAllCaps="false"
-                android:textColor="@color/buttonColor"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pieChart" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:background="@drawable/homescreen_cardview_background"
+                android:elevation="20dp"
+                android:orientation="vertical">
 
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="24dp"
+                    android:text="Current Balance"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+
+                    android:textStyle="normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/balanceAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="32dp"
+                    android:fontFamily="@font/autour_one"
+                    android:text="@string/amountInRupee"
+                    android:textColor="@color/white"
+                    android:textSize="45sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+        <!--card view for showing expenses - charts-->
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/autour_one"
+            android:gravity="center"
+            android:text="Your Spends"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/cardView"
+            app:layout_constraintTop_toBottomOf="@id/cardView" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/monthlyBudgetCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="@id/cardView"
+            app:layout_constraintStart_toStartOf="@id/cardView"
+            app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/monthlyDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/autour_one"
+                    android:text="@string/monthlyDuration"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/monthlyExpense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/autour_one"
+                    android:text="@string/amountInRupee"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/monthlyDuration"
+                    app:layout_constraintTop_toBottomOf="@id/monthlyDuration" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.789"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/monthlyExpense"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <Button
+                    android:id="@+id/checkDetailedAnalysisBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:padding="5dp"
+                    android:text="Check detailed analysis"
+                    android:textAllCaps="false"
+                    android:textColor="@color/buttonColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pieChart" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/seeMoreActionBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:visibility="invisible"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/autour_one"
+            android:text="See More"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/monthlyBudgetCard" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/autour_one"
+            android:text="Recent Transactions"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/monthlyBudgetCard" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@id/seeMoreActionBtn"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/eachRowLayout1"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
+            android:elevation="5dp"
+            app:cardCornerRadius="10dp">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:elevation="0dp"
+                    android:src="@drawable/ic_entertainment"
+                    app:backgroundTint="@color/primaryBackground"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/primaryTextColor"
+                    tools:layout_editor_absoluteX="31dp"
+                    tools:layout_editor_absoluteY="59dp" />
+
+                <TextView
+                    android:id="@+id/dateShowMainScreen1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/text_background"
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="2dp"
+                    android:text="15 July 22"
+                    app:layout_constraintStart_toEndOf="@id/floatingIcon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/categoryShowMainScreen1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/text_background"
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="2dp"
+                    android:text="Entertainment"
+                    app:layout_constraintStart_toEndOf="@id/dateShowMainScreen1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/descriptionShowMainScreen1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="45dp"
+                    android:fontFamily="@font/autour_one"
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="2dp"
+                    android:text="Pizza Dine out"
+                    android:textColor="@color/primaryTextColor"
+                    app:layout_constraintEnd_toStartOf="@+id/amountShowMainScreen1"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/floatingIcon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/amountShowMainScreen1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="45dp"
+                    android:fontFamily="@font/autour_one"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/income_color"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/amountInRupee"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@id/eachRowLayout1"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/eachRowLayout2"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
+            android:elevation="5dp"
+            app:cardCornerRadius="10dp">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingIcon2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:elevation="0dp"
+                    android:src="@drawable/ic_entertainment"
+                    app:backgroundTint="@color/primaryBackground"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/primaryTextColor"
+                    tools:layout_editor_absoluteX="31dp"
+                    tools:layout_editor_absoluteY="59dp" />
+
+                <TextView
+                    android:id="@+id/dateShowMainScreen2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/text_background"
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="2dp"
+                    android:text="15 July 22"
+                    app:layout_constraintStart_toEndOf="@id/floatingIcon2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/categoryShowMainScreen2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/text_background"
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="2dp"
+                    android:text="Entertainment"
+                    app:layout_constraintStart_toEndOf="@id/dateShowMainScreen2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/descriptionShowMainScreen2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="45dp"
+                    android:fontFamily="@font/autour_one"
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="2dp"
+                    android:text="Pizza Dine out"
+                    android:textColor="@color/primaryTextColor"
+                    app:layout_constraintEnd_toStartOf="@+id/amountShowMainScreen2"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/floatingIcon2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/amountShowMainScreen2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="45dp"
+                    android:fontFamily="@font/autour_one"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/income_color"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/amountInRupee"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/eachRowLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
+            android:elevation="5dp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/eachRowLayout2">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingIcon3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:elevation="0dp"
+                    android:src="@drawable/ic_entertainment"
+                    app:backgroundTint="@color/primaryBackground"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/primaryTextColor"
+                    tools:layout_editor_absoluteX="31dp"
+                    tools:layout_editor_absoluteY="59dp" />
+
+                <TextView
+                    android:id="@+id/dateShowMainScreen3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/text_background"
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="2dp"
+                    android:text="15 July 22"
+                    app:layout_constraintStart_toEndOf="@id/floatingIcon3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/categoryShowMainScreen3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/text_background"
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="2dp"
+                    android:text="Entertainment"
+                    app:layout_constraintStart_toEndOf="@id/dateShowMainScreen3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/descriptionShowMainScreen3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="45dp"
+                    android:fontFamily="@font/autour_one"
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="2dp"
+                    android:text="Pizza Dine out"
+                    android:textColor="@color/primaryTextColor"
+                    app:layout_constraintEnd_toStartOf="@+id/amountShowMainScreen3"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/floatingIcon3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/amountShowMainScreen3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="45dp"
+                    android:fontFamily="@font/autour_one"
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/amountInRupee"
+                    android:textColor="@color/income_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

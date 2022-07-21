@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.example.payment.R
 import com.example.payment.TransactionViewModel
 import com.example.payment.databinding.FragmentMainScreenBinding
@@ -21,6 +22,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -73,12 +75,12 @@ class MainScreen : Fragment() {
         var expense = 0f
         viewModel.incomeSum.observe(viewLifecycleOwner, Observer {
             income = it
-            updateChart(income,expense)
+            updateChart(income, expense)
         })
 
         viewModel.expenseSum.observe(viewLifecycleOwner, Observer {
             expense = it
-            updateChart(income,expense)
+            updateChart(income, expense)
         })
 
 //      analysis button
@@ -86,35 +88,126 @@ class MainScreen : Fragment() {
             Toast.makeText(requireContext(), "Coming Soon", Toast.LENGTH_SHORT).show()
         }
 
+//      setting the data for the recent transactions
+        viewModel.readAllTransaction.observe(viewLifecycleOwner, Observer { transactionList ->
+//            setting amount for the 1st transaction
+            if (transactionList[0].isExpense) {
+                binding.amountShowMainScreen1.text =
+                    transactionList[0].expenseAmount.toString()
+                binding.amountShowMainScreen1.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.expense_color
+                    )
+                )
+            } else {
+                binding.amountShowMainScreen1.text =
+                    transactionList[0].incomeAmount.toString()
+                binding.amountShowMainScreen1.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.income_color
+                    )
+                )
+            }
+//            setting amount for the 2nd transaction
+            if (transactionList[1].isExpense) {
+                binding.amountShowMainScreen2.text =
+                    transactionList[1].expenseAmount.toString()
+                binding.amountShowMainScreen2.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.expense_color
+                    )
+                )
+            } else {
+                binding.amountShowMainScreen2.text =
+                    transactionList[1].incomeAmount.toString()
+                binding.amountShowMainScreen2.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.income_color
+                    )
+                )
+            }
+//            setting amount for the 3rd transaction
+            if (transactionList[2].isExpense) {
+                binding.amountShowMainScreen3.text =
+                    transactionList[2].expenseAmount.toString()
+                binding.amountShowMainScreen3.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.expense_color
+                    )
+                )
+            } else {
+                binding.amountShowMainScreen3.text =
+                    transactionList[2].incomeAmount.toString()
+                binding.amountShowMainScreen3.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.income_color
+                    )
+                )
+            }
+//            setting date
+            val simpleDateFormat = SimpleDateFormat("dd MMM")
+            var dateString = simpleDateFormat.format(transactionList[0].date)
+            binding.dateShowMainScreen1.text = dateString
+            dateString = simpleDateFormat.format(transactionList[1].date)
+            binding.dateShowMainScreen2.text = dateString
+            dateString = simpleDateFormat.format(transactionList[2].date)
+            binding.dateShowMainScreen3.text = dateString
+//            setting category values
+            binding.categoryShowMainScreen1.text =
+                transactionList[0].transactionType
+            binding.categoryShowMainScreen2.text =
+                transactionList[1].transactionType
+            binding.categoryShowMainScreen3.text =
+                transactionList[2].transactionType
+//            setting description
+            binding.descriptionShowMainScreen1.text =
+                transactionList[0].tDescription
+            binding.descriptionShowMainScreen2.text =
+                transactionList[1].tDescription
+            binding.descriptionShowMainScreen3.text =
+                transactionList[2].tDescription
+        })
+
         return binding.root
     }
 
-    fun setupPieChart() {
+    private fun setupPieChart() {
         binding.pieChart.isDrawHoleEnabled = true
         binding.pieChart.setUsePercentValues(true)
         binding.pieChart.setEntryLabelTextSize(12f)
-        binding.pieChart.setEntryLabelColor(ContextCompat.getColor(requireContext(), R.color.primaryTextColor))
+        binding.pieChart.setEntryLabelColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.primaryTextColor
+            )
+        )
         binding.pieChart.description.text = ""
         binding.pieChart.isDrawHoleEnabled = true
         var c = binding.monthlyBudgetCard.cardBackgroundColor
         binding.pieChart.setHoleColor(c.defaultColor)
         var l = binding.pieChart.legend
         l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-        l.horizontalAlignment =Legend.LegendHorizontalAlignment.RIGHT
-        l.orientation=Legend.LegendOrientation.VERTICAL
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+        l.orientation = Legend.LegendOrientation.VERTICAL
         l.setDrawInside(false)
         l.textColor = ContextCompat.getColor(requireContext(), R.color.primaryTextColor)
         l.isEnabled = true
     }
 
-    fun updateChart(income:Float,expense:Float) {
+    fun updateChart(income: Float, expense: Float) {
         var entries = mutableListOf<PieEntry>()
         var colors = ArrayList<Int>()
         colors.add(ContextCompat.getColor(requireContext(), R.color.income_color))
 //        colors.add(ContextCompat.getColor(requireContext(), R.color.expense_color))
         colors.add(Color.RED)
-        entries.add(PieEntry(income,"Income"))
-        entries.add(PieEntry(expense,"Expense"))
+        entries.add(PieEntry(income, "Income"))
+        entries.add(PieEntry(expense, "Expense"))
         var dataSet = PieDataSet(entries, "")
         dataSet.colors = colors
         var data = PieData(dataSet)

@@ -14,7 +14,6 @@ import java.time.Clock
 import java.time.Instant
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,19 +24,6 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavBar = findViewById<BottomNavigationView>(R.id.bottomBar)
         setupWithNavController(bottomNavBar,navController)
-
-    }
-
-    fun switchToGpay(){
-        val i = packageManager.getLaunchIntentForPackage("com.google.android.apps.nbu.paisa.user")
-        if(i!=null){
-            startActivity(i)
-            Toast.makeText(this, "Launching", Toast.LENGTH_SHORT).show()
-        }
-        else
-        {
-            Toast.makeText(this, "Failed to open Gpay", Toast.LENGTH_SHORT).show()
-        }
 
     }
 }

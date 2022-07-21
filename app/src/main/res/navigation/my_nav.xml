@@ -9,7 +9,11 @@
         android:id="@+id/MainScreen"
         android:name="com.example.payment.fragments.mainScreen.MainScreen"
         android:label="Home"
-        tools:layout="@layout/fragment_main_screen" />
+        tools:layout="@layout/fragment_main_screen" >
+        <action
+            android:id="@+id/action_MainScreen_to_Stats"
+            app:destination="@id/Stats" />
+    </fragment>
     <fragment
         android:id="@+id/Wallet"
         android:name="com.example.payment.fragments.wallet.Wallet"
