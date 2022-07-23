@@ -21,7 +21,9 @@
         tools:layout="@layout/fragment_wallet" >
         <action
             android:id="@+id/action_Wallet_to_cryptoListFragment"
-            app:destination="@id/cryptoListFragment" />
+            app:destination="@id/cryptoListFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/Stats"
@@ -65,6 +67,20 @@
         tools:layout="@layout/fragment_crypto_list" >
         <action
             android:id="@+id/action_cryptoListFragment_to_Wallet"
-            app:destination="@id/Wallet" />
+            app:destination="@id/Wallet"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_cryptoListFragment_to_addCryptoTransaction"
+            app:destination="@id/addCryptoTransaction" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCryptoTransaction"
+        android:name="com.example.payment.fragments.wallet.addCryptoTransaction"
+        android:label="fragment_add_crypto_transaction"
+        tools:layout="@layout/fragment_add_crypto_transaction" >
+        <action
+            android:id="@+id/action_addCryptoTransaction_to_cryptoListFragment"
+            app:destination="@id/cryptoListFragment" />
     </fragment>
 </navigation>

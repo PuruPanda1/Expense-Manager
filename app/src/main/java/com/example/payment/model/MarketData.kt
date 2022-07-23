@@ -19,7 +19,7 @@ data class MarketData(
     val market_cap_change_24h_in_currency: MarketCapChange24hInCurrency,
     val market_cap_change_percentage_24h: Double,
     val market_cap_change_percentage_24h_in_currency: MarketCapChangePercentage24hInCurrency,
-    val market_cap_rank: Double,
+    val market_cap_rank: Int,
     val max_supply: Any,
     val mcap_to_tvl_ratio: Double,
     val price_change_24h: Double,

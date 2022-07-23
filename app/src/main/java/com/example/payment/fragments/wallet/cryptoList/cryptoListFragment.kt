@@ -7,14 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.payment.ApiViewModel
 import com.example.payment.ApiViewModelFactory
+import com.example.payment.CryptoAdapter
 import com.example.payment.R
 import com.example.payment.apiModules.CryptoRepository
 import com.example.payment.databinding.FragmentCryptoListBinding
+import kotlin.math.log
 
 class cryptoListFragment : Fragment() {
     private var _binding:FragmentCryptoListBinding? = null
@@ -28,28 +33,37 @@ class cryptoListFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentCryptoListBinding.inflate(layoutInflater,container,false)
 
+//        setting search button
+        binding.cryptoSearchIcon.setOnClickListener {
+            binding.cryptoSearchIcon.isVisible = false
+            binding.headerName.isVisible = false
+            binding.textInputLayout2.isVisible = true
+        }
+
+//        setting the back button
+        binding.backToWalletButton.setOnClickListener {
+            Navigation.findNavController(binding.root).navigate(R.id.action_cryptoListFragment_to_Wallet)
+        }
+
         val repository = CryptoRepository()
         val viewModelFactory = ApiViewModelFactory(repository)
         viewModel = ViewModelProvider(this,viewModelFactory)[ApiViewModel::class.java]
 
-        var coin:String = "defichain"
-        var options: HashMap<String,String> = HashMap()
-        options["localization"]="false"
-        options["tickers"]="false"
-        options["community_data"]="false"
-        options["developer_data"]="false"
-        options["sparkline"]="false"
+        viewModel.getTrendingList()
+//        setting the crypto list
+        val adapter = CryptoAdapter()
+        binding.cryptoListRc.layoutManager = LinearLayoutManager(requireContext())
+        binding.cryptoListRc.adapter = adapter
 
-        viewModel.getCoinDetails(coin,options)
-
-        viewModel.coinData.observe(viewLifecycleOwner,Observer{
+        viewModel.coinList.observe(viewLifecycleOwner, Observer {
             if(it.isSuccessful){
-                Log.d("apiChecking", "onCreateView: "+it.body()!!.market_data.current_price.usd)
+                adapter.setData(it.body()!!)
             }
             else{
-                Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
             }
         })
+
 
         return binding.root
     }

@@ -2,7 +2,7 @@ package com.example.payment.model
 
 data class Low24h(
     val aed: Double,
-    val ars: Int,
+    val ars: Double,
     val aud: Double,
     val bch: Double,
     val bdt: Double,
@@ -54,7 +54,7 @@ data class Low24h(
     val uah: Double,
     val usd: Double,
     val vef: Double,
-    val vnd: Int,
+    val vnd: Double,
     val xag: Double,
     val xau: Double,
     val xdr: Double,
