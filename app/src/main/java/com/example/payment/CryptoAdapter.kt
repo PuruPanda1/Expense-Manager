@@ -6,8 +6,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.payment.fragments.wallet.cryptoList.cryptoListFragment
+import com.example.payment.fragments.wallet.cryptoList.cryptoListFragmentDirections
 import com.example.payment.model.trendingCoin
 
 class CryptoAdapter : RecyclerView.Adapter<MyHolder>() {
@@ -31,6 +34,17 @@ class CryptoAdapter : RecyclerView.Adapter<MyHolder>() {
         Glide.with(holder.image)
             .load(url)
             .into(holder.image)
+
+//        onclick listener
+        holder.layout.setOnClickListener {
+            val action = cryptoListFragmentDirections.actionCryptoListFragmentToAddCryptoTransaction(
+                item.name,
+                item.market_data.current_price.inr.toFloat(),
+                item.symbol,
+                item.id
+            )
+            Navigation.findNavController(holder.layout).navigate(action)
+        }
     }
 
     override fun getItemCount(): Int {

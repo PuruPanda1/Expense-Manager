@@ -26,8 +26,9 @@
         <entry key="app/src/main/res/drawable/text_background.xml" value="0.3355" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/crypto_list_row.xml" value="0.3296875" />
+        <entry key="app/src/main/res/layout/fragment_add_crypto_transaction.xml" value="0.3307291666666667" />
         <entry key="app/src/main/res/layout/fragment_add_transaction.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/fragment_crypto_list.xml" value="0.248046875" />
+        <entry key="app/src/main/res/layout/fragment_crypto_list.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_launch_payment.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_main_screen.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.35572916666666665" />

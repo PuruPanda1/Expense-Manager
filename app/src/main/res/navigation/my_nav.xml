@@ -72,7 +72,9 @@
             app:exitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_cryptoListFragment_to_addCryptoTransaction"
-            app:destination="@id/addCryptoTransaction" />
+            app:destination="@id/addCryptoTransaction"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/addCryptoTransaction"
@@ -81,6 +83,20 @@
         tools:layout="@layout/fragment_add_crypto_transaction" >
         <action
             android:id="@+id/action_addCryptoTransaction_to_cryptoListFragment"
-            app:destination="@id/cryptoListFragment" />
+            app:destination="@id/cryptoListFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <argument
+            android:name="cryptoName"
+            app:argType="string" />
+        <argument
+            android:name="cryptoPrice"
+            app:argType="float" />
+        <argument
+            android:name="cryptoSymbol"
+            app:argType="string" />
+        <argument
+            android:name="cryptoId"
+            app:argType="string" />
     </fragment>
 </navigation>
