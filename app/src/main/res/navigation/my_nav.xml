@@ -18,7 +18,11 @@
         android:id="@+id/Wallet"
         android:name="com.example.payment.fragments.wallet.Wallet"
         android:label="Wallet"
-        tools:layout="@layout/fragment_wallet" />
+        tools:layout="@layout/fragment_wallet" >
+        <action
+            android:id="@+id/action_Wallet_to_cryptoListFragment"
+            app:destination="@id/cryptoListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/Stats"
         android:name="com.example.payment.fragments.stats.Stats"
@@ -53,5 +57,14 @@
         <argument
             android:name="transaction"
             app:argType="com.example.payment.db.Transaction" />
+    </fragment>
+    <fragment
+        android:id="@+id/cryptoListFragment"
+        android:name="com.example.payment.fragments.wallet.cryptoList.cryptoListFragment"
+        android:label="fragment_crypto_list"
+        tools:layout="@layout/fragment_crypto_list" >
+        <action
+            android:id="@+id/action_cryptoListFragment_to_Wallet"
+            app:destination="@id/Wallet" />
     </fragment>
 </navigation>

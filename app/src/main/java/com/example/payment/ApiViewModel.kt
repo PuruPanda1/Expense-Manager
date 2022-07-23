@@ -1,0 +1,21 @@
+package com.example.payment
+
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.payment.apiModules.CryptoRepository
+import com.example.payment.model.coin
+import kotlinx.coroutines.launch
+import retrofit2.Response
+
+class ApiViewModel(private val repository: CryptoRepository):ViewModel() {
+    val coinData : MutableLiveData<Response<coin>> = MutableLiveData()
+
+//    returns detials about a particular coin
+    fun getCoinDetails(coin:String,options:Map<String,String>){
+        viewModelScope.launch {
+            val response = repository.getCoinDetails(coin,options)
+            coinData.value = response
+        }
+    }
+}
