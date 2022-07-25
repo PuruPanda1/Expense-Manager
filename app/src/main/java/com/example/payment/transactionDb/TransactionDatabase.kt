@@ -1,4 +1,4 @@
-package com.example.payment.db
+package com.example.payment.transactionDb
 
 import android.content.Context
 import androidx.room.Database

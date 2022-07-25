@@ -58,7 +58,7 @@
             app:exitAnim="@android:anim/slide_out_right" />
         <argument
             android:name="transaction"
-            app:argType="com.example.payment.db.Transaction" />
+            app:argType="com.example.payment.transactionDb.Transaction" />
     </fragment>
     <fragment
         android:id="@+id/cryptoListFragment"
@@ -98,5 +98,25 @@
         <argument
             android:name="cryptoId"
             app:argType="string" />
+        <argument
+            android:name="isUpdate"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="buyingPrice"
+            app:argType="float"
+            android:defaultValue="0" />
+        <argument
+            android:name="numberOfCoins"
+            app:argType="float"
+            android:defaultValue="0" />
+        <argument
+            android:name="date"
+            app:argType="long"
+            android:defaultValue="0L" />
+        <argument
+            android:name="sid"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

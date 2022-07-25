@@ -1,4 +1,4 @@
-package com.example.payment.db
+package com.example.payment.transactionDb
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

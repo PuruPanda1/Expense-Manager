@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.payment.databinding.FragmentAddTransactionBinding
-import com.example.payment.db.Transaction
+import com.example.payment.transactionDb.Transaction
 
 
 class addTransaction : Fragment() {

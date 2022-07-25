@@ -45,6 +45,7 @@ class cryptoListFragment : Fragment() {
             Navigation.findNavController(binding.root).navigate(R.id.action_cryptoListFragment_to_Wallet)
         }
 
+//        setting the viewModel and calling it
         val repository = CryptoRepository()
         val viewModelFactory = ApiViewModelFactory(repository)
         viewModel = ViewModelProvider(this,viewModelFactory)[ApiViewModel::class.java]

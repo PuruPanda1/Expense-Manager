@@ -1,4 +1,4 @@
-package com.example.payment.db
+package com.example.payment.transactionDb
 
 import android.os.Parcel
 import android.os.Parcelable

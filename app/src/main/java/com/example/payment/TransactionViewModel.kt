@@ -5,9 +5,9 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.payment.db.Transaction
-import com.example.payment.db.TransactionDatabase
-import com.example.payment.db.TransactionRepository
+import com.example.payment.transactionDb.Transaction
+import com.example.payment.transactionDb.TransactionDatabase
+import com.example.payment.transactionDb.TransactionRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

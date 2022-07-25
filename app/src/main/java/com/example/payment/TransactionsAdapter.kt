@@ -11,7 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.example.payment.db.Transaction
+import com.example.payment.transactionDb.Transaction
 import com.example.payment.fragments.stats.Stats
 import com.example.payment.fragments.stats.StatsDirections
 import java.text.SimpleDateFormat
