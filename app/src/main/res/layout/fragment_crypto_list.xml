@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/backToWalletButton"
+        android:id="@+id/backToCryptoPortfolio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -34,7 +34,7 @@
         android:textColor="@color/primaryTextColor"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@id/textInputLayout2"
-        app:layout_constraintStart_toEndOf="@+id/backToWalletButton"
+        app:layout_constraintStart_toEndOf="@+id/backToCryptoPortfolio"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -62,7 +62,7 @@
         app:endIconDrawable="@drawable/ic_search"
         app:endIconMode="custom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/backToWalletButton"
+        app:layout_constraintStart_toEndOf="@id/backToCryptoPortfolio"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText

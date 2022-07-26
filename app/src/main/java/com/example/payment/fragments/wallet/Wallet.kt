@@ -21,7 +21,7 @@ class Wallet : Fragment() {
         _binding = FragmentWalletBinding.inflate(layoutInflater,container,false)
 
         binding.cryptoCardView.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_Wallet_to_cryptoListFragment)
+            Navigation.findNavController(binding.root).navigate(R.id.action_Wallet_to_cryptoTransactionList)
         }
 
         return binding.root

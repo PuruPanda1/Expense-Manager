@@ -7,6 +7,7 @@ import com.example.payment.viewModel.ApiViewModel
 
 class ApiViewModelFactory(private val repository: CryptoRepository):ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        @Suppress("UNCHECKED_CAST")
         return ApiViewModel(repository) as T
     }
 }

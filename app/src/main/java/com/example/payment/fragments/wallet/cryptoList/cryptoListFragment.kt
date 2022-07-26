@@ -38,8 +38,8 @@ class cryptoListFragment : Fragment() {
         }
 
 //        setting the back button
-        binding.backToWalletButton.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_cryptoListFragment_to_Wallet)
+        binding.backToCryptoPortfolio.setOnClickListener {
+            Navigation.findNavController(binding.root).navigate(R.id.action_cryptoListFragment_to_cryptoTransactionList)
         }
 
 //        setting the viewModel and calling it

@@ -36,7 +36,7 @@ class addCryptoTransaction : Fragment() {
         }
 
 //        calling viewmodel and setting it up
-        viewModel = ViewModelProvider(requireActivity()!!)[CryptoViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[CryptoViewModel::class.java]
 
 //        setting datepickeicon onClickListener
         binding.datePickerIcon.setOnClickListener {

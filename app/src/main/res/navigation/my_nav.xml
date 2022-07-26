@@ -20,8 +20,8 @@
         android:label="Wallet"
         tools:layout="@layout/fragment_wallet" >
         <action
-            android:id="@+id/action_Wallet_to_cryptoListFragment"
-            app:destination="@id/cryptoListFragment"
+            android:id="@+id/action_Wallet_to_cryptoTransactionList"
+            app:destination="@id/cryptoPortfolio"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
@@ -66,13 +66,13 @@
         android:label="fragment_crypto_list"
         tools:layout="@layout/fragment_crypto_list" >
         <action
-            android:id="@+id/action_cryptoListFragment_to_Wallet"
-            app:destination="@id/Wallet"
+            android:id="@+id/action_cryptoListFragment_to_addCryptoTransaction"
+            app:destination="@id/addCryptoTransaction"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
         <action
-            android:id="@+id/action_cryptoListFragment_to_addCryptoTransaction"
-            app:destination="@id/addCryptoTransaction"
+            android:id="@+id/action_cryptoListFragment_to_cryptoTransactionList"
+            app:destination="@id/cryptoPortfolio"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
@@ -118,5 +118,21 @@
             android:name="sid"
             app:argType="integer"
             android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/cryptoPortfolio"
+        android:name="com.example.payment.fragments.wallet.cryptoPortfolio.CryptoPortfolio"
+        android:label="fragment_crypto_transaction_list"
+        tools:layout="@layout/fragment_crypto_portfolio" >
+        <action
+            android:id="@+id/action_cryptoPortfolio_to_Wallet"
+            app:destination="@id/Wallet"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_cryptoPortfolio_to_cryptoListFragment"
+            app:destination="@id/cryptoListFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
 </navigation>
