@@ -1,4 +1,4 @@
-package com.example.payment
+package com.example.payment.rcAdapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.payment.fragments.wallet.cryptoList.cryptoListFragment
+import com.example.payment.R
 import com.example.payment.fragments.wallet.cryptoList.cryptoListFragmentDirections
 import com.example.payment.model.trendingCoin
 

@@ -10,8 +10,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.payment.TransactionViewModel
-import com.example.payment.TransactionsAdapter
+import com.example.payment.viewModel.TransactionViewModel
+import com.example.payment.rcAdapter.TransactionsAdapter
 import com.example.payment.databinding.FragmentStatsBinding
 import com.example.payment.transactionDb.Transaction
 

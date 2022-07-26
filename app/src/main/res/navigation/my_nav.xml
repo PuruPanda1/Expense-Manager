@@ -43,12 +43,12 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/Scanner"
-        android:name="com.example.payment.launchPayment"
+        android:name="com.example.payment.fragments.payment.launchPayment"
         android:label="fragment_launch_payment"
         tools:layout="@layout/fragment_launch_payment" />
     <fragment
         android:id="@+id/addTransaction"
-        android:name="com.example.payment.addTransaction"
+        android:name="com.example.payment.fragments.stats.addTranasactions.addTransaction"
         android:label="fragment_add_transaction"
         tools:layout="@layout/fragment_add_transaction" >
         <action
@@ -78,7 +78,7 @@
     </fragment>
     <fragment
         android:id="@+id/addCryptoTransaction"
-        android:name="com.example.payment.fragments.wallet.addCryptoTransaction"
+        android:name="com.example.payment.fragments.wallet.addCryptoTransaction.addCryptoTransaction"
         android:label="fragment_add_crypto_transaction"
         tools:layout="@layout/fragment_add_crypto_transaction" >
         <action

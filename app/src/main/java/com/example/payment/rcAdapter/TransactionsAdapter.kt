@@ -1,4 +1,4 @@
-package com.example.payment
+package com.example.payment.rcAdapter
 
 import android.app.AlertDialog
 import android.content.Context
@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.example.payment.R
 import com.example.payment.transactionDb.Transaction
 import com.example.payment.fragments.stats.Stats
 import com.example.payment.fragments.stats.StatsDirections
@@ -35,13 +36,17 @@ class TransactionsAdapter(val fragment: Stats) : RecyclerView.Adapter<Myholder>(
         holder.category.text = item.transactionType
 
         if(item.isExpense){
-            holder.amount.setTextColor(ContextCompat.getColor(holder.amount.context,R.color.expense_color))
+            holder.amount.setTextColor(ContextCompat.getColor(holder.amount.context,
+                R.color.expense_color
+            ))
             val updatedAmount =
                 holder.amount.getResources().getString(R.string.amountInRupee, item.expenseAmount.toString())
             holder.amount.text = updatedAmount
         }
         else{
-            holder.amount.setTextColor(ContextCompat.getColor(holder.amount.context,R.color.income_color))
+            holder.amount.setTextColor(ContextCompat.getColor(holder.amount.context,
+                R.color.income_color
+            ))
             val updatedAmount =
                 holder.amount.getResources().getString(R.string.amountInRupee, item.incomeAmount.toString())
             holder.amount.text = updatedAmount

@@ -20,7 +20,7 @@ class Wallet : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentWalletBinding.inflate(layoutInflater,container,false)
 
-        binding.showCryptoList.setOnClickListener {
+        binding.cryptoCardView.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_Wallet_to_cryptoListFragment)
         }
 

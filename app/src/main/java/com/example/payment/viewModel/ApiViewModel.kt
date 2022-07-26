@@ -1,4 +1,4 @@
-package com.example.payment
+package com.example.payment.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +13,7 @@ class ApiViewModel(private val repository: CryptoRepository) : ViewModel() {
     val coinData: MutableLiveData<Response<coin>> = MutableLiveData()
     val coinList: MutableLiveData<Response<List<trendingCoin>>> = MutableLiveData()
 
-    //    returns detials about a particular coin
+    //    returns details about a particular coin
     fun getCoinDetails(coin: String, options: Map<String, String>) {
         viewModelScope.launch {
             val response = repository.getCoinDetails(coin, options)

@@ -1,4 +1,4 @@
-package com.example.payment
+package com.example.payment.fragments.stats.addTranasactions
 
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.example.payment.R
+import com.example.payment.viewModel.TransactionViewModel
 import com.example.payment.databinding.FragmentAddTransactionBinding
 import com.example.payment.transactionDb.Transaction
 

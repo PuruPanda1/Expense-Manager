@@ -1,7 +1,6 @@
-package com.example.payment
+package com.example.payment.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -11,7 +10,7 @@ import com.example.payment.transactionDb.TransactionRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-public class TransactionViewModel(application: Application) : AndroidViewModel(application) {
+class TransactionViewModel(application: Application) : AndroidViewModel(application) {
     var readAllTransaction: LiveData<List<Transaction>>
     var readAllIncomeTransaction: LiveData<List<Transaction>>
     var readAllExpenseTransaction: LiveData<List<Transaction>>
@@ -31,10 +30,6 @@ public class TransactionViewModel(application: Application) : AndroidViewModel(a
         readMonthlySpends = repository.monthlySpends
         incomeSum = repository.incomeSum
         expenseSum = repository.expenseSum
-    }
-
-    fun insideViewModel() {
-        Log.d("ViewModel", "insideViewModel: hello")
     }
 
     fun insertTransaction(transaction: Transaction) {

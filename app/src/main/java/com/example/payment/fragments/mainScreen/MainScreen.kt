@@ -12,7 +12,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.payment.R
-import com.example.payment.TransactionViewModel
+import com.example.payment.viewModel.TransactionViewModel
 import com.example.payment.databinding.FragmentMainScreenBinding
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
@@ -200,6 +200,7 @@ class MainScreen : Fragment() {
         binding.pieChart.isDrawHoleEnabled = true
         binding.pieChart.setUsePercentValues(true)
         binding.pieChart.setEntryLabelTextSize(12f)
+        binding.pieChart.holeRadius = 65f
         binding.pieChart.setEntryLabelColor(
             ContextCompat.getColor(
                 requireContext(),
@@ -228,6 +229,8 @@ class MainScreen : Fragment() {
         entries.add(PieEntry(income, "Income"))
         entries.add(PieEntry(expense, "Expense"))
         var dataSet = PieDataSet(entries, "")
+        dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+        dataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
         dataSet.colors = colors
         var data = PieData(dataSet)
         data.setDrawValues(true)
