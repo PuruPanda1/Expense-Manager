@@ -11,7 +11,7 @@ interface CryptoApi {
 
 //    coin details according to the name
     @GET("coins/{coinName}")
-    suspend fun getCoinDetials(
+    suspend fun getCoinDetails(
         @Path("coinName")coinName:String,
         @QueryMap options:Map<String,String>
     ):Response<coin>

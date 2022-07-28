@@ -53,9 +53,7 @@ class addCryptoTransaction : Fragment() {
         }
 
         binding.cryptoName.text = args.cryptoName
-        val moneyString =
-            String.format(resources.getString(R.string.amountInRupee, args.cryptoPrice.toString()))
-        binding.cryptoPrice.text = moneyString
+        binding.cryptoPrice.text = args.cryptoPrice.toString()
 
         binding.addCryptoTransactionBtn.setOnClickListener {
             if (args.isUpdate) {
@@ -71,16 +69,21 @@ class addCryptoTransaction : Fragment() {
         val id = args.cryptoId
         val numberOfCoins = binding.numberOfCoins.text.toString()
         val buyingPrice = binding.buyingPrice.text.toString()
+        val currentPrice = binding.cryptoPrice.text.toString().toDouble()
         val name = args.cryptoName
+        val total = numberOfCoins.toDouble() * currentPrice.toDouble()
         if (check(id, numberOfCoins, buyingPrice, name, date)) {
             viewModel.updateCryptoTransaction(
                 CryptoTransaction(
                     args.sid,
                     id,
                     name,
+                    args.cryptoSymbol,
+                    currentPrice,
                     numberOfCoins.toDouble(),
                     buyingPrice.toDouble(),
-                    date
+                    date,
+                    total
                 )
             )
             Toast.makeText(requireContext(), "Transaction Updated", Toast.LENGTH_SHORT).show()
@@ -100,16 +103,21 @@ class addCryptoTransaction : Fragment() {
         val id = args.cryptoId
         val numberOfCoins = binding.numberOfCoins.text.toString()
         val buyingPrice = binding.buyingPrice.text.toString()
+        val currentPrice = binding.cryptoPrice.text.toString().toDouble()
         val name = args.cryptoName
+        val total = numberOfCoins.toDouble() * currentPrice.toDouble()
         if (check(id, numberOfCoins, buyingPrice, name, date)) {
             viewModel.insertCryptoTransaction(
                 CryptoTransaction(
                     0,
                     id,
                     name,
+                    args.cryptoSymbol,
+                    currentPrice,
                     numberOfCoins.toDouble(),
                     buyingPrice.toDouble(),
-                    date
+                    date,
+                    total
                 )
             )
             Toast.makeText(requireContext(), "Transaction Added", Toast.LENGTH_SHORT).show()

@@ -17,4 +17,10 @@ interface CryptoDao {
 
     @Query("SELECT * FROM cryptoTransaction ORDER BY date")
     fun getAllStudents(): LiveData<List<CryptoTransaction>>
+
+    @Query("SELECT SUM(totalAmount) FROM cryptoTransaction")
+    fun getTotalAmount(): LiveData<Double>
+
+    @Query("SELECT (numberOfCoins * SUM(currentPrice)) - (numberOfCoins * SUM(buyingPrice)) FROM cryptoTransaction")
+    fun getProfitLoss(): LiveData<Double>
 }

@@ -20,12 +20,11 @@ abstract class CryptoTransactionDatabase : RoomDatabase() {
                 return tempIns
             }
             synchronized(this) {
-                val instance = Room.databaseBuilder(
+                return Room.databaseBuilder(
                     context.applicationContext,
                     CryptoTransactionDatabase::class.java,
                     "crypto_transaction_database"
                 ).build()
-                return instance
             }
         }
     }

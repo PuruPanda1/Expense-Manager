@@ -134,5 +134,8 @@
             app:destination="@id/cryptoListFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_cryptoPortfolio_to_addCryptoTransaction"
+            app:destination="@id/addCryptoTransaction" />
     </fragment>
 </navigation>

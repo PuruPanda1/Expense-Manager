@@ -6,7 +6,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CryptoViewModel(application: Application) : AndroidViewModel(application) {
-    private lateinit var cryptoData: LiveData<List<CryptoTransaction>>
+    lateinit var cryptoData: LiveData<List<CryptoTransaction>>
+    lateinit var totalAmount:LiveData<Double>
+    lateinit var profitLoss:LiveData<Double>
     private val repository: CryptoDbRepository
 
     init {
@@ -14,9 +16,14 @@ class CryptoViewModel(application: Application) : AndroidViewModel(application) 
         repository = CryptoDbRepository(dao)
     }
 
+    fun getTotalAmount(){
+        totalAmount = repository.totalAmount
+    }
 
     fun getCryptoData() {
         cryptoData = repository.readAllData
+        totalAmount = repository.totalAmount
+        profitLoss = repository.profitLoss
     }
 
     fun insertCryptoTransaction(cryptoTransaction: CryptoTransaction) {
@@ -28,6 +35,12 @@ class CryptoViewModel(application: Application) : AndroidViewModel(application) 
     fun updateCryptoTransaction(cryptoTransaction: CryptoTransaction) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateCryptoTransaction(cryptoTransaction)
+        }
+    }
+
+    fun deleteCryptoTransaction(cryptoTransaction: CryptoTransaction){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteCryptoTransaction(cryptoTransaction)
         }
     }
 }

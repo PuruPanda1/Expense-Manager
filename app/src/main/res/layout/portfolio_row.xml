@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="8dp"
+    android:layout_margin="5dp"
+    app:strokeColor="@color/primaryBorder"
+    app:strokeWidth="1dp"
+    android:id="@+id/cryptoLayout"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryBackground"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/investmentSymbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/autour_one"
+            android:gravity="start"
+            android:padding="2dp"
+            android:text="DFI"
+            android:textAllCaps="true"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/investmentQty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/primaryTextColor"
+            android:layout_weight="1"
+            android:fontFamily="@font/autour_one"
+            android:gravity="end"
+            android:padding="2dp"
+            android:text="10"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/investmentPL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/autour_one"
+            android:gravity="end"
+            android:padding="2dp"
+            android:text="+200 (2%)"
+            android:textColor="@color/income_color"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/investmentCV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:textColor="@color/primaryTextColor"
+            android:fontFamily="@font/autour_one"
+            android:gravity="end"
+            android:padding="2dp"
+            android:text="10200"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
