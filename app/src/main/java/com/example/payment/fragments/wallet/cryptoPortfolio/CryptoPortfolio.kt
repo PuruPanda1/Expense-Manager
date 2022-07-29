@@ -61,38 +61,6 @@ class CryptoPortfolio : Fragment() {
         }
 
 //        setting the profit/loss amount
-        viewModel.profitLoss.observe(viewLifecycleOwner) {
-            if (it == null) {
-                binding.changesInAmount.text = "₹0"
-                binding.changesInAmount.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.income_color
-                    )
-                )
-
-            } else {
-                if (it >= 0) {
-                    binding.changesInAmount.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.income_color
-                        )
-                    )
-                } else {
-                    binding.changesInAmount.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.expense_color
-                        )
-                    )
-                }
-                val number3digits = Math.round(it * 1000.0) / 1000.0
-                val number2digits = Math.round(number3digits * 100.0) / 100.0
-                val pl = Math.round(number2digits * 10.0) / 10.0
-                binding.changesInAmount.text = "₹${pl}"
-            }
-        }
 
         val adapter = CryptoPortfolioAdapter(this)
         binding.cryptoPortfolioRC.layoutManager = LinearLayoutManager(requireContext())

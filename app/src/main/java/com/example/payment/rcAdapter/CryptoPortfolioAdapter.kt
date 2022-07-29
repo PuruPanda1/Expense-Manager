@@ -58,7 +58,7 @@ class CryptoPortfolioAdapter(private val fragment: CryptoPortfolio) :
             )
         }
 
-        var percentage = (profitLoss / item.currentPrice) * 100
+        var percentage = (profitLoss / (item.numberOfCoins*item.currentPrice)) * 100
         number3digits = Math.round(percentage * 1000.0) / 1000.0
         number2digits = Math.round(number3digits * 100.0) / 100.0
         percentage = Math.round(number2digits * 10.0) / 10.0

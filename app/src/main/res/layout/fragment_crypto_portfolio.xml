@@ -62,6 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="200 (2%)"
+        android:visibility="gone"
         android:textColor="@color/income_color"
         android:textSize="15sp"
         android:textStyle="bold"

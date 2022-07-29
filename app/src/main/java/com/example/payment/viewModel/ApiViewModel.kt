@@ -15,22 +15,21 @@ import retrofit2.Response
 
 class ApiViewModel(private val repository: CryptoRepository) : ViewModel() {
     val coinList: MutableLiveData<Response<List<trendingCoin>>> = MutableLiveData()
+    val coin: MutableLiveData<Response<coin>> = MutableLiveData()
     //    returns details about a particular coin
     fun getCoinDetails(
-        coin: String,
-        selectedCrypto: CryptoTransaction,
-        application: Application
+        selectedCoin: String
     ) {
-        var options = HashMap<String,String>()
+        val options = HashMap<String, String>()
         options["localization"] = "false"
         options["tickers"] = "false"
         options["community_data"] = "false"
         options["developer_data"] = "false"
         options["sparkline"] = "false"
         viewModelScope.launch {
-            val response = repository.getCoinDetails(coin, options)
+            val response = repository.getCoinDetails(selectedCoin, options)
             if (response.isSuccessful && response.body() != null) {
-
+                coin.value = response
             }
         }
     }
