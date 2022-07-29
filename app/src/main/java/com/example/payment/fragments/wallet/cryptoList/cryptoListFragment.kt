@@ -2,6 +2,7 @@ package com.example.payment.fragments.wallet.cryptoList
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,18 +44,7 @@ class cryptoListFragment : Fragment() {
 
 //      setting the onclick listener for search icon in the input text field
         binding.textInputLayout2.setEndIconOnClickListener {
-            val searchedCoin = binding.searchCrypto.text.toString().replace(" ", "")
-            if (searchedCoin.isBlank()) {
-                Toast.makeText(requireContext(), "Enter coin name", Toast.LENGTH_SHORT).show()
-            } else {
-                viewModel.getCoinDetails(searchedCoin)
-                binding.cryptoListRc.isVisible = false
-                binding.searchResultView.isVisible = true
-                binding.showAllButton.isVisible = true
-                viewModel.coin.observe(viewLifecycleOwner) {
-                    setSearchedCoin(it.body()!!)
-                }
-            }
+            searchedCoin()
         }
 
 //        setting the showAll button
@@ -83,12 +73,36 @@ class cryptoListFragment : Fragment() {
             if (it.isSuccessful) {
                 adapter.setData(it.body()!!)
             } else {
-                Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to fetch the list", Toast.LENGTH_SHORT)
+                    .show()
             }
         })
 
 
         return binding.root
+    }
+
+    private fun searchedCoin() {
+        val searchedCoin = binding.searchCrypto.text.toString().replace(" ", "")
+        if (searchedCoin.isBlank()) {
+            Toast.makeText(requireContext(), "Enter coin name", Toast.LENGTH_SHORT).show()
+        } else {
+            viewModel.getCoinDetails(searchedCoin)
+            binding.cryptoListRc.isVisible = false
+            binding.searchResultView.isVisible = true
+            binding.showAllButton.isVisible = true
+            viewModel.coin.observe(viewLifecycleOwner) {
+                if (it.isSuccessful) {
+                    setSearchedCoin(it.body()!!)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to fetch the results",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 
     private fun showAllButton() {
@@ -102,6 +116,7 @@ class cryptoListFragment : Fragment() {
     }
 
     private fun setSearchedCoin(item: coin) {
+        binding.searchCrypto.setText("")
         binding.cryptoNameRC.text = item.name
         val priceString = String.format(
             binding.cryptoNameRC.getResources()

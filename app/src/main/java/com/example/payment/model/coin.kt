@@ -1,6 +1,7 @@
 package com.example.payment.model
 
 data class coin(
+    val error:String,
     val additional_notices: List<Any>,
     val asset_platform_id: Any,
     val block_time_in_minutes: Double,

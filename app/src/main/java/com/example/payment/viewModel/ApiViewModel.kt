@@ -2,6 +2,7 @@ package com.example.payment.viewModel
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,6 +17,7 @@ import retrofit2.Response
 class ApiViewModel(private val repository: CryptoRepository) : ViewModel() {
     val coinList: MutableLiveData<Response<List<trendingCoin>>> = MutableLiveData()
     val coin: MutableLiveData<Response<coin>> = MutableLiveData()
+
     //    returns details about a particular coin
     fun getCoinDetails(
         selectedCoin: String
