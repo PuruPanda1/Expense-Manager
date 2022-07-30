@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 
 
-
-
 @Dao
 interface TransactionDao {
     @Insert
@@ -30,11 +28,14 @@ interface TransactionDao {
     fun getDifferenceSum(): LiveData<Float>
 
     @Query("SELECT SUM(expenseAmount) FROM transactions WHERE month = strftime('%m', 'now')")
-    fun getMonthlySpends():LiveData<Float>
+    fun getMonthlySpends(): LiveData<Float>
 
     @Query("SELECT SUM(incomeAmount) FROM transactions WHERE isExpense=0 AND month = strftime('%m','now')")
     fun getIncomeSum(): LiveData<Float>
 
     @Query("SELECT SUM(expenseAmount) FROM transactions WHERE isExpense=1 AND month = strftime('%m','now')")
     fun getExpenseSum(): LiveData<Float>
+
+    @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE isExpense=1 GROUP BY transactionType")
+    fun getTotal(): LiveData<List<myTypes>>
 }

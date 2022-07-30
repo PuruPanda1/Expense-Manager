@@ -6,6 +6,7 @@ class TransactionRepository(private val transactionDao: TransactionDao) {
     val readAllData: LiveData<List<Transaction>> = transactionDao.getAllTransaction()
     val incomeData: LiveData<List<Transaction>> = transactionDao.getIncomeTransactions()
     val expenseData:LiveData<List<Transaction>> = transactionDao.getExpenseTransactions()
+    val amountCategory:LiveData<List<myTypes>> = transactionDao.getTotal()
     val differenceSum : LiveData<Float> = transactionDao.getDifferenceSum()
     val monthlySpends:LiveData<Float> = transactionDao.getMonthlySpends()
     val incomeSum = transactionDao.getIncomeSum()

@@ -11,8 +11,8 @@
         android:label="Home"
         tools:layout="@layout/fragment_main_screen" >
         <action
-            android:id="@+id/action_MainScreen_to_Stats"
-            app:destination="@id/Stats" />
+            android:id="@+id/action_MainScreen_to_detailedTransactionAnalysis"
+            app:destination="@id/detailedTransactionAnalysis" />
     </fragment>
     <fragment
         android:id="@+id/Wallet"
@@ -137,5 +137,14 @@
         <action
             android:id="@+id/action_cryptoPortfolio_to_addCryptoTransaction"
             app:destination="@id/addCryptoTransaction" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailedTransactionAnalysis"
+        android:name="com.example.payment.DetailedTransactionAnalysis"
+        android:label="fragment_detailed_transaction_analysis"
+        tools:layout="@layout/fragment_detailed_transaction_analysis" >
+        <action
+            android:id="@+id/action_detailedTransactionAnalysis_to_MainScreen"
+            app:destination="@id/MainScreen" />
     </fragment>
 </navigation>

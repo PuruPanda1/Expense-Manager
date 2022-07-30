@@ -2,6 +2,7 @@ package com.example.payment.fragments.mainScreen
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.example.payment.R
 import com.example.payment.viewModel.TransactionViewModel
 import com.example.payment.databinding.FragmentMainScreenBinding
@@ -99,7 +101,8 @@ class MainScreen : Fragment() {
 
 //      analysis button
         binding.checkDetailedAnalysisBtn.setOnClickListener {
-            Toast.makeText(requireContext(), "Coming Soon", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(), "Coming Soon", Toast.LENGTH_SHORT).show()
+            Navigation.findNavController(binding.root).navigate(R.id.action_MainScreen_to_detailedTransactionAnalysis)
         }
 
 //      setting the data for the recent transactions
