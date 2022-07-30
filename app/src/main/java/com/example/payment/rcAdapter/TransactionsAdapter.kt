@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -50,6 +51,20 @@ class TransactionsAdapter(val fragment: Stats) : RecyclerView.Adapter<Myholder>(
             val updatedAmount =
                 holder.amount.getResources().getString(R.string.amountInRupee, item.incomeAmount.toString())
             holder.amount.text = updatedAmount
+        }
+
+        when(item.transactionType){
+            "DineOut" -> holder.image.setImageResource(R.drawable.pizza_icon)
+            "Bills" -> holder.image.setImageResource(R.drawable.bill_icon)
+            "Credit Card Due" -> holder.image.setImageResource(R.drawable.creditcard_icon)
+            "Entertainment" -> holder.image.setImageResource(R.drawable.entertainment_icon)
+            "Fuel" -> holder.image.setImageResource(R.drawable.fuel_icon)
+            "Groceries" -> holder.image.setImageResource(R.drawable.grocery_icon)
+            "Shopping" -> holder.image.setImageResource(R.drawable.shopping_icon)
+            "Stationary" -> holder.image.setImageResource(R.drawable.stationary_icon)
+            "Suspense" -> holder.image.setImageResource(R.drawable.general_icon)
+            "Transportation" -> holder.image.setImageResource(R.drawable.transportation_icon)
+            else -> holder.image.setImageResource(R.drawable.ic_entertainment)
         }
 
         holder.layout.setOnLongClickListener {
@@ -110,4 +125,5 @@ class Myholder(val view: View) : RecyclerView.ViewHolder(view) {
     val amount: TextView = view.findViewById(R.id.amountShowRC)
     val date: TextView = view.findViewById(R.id.dateShowRC)
     val layout: CardView = view.findViewById(R.id.eachRowLayout)
+    val image: ImageView = view.findViewById(R.id.floatingTransactionIcon)
 }
