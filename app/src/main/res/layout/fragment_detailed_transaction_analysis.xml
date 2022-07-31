@@ -35,30 +35,106 @@
         app:layout_constraintStart_toEndOf="@+id/backToMainScreen"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/analysisPieChart"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+    <ImageView
+        android:id="@+id/rangePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_calender"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/primary_blue" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/detailedMonthlyBudgetCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:padding="70dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
+        android:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backToMainScreen"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/backToMainScreen">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primaryBackground"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/detailedMonthlyDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/autour_one"
+                android:text="@string/monthlyDuration"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/detailedmonthlyExpense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/autour_one"
+                android:text="@string/amountInRupee"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/monthlyDuration"
+                app:layout_constraintTop_toBottomOf="@id/detailedMonthlyDuration" />
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/analysisPieChart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:padding="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.789"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detailedmonthlyExpense"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <!--    <com.github.mikephil.charting.charts.PieChart-->
+    <!--        android:id="@+id/analysisPieChart"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="200dp"-->
+    <!--        android:layout_marginStart="10dp"-->
+    <!--        android:layout_marginTop="25dp"-->
+    <!--        android:layout_marginEnd="10dp"-->
+    <!--        android:padding="70dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/backToMainScreen"-->
+    <!--        app:layout_constraintVertical_bias="0.0" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactionTypeRC"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/analysisPieChart"
+        app:layout_constraintTop_toBottomOf="@id/detailedMonthlyBudgetCard"
         tools:listitem="@layout/detailed_analysis_row" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

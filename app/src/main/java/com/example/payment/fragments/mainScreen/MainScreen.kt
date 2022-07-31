@@ -112,7 +112,7 @@ class MainScreen : Fragment() {
         //            setting amount for the 1st transaction
         if (transactionList[0].isExpense) {
             binding.amountShowMainScreen1.text =
-                transactionList[0].expenseAmount.toString()
+                String.format(getString(R.string.amountInRupee,transactionList[0].expenseAmount.toString()))
             binding.amountShowMainScreen1.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -121,7 +121,7 @@ class MainScreen : Fragment() {
             )
         } else {
             binding.amountShowMainScreen1.text =
-                transactionList[0].incomeAmount.toString()
+                String.format(getString(R.string.amountInRupee,transactionList[0].incomeAmount.toString()))
             binding.amountShowMainScreen1.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -132,7 +132,7 @@ class MainScreen : Fragment() {
 //            setting amount for the 2nd transaction
         if (transactionList[1].isExpense) {
             binding.amountShowMainScreen2.text =
-                transactionList[1].expenseAmount.toString()
+                String.format(getString(R.string.amountInRupee,transactionList[1].expenseAmount.toString()))
             binding.amountShowMainScreen2.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -141,7 +141,7 @@ class MainScreen : Fragment() {
             )
         } else {
             binding.amountShowMainScreen2.text =
-                transactionList[1].incomeAmount.toString()
+                String.format(getString(R.string.amountInRupee,transactionList[1].incomeAmount.toString()))
             binding.amountShowMainScreen2.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -152,7 +152,7 @@ class MainScreen : Fragment() {
 //            setting amount for the 3rd transaction
         if (transactionList[2].isExpense) {
             binding.amountShowMainScreen3.text =
-                transactionList[2].expenseAmount.toString()
+                String.format(getString(R.string.amountInRupee,transactionList[2].expenseAmount.toString()))
             binding.amountShowMainScreen3.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -161,7 +161,7 @@ class MainScreen : Fragment() {
             )
         } else {
             binding.amountShowMainScreen3.text =
-                transactionList[2].incomeAmount.toString()
+                String.format(getString(R.string.amountInRupee,transactionList[2].incomeAmount.toString()))
             binding.amountShowMainScreen3.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -237,6 +237,7 @@ class MainScreen : Fragment() {
         binding.pieChart.isDrawHoleEnabled = true
         binding.pieChart.setUsePercentValues(true)
         binding.pieChart.setEntryLabelTextSize(8f)
+        binding.pieChart.isRotationEnabled = false
         binding.pieChart.holeRadius = 65f
         binding.pieChart.setEntryLabelColor(
             ContextCompat.getColor(

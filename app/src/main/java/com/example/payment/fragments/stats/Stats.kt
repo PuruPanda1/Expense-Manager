@@ -10,10 +10,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.payment.R
 import com.example.payment.viewModel.TransactionViewModel
 import com.example.payment.rcAdapter.TransactionsAdapter
 import com.example.payment.databinding.FragmentStatsBinding
+import com.example.payment.rcAdapter.TransactionTypeAdapter
 import com.example.payment.transactionDb.Transaction
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.SimpleDateFormat
 
 class Stats : Fragment() {
     private var _binding: FragmentStatsBinding? = null
@@ -35,8 +39,26 @@ class Stats : Fragment() {
 
 //          add new transaction onclick listener
         binding.addBtn.setOnClickListener {
-            val action = StatsDirections.actionStatsToAddTransaction(Transaction(-1, "", 0f, true,0L,"",0,0,0,0f))
+            val action = StatsDirections.actionStatsToAddTransaction(
+                Transaction(
+                    -1,
+                    "",
+                    0f,
+                    true,
+                    0L,
+                    "",
+                    0,
+                    0,
+                    0,
+                    0f
+                )
+            )
             Navigation.findNavController(binding.root).navigate(action)
+        }
+
+//        setting the custom date option
+        binding.selectedDatePicker.setOnClickListener {
+            openRangePicker(adapter)
         }
 
 //        income button
@@ -49,7 +71,7 @@ class Stats : Fragment() {
         }
 
 //        expense button
-        binding.expenseTransactions.setOnClickListener{
+        binding.expenseTransactions.setOnClickListener {
             viewModel.readAllTransaction.removeObservers(viewLifecycleOwner)
             viewModel.readAllIncomeTransaction.removeObservers(viewLifecycleOwner)
             viewModel.readAllExpenseTransaction.observe(viewLifecycleOwner, Observer {
@@ -58,9 +80,10 @@ class Stats : Fragment() {
         }
 
 //        all button
-        binding.allTransactions.setOnClickListener{
+        binding.allTransactions.setOnClickListener {
             viewModel.readAllExpenseTransaction.removeObservers(viewLifecycleOwner)
             viewModel.readAllIncomeTransaction.removeObservers(viewLifecycleOwner)
+            viewModel.readAllTransactionDate.removeObservers(viewLifecycleOwner)
             viewModel.readAllTransaction.observe(viewLifecycleOwner, Observer {
                 adapter.setData(it)
             })
@@ -73,6 +96,25 @@ class Stats : Fragment() {
 
         return binding.root
     }
+
+    private fun openRangePicker(adapter: TransactionsAdapter) {
+        val dateRangePicker = MaterialDatePicker.Builder
+            .dateRangePicker()
+            .setTitleText("Choose duration")
+            .build()
+
+        dateRangePicker.show(activity!!.supportFragmentManager, "datepicker")
+
+        dateRangePicker.addOnPositiveButtonClickListener { it ->
+            viewModel.getCustomDurationData(listOf(it.first, it.second))
+        }
+        viewModel.readAllTransaction.removeObservers(viewLifecycleOwner)
+        //        calender icon
+        viewModel.readAllTransactionDate.observe(viewLifecycleOwner) { list ->
+            adapter.setData(list)
+        }
+    }
+
 
     fun deleteTransaction(transaction: Transaction) {
         viewModel.deleteTransaction(transaction)
