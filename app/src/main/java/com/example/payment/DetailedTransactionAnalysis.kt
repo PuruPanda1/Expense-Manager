@@ -110,6 +110,7 @@ class DetailedTransactionAnalysis : Fragment() {
         //        calender icon
         viewModel.listAccordingToDate.observe(viewLifecycleOwner) { list ->
             adapter.setDataList(list)
+            updateChart(list)
         }
         viewModel.sumAccordingToDate.observe(viewLifecycleOwner) {
             binding.detailedmonthlyExpense.text =
