@@ -153,9 +153,17 @@ class DetailedTransactionAnalysis : Fragment() {
         var entries = mutableListOf<PieEntry>()
         var colors = ArrayList<Int>()
 
-        ColorTemplate.VORDIPLOM_COLORS.forEach {
-            colors.add(it)
-        }
+        //        10 COLORS
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color1))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color2))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color3))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color4))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color5))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color6))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color7))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color8))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color9))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color10))
 
 //        setting the value
         list.forEach {

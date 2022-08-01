@@ -112,7 +112,12 @@ class MainScreen : Fragment() {
         //            setting amount for the 1st transaction
         if (transactionList[0].isExpense) {
             binding.amountShowMainScreen1.text =
-                String.format(getString(R.string.amountInRupee,transactionList[0].expenseAmount.toString()))
+                String.format(
+                    getString(
+                        R.string.amountInRupee,
+                        transactionList[0].expenseAmount.toString()
+                    )
+                )
             binding.amountShowMainScreen1.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -121,7 +126,12 @@ class MainScreen : Fragment() {
             )
         } else {
             binding.amountShowMainScreen1.text =
-                String.format(getString(R.string.amountInRupee,transactionList[0].incomeAmount.toString()))
+                String.format(
+                    getString(
+                        R.string.amountInRupee,
+                        transactionList[0].incomeAmount.toString()
+                    )
+                )
             binding.amountShowMainScreen1.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -132,7 +142,12 @@ class MainScreen : Fragment() {
 //            setting amount for the 2nd transaction
         if (transactionList[1].isExpense) {
             binding.amountShowMainScreen2.text =
-                String.format(getString(R.string.amountInRupee,transactionList[1].expenseAmount.toString()))
+                String.format(
+                    getString(
+                        R.string.amountInRupee,
+                        transactionList[1].expenseAmount.toString()
+                    )
+                )
             binding.amountShowMainScreen2.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -141,7 +156,12 @@ class MainScreen : Fragment() {
             )
         } else {
             binding.amountShowMainScreen2.text =
-                String.format(getString(R.string.amountInRupee,transactionList[1].incomeAmount.toString()))
+                String.format(
+                    getString(
+                        R.string.amountInRupee,
+                        transactionList[1].incomeAmount.toString()
+                    )
+                )
             binding.amountShowMainScreen2.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -152,7 +172,12 @@ class MainScreen : Fragment() {
 //            setting amount for the 3rd transaction
         if (transactionList[2].isExpense) {
             binding.amountShowMainScreen3.text =
-                String.format(getString(R.string.amountInRupee,transactionList[2].expenseAmount.toString()))
+                String.format(
+                    getString(
+                        R.string.amountInRupee,
+                        transactionList[2].expenseAmount.toString()
+                    )
+                )
             binding.amountShowMainScreen3.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -161,7 +186,12 @@ class MainScreen : Fragment() {
             )
         } else {
             binding.amountShowMainScreen3.text =
-                String.format(getString(R.string.amountInRupee,transactionList[2].incomeAmount.toString()))
+                String.format(
+                    getString(
+                        R.string.amountInRupee,
+                        transactionList[2].incomeAmount.toString()
+                    )
+                )
             binding.amountShowMainScreen3.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -258,9 +288,17 @@ class MainScreen : Fragment() {
         var entries = mutableListOf<PieEntry>()
         var colors = ArrayList<Int>()
 
-        ColorTemplate.VORDIPLOM_COLORS.forEach {
-            colors.add(it)
-        }
+        //        10 COLORS
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color1))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color2))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color3))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color4))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color5))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color6))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color7))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color8))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color9))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.Color10))
 
 //        setting the value
         list.forEach {

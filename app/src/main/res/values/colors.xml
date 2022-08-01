@@ -18,4 +18,15 @@
     <color name="expense_color">#FF2400</color>
     <color name="income_color">#3EB489</color>
     <color name="primaryBorder">#9B9BC4</color>
+
+    <color name="Color1">#b71528</color>
+    <color name="Color2">#f83a44</color>
+    <color name="Color3">#ff810a</color>
+    <color name="Color4">#d9c045</color>
+    <color name="Color5">#c4fb0e</color>
+    <color name="Color6">#88d38c</color>
+    <color name="Color7">#0affb6</color>
+    <color name="Color8">#39ecf9</color>
+    <color name="Color9">#29339b</color>
+    <color name="Color10">#b85199</color>
 </resources>
