@@ -9,4 +9,6 @@
     <string name="transactionTypeName">on %s</string>
     <string name="transactionTypeCount">%d Expenses</string>
     <string name="transactionTypeCountSingular">%d Expense</string>
+    <string name="devName">PuruPanda</string>
+    <string name="devBio">Hey, I am Purab Modi, developer of this application. You can change this information by clicking on the edit button. Happy Budgeting!</string>
 </resources>

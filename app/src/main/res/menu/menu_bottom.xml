@@ -5,14 +5,14 @@
         android:title="Home"
         android:icon="@drawable/ic_home"/>
 
-    <item
-        android:id="@+id/Wallet"
-        android:title="Wallet"
-        android:icon="@drawable/ic_wallet"/>
-    <item
-        android:id="@+id/Scanner"
-        android:title="Payment"
-        android:icon="@drawable/ic_scanner"/>
+<!--    <item-->
+<!--        android:id="@+id/Wallet"-->
+<!--        android:title="Wallet"-->
+<!--        android:icon="@drawable/ic_wallet"/>-->
+<!--    <item-->
+<!--        android:id="@+id/Scanner"-->
+<!--        android:title="Payment"-->
+<!--        android:icon="@drawable/ic_scanner"/>-->
 
     <item
         android:id="@+id/Stats"
