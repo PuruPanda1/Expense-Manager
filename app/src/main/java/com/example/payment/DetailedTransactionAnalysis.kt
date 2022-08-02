@@ -1,7 +1,6 @@
 package com.example.payment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +18,6 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,7 +25,7 @@ import kotlin.collections.ArrayList
 
 class DetailedTransactionAnalysis : Fragment() {
     private var _binding: FragmentDetailedTransactionAnalysisBinding? = null
-    private val months = listOf<String>(
+    private val months = listOf(
         "January",
         "February",
         "March",
@@ -45,7 +43,7 @@ class DetailedTransactionAnalysis : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding =
             FragmentDetailedTransactionAnalysisBinding.inflate(layoutInflater, container, false)
@@ -102,7 +100,7 @@ class DetailedTransactionAnalysis : Fragment() {
 
         dateRangePicker.show(activity!!.supportFragmentManager, "datepicker")
 
-        dateRangePicker.addOnPositiveButtonClickListener { it ->
+        dateRangePicker.addOnPositiveButtonClickListener {
             viewModel.getCustomDurationData(listOf(it.first, it.second))
         }
         viewModel.readTransactionTypeAmount.removeObservers(viewLifecycleOwner)
@@ -113,8 +111,13 @@ class DetailedTransactionAnalysis : Fragment() {
             updateChart(list)
         }
         viewModel.sumAccordingToDate.observe(viewLifecycleOwner) {
-            binding.detailedmonthlyExpense.text =
-                String.format(getString(R.string.amountInRupee, it.toString()))
+            if (it == null) {
+                binding.detailedmonthlyExpense.text =
+                    String.format(getString(R.string.amountInRupee, "0"))
+            } else {
+                binding.detailedmonthlyExpense.text =
+                    String.format(getString(R.string.amountInRupee, it.toString()))
+            }
         }
 //        setting the duration in the card view
         viewModel.dates.observe(viewLifecycleOwner) {
@@ -149,9 +152,9 @@ class DetailedTransactionAnalysis : Fragment() {
         binding.analysisPieChart.setExtraOffsets(10f, 10f, 10f, 10f)
     }
 
-    fun updateChart(list: List<myTypes>) {
-        var entries = mutableListOf<PieEntry>()
-        var colors = ArrayList<Int>()
+    private fun updateChart(list: List<myTypes>) {
+        val entries = mutableListOf<PieEntry>()
+        val colors = ArrayList<Int>()
 
         //        10 COLORS
         colors.add(ContextCompat.getColor(requireContext(), R.color.Color1))
@@ -173,7 +176,7 @@ class DetailedTransactionAnalysis : Fragment() {
         dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
         dataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
         dataSet.colors = colors
-        var data = PieData(dataSet)
+        val data = PieData(dataSet)
         data.setDrawValues(true)
         data.setValueFormatter(PercentFormatter(binding.analysisPieChart))
         data.setValueTextSize(12f)

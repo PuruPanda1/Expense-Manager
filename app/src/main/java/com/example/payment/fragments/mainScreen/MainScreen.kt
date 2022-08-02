@@ -1,16 +1,12 @@
 package com.example.payment.fragments.mainScreen
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.payment.R
@@ -19,19 +15,17 @@ import com.example.payment.databinding.FragmentMainScreenBinding
 import com.example.payment.transactionDb.Transaction
 import com.example.payment.transactionDb.myTypes
 import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 class MainScreen : Fragment() {
     private var _binding: FragmentMainScreenBinding? = null
-    private val months = listOf<String>(
+    private val months = listOf(
         "January",
         "February",
         "March",
@@ -49,7 +43,7 @@ class MainScreen : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentMainScreenBinding.inflate(inflater, container, false)
 
@@ -57,7 +51,7 @@ class MainScreen : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
 
 //        set balance amount
-        viewModel.readDifferenceSum.observe(viewLifecycleOwner, Observer {
+        viewModel.readDifferenceSum.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.balanceAmount.text =
                     String.format(getString(R.string.amountInRupee, it.toString()))
@@ -65,13 +59,13 @@ class MainScreen : Fragment() {
                 binding.balanceAmount.text =
                     String.format(getString(R.string.amountInRupee, "0"))
             }
-        })
+        }
 
 //        set monthly balance amount
         val month = months[Calendar.getInstance().get(Calendar.MONTH)]
         binding.monthlyDuration.text = String.format(getString(R.string.monthlyDuration, month))
 //        observer for balance
-        viewModel.readMonthlySpends.observe(viewLifecycleOwner, Observer {
+        viewModel.readMonthlySpends.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.monthlyExpense.text =
                     String.format(getString(R.string.amountInRupee, it.toString()))
@@ -79,14 +73,14 @@ class MainScreen : Fragment() {
                 binding.monthlyExpense.text =
                     String.format(getString(R.string.amountInRupee, "0"))
             }
-        })
+        }
 
 //         setting the pie chart
         setupPieChart()
 //        observer for pie chart
-        viewModel.readTransactionTypeAmount.observe(viewLifecycleOwner, Observer {
+        viewModel.readTransactionTypeAmount.observe(viewLifecycleOwner) {
             updateChart(it)
-        })
+        }
 
 //      analysis button
         binding.checkDetailedAnalysisBtn.setOnClickListener {
@@ -96,7 +90,7 @@ class MainScreen : Fragment() {
         }
 
 //      setting the data for the recent transactions
-        viewModel.readAllTransaction.observe(viewLifecycleOwner, Observer { transactionList ->
+        viewModel.readAllTransaction.observe(viewLifecycleOwner) { transactionList ->
             if (transactionList.isEmpty() || transactionList.size < 3) {
                 binding.eachRowLayout1.isVisible = false
                 binding.eachRowLayout2.isVisible = false
@@ -104,7 +98,7 @@ class MainScreen : Fragment() {
             } else {
                 setRecentTransaction(transactionList!!)
             }
-        })
+        }
         return binding.root
     }
 
@@ -284,9 +278,9 @@ class MainScreen : Fragment() {
     }
 
 
-    fun updateChart(list: List<myTypes>) {
-        var entries = mutableListOf<PieEntry>()
-        var colors = ArrayList<Int>()
+    private fun updateChart(list: List<myTypes>) {
+        val entries = mutableListOf<PieEntry>()
+        val colors = ArrayList<Int>()
 
         //        10 COLORS
         colors.add(ContextCompat.getColor(requireContext(), R.color.Color1))
@@ -308,7 +302,7 @@ class MainScreen : Fragment() {
         dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
         dataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
         dataSet.colors = colors
-        var data = PieData(dataSet)
+        val data = PieData(dataSet)
         data.setDrawValues(true)
         data.setValueFormatter(PercentFormatter(binding.pieChart))
         data.setValueTextSize(12f)

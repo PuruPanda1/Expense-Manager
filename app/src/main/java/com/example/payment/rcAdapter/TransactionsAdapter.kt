@@ -41,7 +41,7 @@ class TransactionsAdapter(val fragment: Stats) : RecyclerView.Adapter<Myholder>(
                 R.color.expense_color
             ))
             val updatedAmount =
-                holder.amount.getResources().getString(R.string.amountInRupee, item.expenseAmount.toString())
+                holder.amount.resources.getString(R.string.amountInRupee, item.expenseAmount.toString())
             holder.amount.text = updatedAmount
         }
         else{
@@ -49,7 +49,7 @@ class TransactionsAdapter(val fragment: Stats) : RecyclerView.Adapter<Myholder>(
                 R.color.income_color
             ))
             val updatedAmount =
-                holder.amount.getResources().getString(R.string.amountInRupee, item.incomeAmount.toString())
+                holder.amount.resources.getString(R.string.amountInRupee, item.incomeAmount.toString())
             holder.amount.text = updatedAmount
         }
 
@@ -64,6 +64,8 @@ class TransactionsAdapter(val fragment: Stats) : RecyclerView.Adapter<Myholder>(
             "Stationary" -> holder.image.setImageResource(R.drawable.stationary_icon)
             "Suspense" -> holder.image.setImageResource(R.drawable.general_icon)
             "Transportation" -> holder.image.setImageResource(R.drawable.transportation_icon)
+            "Salary" -> holder.image.setImageResource(R.drawable.salary_icon)
+            "Income" -> holder.image.setImageResource(R.drawable.income_icon)
             else -> holder.image.setImageResource(R.drawable.ic_entertainment)
         }
 
