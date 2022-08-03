@@ -96,7 +96,7 @@ class MainScreen : Fragment() {
                     binding.monthlyExpense.setTextColor(
                         ContextCompat.getColor(
                             requireContext(),
-                            R.color.white
+                            R.color.primaryTextColor
                         )
                     )
                 }
