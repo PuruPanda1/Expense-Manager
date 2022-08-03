@@ -28,7 +28,6 @@ class Profile : Fragment() {
         binding.userName.isEnabled = false
         binding.userBio.isEnabled = false
         binding.userBudget.isEnabled = false
-        requireActivity().window.statusBarColor = requireActivity().getColor(R.color.primary_blue);
 
 //        Setting the predefault values
         viewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
@@ -51,13 +50,7 @@ class Profile : Fragment() {
 
         return binding.root
     }
-
-    override fun onPause() {
-        super.onPause()
-        requireActivity().window.statusBarColor =
-            requireActivity().getColor(R.color.primaryBackground);
-    }
-
+    
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

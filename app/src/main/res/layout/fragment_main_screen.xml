@@ -10,8 +10,29 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/primaryBackground">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/waveSquare"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:src="@drawable/sqaure_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/wave"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="-10dp"
+            android:src="@drawable/ic_wave"
+            android:tint="@color/primary_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/waveSquare" />
+
 
         <!--welcome back view-->
         <TextView
@@ -20,7 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Welcome Back!"
-            android:textSize="18sp"
+            android:textSize="13sp"
+            android:textColor="@color/buttonColor"
             app:layout_constraintStart_toStartOf="@+id/userName"
             app:layout_constraintTop_toTopOf="parent" />
         <!--username view -->
@@ -29,16 +51,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:drawableEnd="@drawable/ic_wolverine"
-            android:drawableTint="#4F5157"
             android:fontFamily="@font/autour_one"
             android:gravity="center"
             android:text="PuruPanda"
-            android:textColor="@color/primaryTextColor"
+            android:textColor="@color/buttonColor"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/greetingMsg"
-            tools:layout_editor_absoluteY="56dp" />
+            tools:layout_editor_absoluteY="56dp"
+            app:drawableEndCompat="@drawable/ic_wolverine"
+            app:drawableTint="@color/buttonColor" />
         <!--notification bell-->
         <ImageView
             android:id="@+id/imageView"
@@ -48,13 +70,13 @@
             android:src="@drawable/ic_notification"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/userName"
-            app:tint="@color/primary_blue" />
+            app:tint="@color/buttonColor" />
         <!--balance card view-->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="35dp"
             android:layout_marginEnd="16dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="50dp"
@@ -62,7 +84,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/userName"
             app:layout_constraintTop_toBottomOf="@+id/userName"
-            app:layout_goneMarginTop="32dp">
+            app:layout_goneMarginTop="35dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

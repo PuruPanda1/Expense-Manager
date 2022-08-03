@@ -7,6 +7,26 @@
     android:background="@color/primaryBackground"
     tools:context=".fragments.stats.addTranasactions.addTransaction">
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/waveSquare"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:src="@drawable/sqaure_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/wave"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="-10dp"
+        android:src="@drawable/ic_wave"
+        android:tint="@color/primary_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/waveSquare" />
+
     <ImageView
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
@@ -16,7 +36,7 @@
         android:src="@drawable/ic_back_arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/primaryTextColor"
+        app:tint="@color/buttonColor"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp" />
 
@@ -29,7 +49,7 @@
         android:fontFamily="@font/autour_one"
         android:gravity="bottom"
         android:text="Add Transaction"
-        android:textColor="@color/primaryTextColor"
+        android:textColor="@color/buttonColor"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/backButton"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +63,7 @@
         android:src="@drawable/ic_calender"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/primary_blue" />
+        app:tint="@color/buttonColor" />
 
 
     <ImageView

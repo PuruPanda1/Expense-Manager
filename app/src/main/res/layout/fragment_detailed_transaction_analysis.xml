@@ -8,29 +8,47 @@
     app:layoutDescription="@xml/fragment_detailed_transaction_analysis_scene"
     tools:context=".DetailedTransactionAnalysis">
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/waveSquare"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:src="@drawable/sqaure_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/wave"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="-10dp"
+        android:src="@drawable/ic_wave"
+        android:tint="@color/primary_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/waveSquare" />
+
     <ImageView
         android:id="@+id/backToMainScreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:src="@drawable/ic_back_arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/primaryTextColor"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:tint="@color/buttonColor" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/autour_one"
         android:gravity="bottom"
         android:text="Expense Summary"
-        android:textColor="@color/primaryTextColor"
+        android:textColor="@color/buttonColor"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/backToMainScreen"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,14 +62,14 @@
         android:src="@drawable/ic_calender"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/primary_blue" />
+        app:tint="@color/buttonColor" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/detailedMonthlyBudgetCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="10dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
@@ -88,7 +106,7 @@
                 android:textColor="@color/primaryTextColor"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/monthlyDuration"
+                app:layout_constraintStart_toStartOf="@id/detailedMonthlyDuration"
                 app:layout_constraintTop_toBottomOf="@id/detailedMonthlyDuration" />
 
             <com.github.mikephil.charting.charts.PieChart
