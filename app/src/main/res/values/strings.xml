@@ -5,10 +5,12 @@
     <string name="monthlyDuration">Spends in %s</string>
     <string name="monthlyExpensePercentage">%s</string>
     <string name="amountInRupee">₹%s</string>
+    <string name="userBudget">/₹%s</string>
     <string name="date_of_transaction">Date Of Transaction: %s</string>
     <string name="transactionTypeName">on %s</string>
     <string name="transactionTypeCount">%d Expenses</string>
     <string name="transactionTypeCountSingular">%d Expense</string>
     <string name="devName">PuruPanda</string>
     <string name="devBio">Hey, I am Purab Modi, developer of this application. You can change this information by clicking on the edit button. Happy Budgeting!</string>
+    <string name="percentageBudget">%s%% of the budget</string>
 </resources>

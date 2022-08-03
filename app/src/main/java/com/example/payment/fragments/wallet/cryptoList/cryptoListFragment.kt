@@ -119,7 +119,7 @@ class cryptoListFragment : Fragment() {
         binding.searchCrypto.setText("")
         binding.cryptoNameRC.text = item.name
         val priceString = String.format(
-            binding.cryptoNameRC.getResources()
+            binding.cryptoNameRC.resources
                 .getString(R.string.amountInRupee, item.market_data.current_price.inr.toString())
         )
         binding.cryptoPriceRC.text = priceString

@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class UserViewModel(application: Application):AndroidViewModel(application) {
     val userDetails : LiveData<User>
-    val userBudget : LiveData<Float>
+    val userBudget : LiveData<Int>
     val repository : UserRepository
 
     init {

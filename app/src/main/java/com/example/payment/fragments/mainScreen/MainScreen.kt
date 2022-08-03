@@ -1,19 +1,20 @@
 package com.example.payment.fragments.mainScreen
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.payment.R
-import com.example.payment.viewModel.TransactionViewModel
 import com.example.payment.databinding.FragmentMainScreenBinding
 import com.example.payment.transactionDb.Transaction
 import com.example.payment.transactionDb.myTypes
+import com.example.payment.userDb.UserViewModel
+import com.example.payment.viewModel.TransactionViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -21,7 +22,6 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainScreen : Fragment() {
     private var _binding: FragmentMainScreenBinding? = null
@@ -39,6 +39,7 @@ class MainScreen : Fragment() {
         "December"
     )
     private lateinit var viewModel: TransactionViewModel
+    private lateinit var userViewModel: UserViewModel
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +50,19 @@ class MainScreen : Fragment() {
 
 //        setting viewModel
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+
+//        Setting the userName
+        var budget = 4000
+        userViewModel.userDetails.observe(viewLifecycleOwner) {
+            if (it != null) {
+                binding.userName.text = it.username
+                binding.userBudget.text = getString(R.string.userBudget, it.userBudget.toString())
+                budget = it.userBudget
+                val per = ((it.userBudget / budget) * 100).toInt().toString()
+                binding.expensePercentage.text = getString(R.string.percentageBudget,per)
+            }
+        }
 
 //        set balance amount
         viewModel.readDifferenceSum.observe(viewLifecycleOwner) {
@@ -69,6 +83,23 @@ class MainScreen : Fragment() {
             if (it != null) {
                 binding.monthlyExpense.text =
                     String.format(getString(R.string.amountInRupee, it.toString()))
+                val per = ((it / budget) * 100).toInt().toString()
+                binding.expensePercentage.text = getString(R.string.percentageBudget,per)
+                if (it > budget) {
+                    binding.monthlyExpense.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.expense_color
+                        )
+                    )
+                } else{
+                    binding.monthlyExpense.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.white
+                        )
+                    )
+                }
             } else {
                 binding.monthlyExpense.text =
                     String.format(getString(R.string.amountInRupee, "0"))

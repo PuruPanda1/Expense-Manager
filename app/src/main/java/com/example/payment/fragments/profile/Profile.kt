@@ -24,6 +24,7 @@ class Profile : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
+        var editButton : Boolean = true
 
         binding.userName.isEnabled = false
         binding.userBio.isEnabled = false
@@ -38,7 +39,7 @@ class Profile : Fragment() {
                         1,
                         getString(R.string.devName),
                         getString(R.string.devBio),
-                        4000f
+                        4000
                         )
                 )
             } else {
@@ -48,9 +49,29 @@ class Profile : Fragment() {
             }
         }
 
+        binding.editButton.setOnClickListener {
+            if(editButton){
+                editButton = false
+                binding.editButton.text = "Save Changes"
+                binding.userName.isEnabled = true
+                binding.userBio.isEnabled = true
+                binding.userBudget.isEnabled = true
+            } else{
+                editButton = true
+                binding.editButton.text = "edit"
+                binding.userName.isEnabled = false
+                binding.userBio.isEnabled = false
+                binding.userBudget.isEnabled = false
+                var username = binding.userName.text.toString()
+                var userBio = binding.userBio.text.toString()
+                var userBudget = binding.userBudget.text.toString().toInt()
+                viewModel.updateUser(User(1,username,userBio,userBudget))
+            }
+        }
+
         return binding.root
     }
-    
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -96,7 +96,7 @@ class addTransaction : Fragment() {
 
 //      setting autoComplete textview for transaction type
 
-        binding.transactionType.setThreshold(3)
+        binding.transactionType.threshold = 3
         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
             requireContext(),
             android.R.layout.simple_dropdown_item_1line,

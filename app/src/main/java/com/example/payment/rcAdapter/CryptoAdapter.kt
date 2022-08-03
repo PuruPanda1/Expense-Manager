@@ -25,7 +25,7 @@ class CryptoAdapter : RecyclerView.Adapter<MyHolder>() {
         val item = dataList[position]
         holder.name.text = item.name
         val priceString = String.format(
-            holder.name.getResources()
+            holder.name.resources
                 .getString(R.string.amountInRupee, item.market_data.current_price.inr.toString())
         )
         holder.price.text = priceString

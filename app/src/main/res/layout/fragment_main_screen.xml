@@ -41,8 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Welcome Back!"
-            android:textSize="13sp"
             android:textColor="@color/buttonColor"
+            android:textSize="13sp"
             app:layout_constraintStart_toStartOf="@+id/userName"
             app:layout_constraintTop_toTopOf="parent" />
         <!--username view -->
@@ -56,11 +56,11 @@
             android:text="PuruPanda"
             android:textColor="@color/buttonColor"
             android:textSize="20sp"
+            app:drawableEndCompat="@drawable/ic_wolverine"
+            app:drawableTint="@color/buttonColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/greetingMsg"
-            tools:layout_editor_absoluteY="56dp"
-            app:drawableEndCompat="@drawable/ic_wolverine"
-            app:drawableTint="@color/buttonColor" />
+            tools:layout_editor_absoluteY="56dp" />
         <!--notification bell-->
         <ImageView
             android:id="@+id/imageView"
@@ -187,6 +187,31 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@id/monthlyDuration"
                     app:layout_constraintTop_toBottomOf="@id/monthlyDuration" />
+
+                <TextView
+                    android:id="@+id/userBudget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/autour_one"
+                    android:text="/₹4000"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/monthlyExpense"
+                    app:layout_constraintTop_toBottomOf="@id/monthlyDuration" />
+
+                <TextView
+                    android:id="@+id/expensePercentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/autour_one"
+                    android:text="@string/percentageBudget"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/pieChart"

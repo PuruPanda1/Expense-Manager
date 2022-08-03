@@ -15,7 +15,7 @@ interface UserDao {
     suspend fun updateUser(user: User)
 
     @Query("SELECT userBudget FROM user_details WHERE userId = 1")
-    fun getUserBudget():LiveData<Float>
+    fun getUserBudget():LiveData<Int>
 
     @Query("SELECT * FROM user_details WHERE userId=1")
     fun getUserDetails(): LiveData<User>
