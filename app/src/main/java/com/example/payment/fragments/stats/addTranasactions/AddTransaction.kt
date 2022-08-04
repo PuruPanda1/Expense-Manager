@@ -1,12 +1,13 @@
 package com.example.payment.fragments.stats.addTranasactions
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,9 +15,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.payment.R
-import com.example.payment.viewModel.TransactionViewModel
 import com.example.payment.databinding.FragmentAddTransactionBinding
 import com.example.payment.transactionDb.Transaction
+import com.example.payment.viewModel.TransactionViewModel
 
 
 class addTransaction : Fragment() {
@@ -26,7 +27,11 @@ class addTransaction : Fragment() {
     private var month: Int = 0
     private var incomeAmount = 0f
     private var expenseAmount = 0f
-    private var date: Long = 0
+    val cal = Calendar.getInstance()
+    val y = cal.get(Calendar.YEAR)
+    val m = cal.get(Calendar.MONTH)
+    val d = cal.get(Calendar.DAY_OF_MONTH)
+    private var date: Long = 0L
     private var isExpense = true
     private val expenseCategory = listOf<String>(
         "Credit Card Due",
@@ -62,7 +67,11 @@ class addTransaction : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+
+//        setting the today's date
+        cal.set(y, m, d)
+        date = cal.timeInMillis
 
         // Inflate the layout for this fragment
         _binding = FragmentAddTransactionBinding.inflate(inflater, container, false)
@@ -115,13 +124,24 @@ class addTransaction : Fragment() {
             isExpense = isChecked
         }
 
+        binding.transactionType.setOnFocusChangeListener { view, b ->
+            if(b){
+                hideSoftKeyboard(view)
+            }
+        }
+
         return binding.root
+    }
+
+    fun hideSoftKeyboard(view: View) {
+        val imm =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun updateTransaction() {
         val tDescription = binding.transactionDescription.text.toString()
         val tAmount = binding.transactionAmount.text.toString()
-        Log.d("tAmount", "updateTransaction: " + tAmount)
         val transactionType = binding.transactionType.text.toString()
         if (check(tDescription, tAmount, transactionType, date)) {
             if (isExpense) {
@@ -146,7 +166,6 @@ class addTransaction : Fragment() {
             Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT).show()
             Navigation.findNavController(binding.root).navigate(R.id.action_addTransaction_to_Stats)
         } else {
-            Log.d("checkingDate", "insertTransaction: empty space")
             if (date == 0L) {
                 Toast.makeText(
                     requireContext(),
@@ -161,13 +180,10 @@ class addTransaction : Fragment() {
 
     //    datePicker function
     private fun datePicker() {
-        val cal = Calendar.getInstance()
-        val y = cal.get(Calendar.YEAR)
-        val m = cal.get(Calendar.MONTH)
-        val d = cal.get(Calendar.DAY_OF_MONTH)
+
 
         val datepickerdialog: DatePickerDialog = DatePickerDialog(
-            activity!!,
+            requireActivity(),
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 // Display Selected date in textbox
                 cal.set(year, monthOfYear, dayOfMonth)
@@ -213,7 +229,6 @@ class addTransaction : Fragment() {
             Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
             Navigation.findNavController(binding.root).navigate(R.id.action_addTransaction_to_Stats)
         } else {
-            Log.d("checkingDate", "insertTransaction: empty space")
             if (date == 0L) {
                 Toast.makeText(
                     requireContext(),
@@ -232,7 +247,6 @@ class addTransaction : Fragment() {
         transactionType: String,
         date: Long
     ): Boolean {
-        Log.d("checkingDate", "check: INside check function")
         if (tDescription.isBlank() || tAmount.isBlank() || transactionType.isBlank() || date == 0L) {
             return false
         }
