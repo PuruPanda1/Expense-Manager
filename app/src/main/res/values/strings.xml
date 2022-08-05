@@ -13,4 +13,5 @@
     <string name="devName">PuruPanda</string>
     <string name="devBio">Hey, I am Purab Modi, developer of this application. You can change this information by clicking on the edit button. Happy Budgeting!</string>
     <string name="percentageBudget">%s%% of the budget</string>
+    <string name="changeDateInstruction">Note: To change the Transaction date, Click on the Calender icon</string>
 </resources>

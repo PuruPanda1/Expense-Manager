@@ -92,7 +92,7 @@
             android:layout_gravity="center"
             android:background="@color/primaryBackground"
             android:inputType="numberDecimal"
-            android:textSize="40dp" />
+            android:textSize="40sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -140,6 +140,19 @@
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="5dp"
+        android:justificationMode="inter_word"
+        app:layout_constraintBottom_toTopOf="@id/addExpenseBtn"
+        android:text="@string/changeDateInstruction"
+        android:fontFamily="@font/poppins"/>
+
     <Button
         android:id="@+id/addExpenseBtn"
         android:layout_width="0dp"
@@ -152,7 +165,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Switch
+    <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/isExpenseSwitch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

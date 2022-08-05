@@ -48,6 +48,23 @@ class MainScreen : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentMainScreenBinding.inflate(inflater, container, false)
 
+//        setting the greeting text
+        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        when (hour) {
+            in 12..16 -> {
+                binding.greetingMsg.text = "Good Afternoon!";
+            }
+            in 17..20 -> {
+                binding.greetingMsg.text = "Good Evening!";
+            }
+            in 21..23 -> {
+                binding.greetingMsg.text = "Good Night!";
+            }
+            else -> {
+                binding.greetingMsg.text = "Good Morning!";
+            }
+        }
+
 //        setting viewModel
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
