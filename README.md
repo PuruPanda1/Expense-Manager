@@ -8,28 +8,31 @@ One of the great features of Project Expense Manager is its budgeting capabiliti
 
 # HomeScreen
 
-<img src="https://user-images.githubusercontent.com/87373273/182038373-e66c984d-2701-4aac-8714-09f34b7a44ae.PNG" width="250"><img src="https://user-images.githubusercontent.com/87373273/182038383-e5dfd706-19c0-4710-9743-8acd68b918b3.PNG" width="250">
+![20220806_010808196](https://user-images.githubusercontent.com/87373273/183149715-96fc9f4c-b3fb-4ea8-bc6e-31e3a8915c0b.png)![20220806_010822687](https://user-images.githubusercontent.com/87373273/183149730-fa51bf57-6a99-469a-8435-2545b2a795fa.png)
 
 # Expense Summary
 
-<img src="https://user-images.githubusercontent.com/87373273/182038414-a45ba0e5-0d3a-4c22-a720-73c010065299.PNG" width="250"><img src="https://user-images.githubusercontent.com/87373273/182038417-c94f3671-8e9f-49b9-bbf6-c68f81353886.PNG" width="250">
+![20220806_010924060](https://user-images.githubusercontent.com/87373273/183149643-9c420eba-4e78-4093-999c-0ee2294e71b0.png)
+![20220806_010939736](https://user-images.githubusercontent.com/87373273/183149655-fadfe83f-5807-44b7-9f56-7b4a3a9cd91d.png)
 
 # Duration Picker for expense summary
 
-<img src="https://user-images.githubusercontent.com/87373273/182038572-90442664-7971-4bb7-ae35-0c5c2f8eeb16.PNG" width="250"><img src="https://user-images.githubusercontent.com/87373273/182038574-6da270d0-ec98-4900-b94c-24aaff7afb40.PNG" width="250">
+![20220806_011847191](https://user-images.githubusercontent.com/87373273/183150526-ab4523ea-0677-44c5-bd79-62c58aef26aa.png)
+![20220806_011850353](https://user-images.githubusercontent.com/87373273/183150531-ded70a93-c506-4ab3-ab0e-26c0dd3f30f9.png)
 
 # Results of Expense Summary (after choosing duration)
 
-<img src="https://user-images.githubusercontent.com/87373273/182038597-e8596569-1a6f-4682-b8e6-02a9e5bb6307.PNG" width="250"><img src="https://user-images.githubusercontent.com/87373273/182038601-60c54532-e83d-48ce-86cc-de883f5d7464.PNG" width="250">
+![20220806_010946965](https://user-images.githubusercontent.com/87373273/183149861-1e79b228-fa5d-4dc3-af06-9a52187f7b23.png)![20220806_010951273](https://user-images.githubusercontent.com/87373273/183149880-567fe44b-1bee-4eb8-a27e-fe64d66c9c77.png)
 
 # Transactions Screen
 
-<img src="https://user-images.githubusercontent.com/87373273/182038637-fd4d1152-201b-4c0c-9aa1-415b1c4e6164.PNG" width="250"><img src="https://user-images.githubusercontent.com/87373273/182038648-4562d72b-25d3-428f-8dea-376c69659b3a.PNG" width="250">
+![20220806_011035203](https://user-images.githubusercontent.com/87373273/183149926-3f7cb701-daa2-4d27-8ca7-5ac892738552.png)
+![20220806_011042256](https://user-images.githubusercontent.com/87373273/183149940-03940d73-67b6-4017-af30-058c9f403e69.png)
 
 # Add Transactions Screen
 
-<img src="https://user-images.githubusercontent.com/87373273/182038666-dd7d5122-9405-49d6-8aa3-13ffdaad644d.PNG" width="250"><img src="https://user-images.githubusercontent.com/87373273/182038674-5a683370-20b1-41c8-9d1f-63cf840afdca.PNG" width="250">
+![20220806_011854074](https://user-images.githubusercontent.com/87373273/183150454-418186fb-28eb-4bce-bfb6-feefffae2e98.png)![20220806_011856597](https://user-images.githubusercontent.com/87373273/183150459-efd5d7ac-2b72-4cf4-8c0d-d67663537615.png)
 
-# date picker for new transactions 
+# Profile Page
 
-<img src="https://user-images.githubusercontent.com/87373273/182038689-9cab7dce-8695-4802-928d-a6db3ed38a98.PNG" width="250"><img src="https://user-images.githubusercontent.com/87373273/182038695-cc773b21-f2c6-4e69-a2f0-3c4a7c1cc42e.PNG" width="250">
+![20220806_011049408](https://user-images.githubusercontent.com/87373273/183150012-69dea3e8-3834-4395-b494-e27e73bf04d8.png)![20220806_011101455](https://user-images.githubusercontent.com/87373273/183150023-07b6bece-8e9c-47c1-a17c-c08fdb1b2c5b.png)
