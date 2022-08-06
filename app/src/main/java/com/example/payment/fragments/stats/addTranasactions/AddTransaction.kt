@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +23,9 @@ import com.example.payment.viewModel.TransactionViewModel
 
 class addTransaction : Fragment() {
     private val args by navArgs<addTransactionArgs>()
-    private var day: Int = 0
-    private var week: Int = 0
-    private var month: Int = 0
+    private var day: Int = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+    private var week: Int = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1
+    private var month: Int = Calendar.getInstance().get(Calendar.MONTH) + 1
     private var incomeAmount = 0f
     private var expenseAmount = 0f
     val cal = Calendar.getInstance()
@@ -37,7 +38,6 @@ class addTransaction : Fragment() {
         "Credit Card Due",
         "Bills",
         "DineOut",
-        "Dividend",
         "Entertainment",
         "Fuel",
         "Groceries",
@@ -72,6 +72,7 @@ class addTransaction : Fragment() {
 //        setting the today's date
         cal.set(y, m, d)
         date = cal.timeInMillis
+        Log.d("checkingDate", "onCreateView: " + date)
 
         // Inflate the layout for this fragment
         _binding = FragmentAddTransactionBinding.inflate(inflater, container, false)
@@ -125,7 +126,7 @@ class addTransaction : Fragment() {
         }
 
         binding.transactionType.setOnFocusChangeListener { view, b ->
-            if(b){
+            if (b) {
                 hideSoftKeyboard(view)
             }
         }
@@ -180,8 +181,6 @@ class addTransaction : Fragment() {
 
     //    datePicker function
     private fun datePicker() {
-
-
         val datepickerdialog: DatePickerDialog = DatePickerDialog(
             requireActivity(),
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->

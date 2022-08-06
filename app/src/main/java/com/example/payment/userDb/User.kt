@@ -1,6 +1,7 @@
 package com.example.payment.userDb
 
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -10,5 +11,6 @@ data class User (
     val userId : Int,
     val username:String,
     val userBio: String,
-    val userBudget:Int
+    val userBudget:Int,
+    val userPhoto: String
         )
