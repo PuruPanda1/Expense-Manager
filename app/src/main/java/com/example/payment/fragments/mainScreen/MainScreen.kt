@@ -60,6 +60,9 @@ class MainScreen : Fragment() {
             in 21..23 -> {
                 binding.greetingMsg.text = "Good Night!";
             }
+            in 23 downTo 7 -> {
+                binding.greetingMsg.text = "Good Night!";
+            }
             else -> {
                 binding.greetingMsg.text = "Good Morning!";
             }
@@ -77,7 +80,7 @@ class MainScreen : Fragment() {
                 binding.userBudget.text = getString(R.string.userBudget, it.userBudget.toString())
                 budget = it.userBudget
                 val per = ((it.userBudget / budget) * 100).toInt().toString()
-                binding.expensePercentage.text = getString(R.string.percentageBudget,per)
+                binding.expensePercentage.text = getString(R.string.percentageBudget, per)
             }
         }
 
@@ -101,7 +104,7 @@ class MainScreen : Fragment() {
                 binding.monthlyExpense.text =
                     String.format(getString(R.string.amountInRupee, it.toString()))
                 val per = ((it / budget) * 100).toInt().toString()
-                binding.expensePercentage.text = getString(R.string.percentageBudget,per)
+                binding.expensePercentage.text = getString(R.string.percentageBudget, per)
                 if (it > budget) {
                     binding.monthlyExpense.setTextColor(
                         ContextCompat.getColor(
@@ -109,7 +112,7 @@ class MainScreen : Fragment() {
                             R.color.expense_color
                         )
                     )
-                } else{
+                } else {
                     binding.monthlyExpense.setTextColor(
                         ContextCompat.getColor(
                             requireContext(),
