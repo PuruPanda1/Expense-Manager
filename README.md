@@ -35,4 +35,6 @@ One of the great features of Project Expense Manager is its budgeting capabiliti
 
 # Profile Page
 
-![20220806_011049408](https://user-images.githubusercontent.com/87373273/183150012-69dea3e8-3834-4395-b494-e27e73bf04d8.png)![20220806_011101455](https://user-images.githubusercontent.com/87373273/183150023-07b6bece-8e9c-47c1-a17c-c08fdb1b2c5b.png)
+![20220806_173617772](https://user-images.githubusercontent.com/87373273/183248287-8c9f63ab-8ad0-4d4b-87bf-d9b909708d81.png)![20220806_173621536](https://user-images.githubusercontent.com/87373273/183248291-7bf3f65a-c21d-49f6-9a57-e2c26d588e71.png)
+
+
