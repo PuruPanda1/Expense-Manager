@@ -102,7 +102,7 @@ class Stats : Fragment() {
         dateRangePicker.show(activity!!.supportFragmentManager, "datepicker")
 
         dateRangePicker.addOnPositiveButtonClickListener {
-            viewModel.getCustomDurationData(listOf(it.first, it.second))
+            viewModel.setCustomDurationData(listOf(it.first, it.second))
         }
         viewModel.readAllTransaction.removeObservers(viewLifecycleOwner)
         //        calender icon

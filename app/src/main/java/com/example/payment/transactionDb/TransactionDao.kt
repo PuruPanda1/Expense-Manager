@@ -53,4 +53,16 @@ interface TransactionDao {
 
     @Query("SELECT * FROM transactions WHERE isExpense=0 AND date BETWEEN :startDate AND :endDate ORDER BY date DESC")
     fun getAllIncomeTransactionsByDate(startDate:Long,endDate:Long): LiveData<List<Transaction>>
+
+    @Query("SELECT * FROM transactions WHERE transactionType=:transactionType AND month = strftime('%m','now') ORDER BY date DESC")
+    fun getMonthlyTransactionsData(transactionType:String):LiveData<List<Transaction>>
+
+    @Query("SELECT * FROM transactions WHERE transactionType=:transactionType AND date BETWEEN :startDate AND :endDate ORDER BY date DESC")
+    fun getRangeTransactionsData(transactionType: String,startDate: Long,endDate: Long):LiveData<List<Transaction>>
+
+    @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE transactionType = :transactionType AND date BETWEEN :startDate AND :endDate GROUP BY transactionType")
+    fun getSingleTransactionType(transactionType:String,startDate:Long,endDate:Long): LiveData<myTypes>
+
+    @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE transactionType = :transactionType AND month = strftime('%m','now') GROUP BY transactionType")
+    fun getMonthlySingleTransactionType(transactionType:String): LiveData<myTypes>
 }

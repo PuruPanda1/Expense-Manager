@@ -146,5 +146,30 @@
         <action
             android:id="@+id/action_detailedTransactionAnalysis_to_MainScreen"
             app:destination="@id/MainScreen" />
+        <action
+            android:id="@+id/action_detailedTransactionAnalysis_to_detailedCategoryTransactionsFragment"
+            app:destination="@id/detailedCategoryTransactionsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailedCategoryTransactionsFragment"
+        android:name="com.example.payment.DetailedCategoryTransactionsFragment"
+        android:label="fragment_detailed_category_transactions"
+        tools:layout="@layout/fragment_detailed_category_transactions" >
+        <action
+            android:id="@+id/action_detailedCategoryTransactionsFragment_to_detailedTransactionAnalysis"
+            app:destination="@id/detailedTransactionAnalysis"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
+        <argument
+            android:name="startDate"
+            app:argType="long" />
+        <argument
+            android:name="endDate"
+            app:argType="long" />
     </fragment>
 </navigation>

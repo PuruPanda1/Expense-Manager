@@ -12,8 +12,24 @@ class TransactionRepository(private val transactionDao: TransactionDao) {
     val incomeSum = transactionDao.getIncomeSum()
     val expenseSum = transactionDao.getExpenseSum()
 
+    fun getRangeTransactionsData(transactionType:String,startDate: Long,endDate: Long):LiveData<List<Transaction>>{
+        return transactionDao.getRangeTransactionsData(transactionType,startDate,endDate)
+    }
+
+    fun getMonthlyTransactionsData(transactionType:String):LiveData<List<Transaction>>{
+        return transactionDao.getMonthlyTransactionsData(transactionType)
+    }
+
     fun getCustomDurationData(startDate: Long, endDate: Long): LiveData<List<myTypes>> {
         return transactionDao.getCustomDurationData(startDate, endDate)
+    }
+
+    fun getSingleTransactionType(transactionType:String,startDate: Long, endDate: Long): LiveData<myTypes> {
+        return transactionDao.getSingleTransactionType(transactionType,startDate, endDate)
+    }
+
+    fun getMonthlySingleTransactionType(transactionType:String,startDate: Long, endDate: Long): LiveData<myTypes> {
+        return transactionDao.getMonthlySingleTransactionType(transactionType)
     }
 
     fun getCustomDurationDataSum(startDate: Long, endDate: Long): LiveData<Float> {

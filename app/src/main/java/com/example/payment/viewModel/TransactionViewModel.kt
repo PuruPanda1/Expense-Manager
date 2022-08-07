@@ -1,9 +1,11 @@
 package com.example.payment.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
-import com.example.payment.transactionDb.*
+import com.example.payment.transactionDb.Transaction
+import com.example.payment.transactionDb.TransactionDatabase
+import com.example.payment.transactionDb.TransactionRepository
+import com.example.payment.transactionDb.myTypes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -11,7 +13,6 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     var readAllTransaction: LiveData<List<Transaction>>
     var readAllIncomeTransaction: LiveData<List<Transaction>>
     var readAllExpenseTransaction: LiveData<List<Transaction>>
-
     var readTransactionTypeAmount: LiveData<List<myTypes>>
     var readDifferenceSum: LiveData<Float>
     var readMonthlySpends: LiveData<Float>
@@ -43,17 +44,43 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     //    setting the transactions list according to the dates
-    val readAllTransactionDate: LiveData<List<Transaction>> = Transformations.switchMap(dates){
-        repository.getAllTransactionsByDate(it[0],it[1])
+    val readAllTransactionDate: LiveData<List<Transaction>> = Transformations.switchMap(dates) {
+        repository.getAllTransactionsByDate(it[0], it[1])
     }
-    val readAllIncomeTransactionDate: LiveData<List<Transaction>> = Transformations.switchMap(dates){
-        repository.getAllIncomeTransactionsByDate(it[0],it[1])
-    }
-    val readAllExpenseTransactionDate: LiveData<List<Transaction>> = Transformations.switchMap(dates){
-        repository.getAllExpenseTransactionsByDate(it[0],it[1])
+    val readAllIncomeTransactionDate: LiveData<List<Transaction>> =
+        Transformations.switchMap(dates) {
+            repository.getAllIncomeTransactionsByDate(it[0], it[1])
+        }
+    val readAllExpenseTransactionDate: LiveData<List<Transaction>> =
+        Transformations.switchMap(dates) {
+            repository.getAllExpenseTransactionsByDate(it[0], it[1])
+        }
+
+    var transactionTypeDetails: MutableLiveData<TransactionTypeData> = MutableLiveData()
+
+    //    transactions according to transactionstype and date asked
+    val transactionsCategoryWise: LiveData<List<Transaction>> =
+        Transformations.switchMap(transactionTypeDetails) {
+            if (it.startDate == 0L) {
+                repository.getMonthlyTransactionsData(it.transactionType)
+            } else {
+                repository.getRangeTransactionsData(it.transactionType, it.startDate, it.endDate)
+            }
+        }
+
+    val readSingleTransactionType : LiveData<myTypes> = Transformations.switchMap(transactionTypeDetails){
+        if (it.startDate == 0L) {
+            repository.getMonthlySingleTransactionType(it.transactionType,it.startDate,it.endDate)
+        } else {
+            repository.getSingleTransactionType(it.transactionType, it.startDate, it.endDate)
+        }
     }
 
-    fun getCustomDurationData(dates: List<Long>) {
+    fun setTransactionTypeData(details: TransactionTypeData) {
+        transactionTypeDetails.value = details
+    }
+
+    fun setCustomDurationData(dates: List<Long>) {
         this.dates.value = dates
     }
 
@@ -76,3 +103,9 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 }
+
+data class TransactionTypeData(
+    val transactionType: String,
+    val startDate: Long,
+    val endDate: Long
+)

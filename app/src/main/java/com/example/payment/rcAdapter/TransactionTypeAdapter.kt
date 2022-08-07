@@ -5,11 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.example.payment.DetailedTransactionAnalysis
+import com.example.payment.DetailedTransactionAnalysisDirections
 import com.example.payment.R
 import com.example.payment.transactionDb.myTypes
 
-class TransactionTypeAdapter:RecyclerView.Adapter<TransactionTypeHolder>() {
+class TransactionTypeAdapter(private val fragment:DetailedTransactionAnalysis):RecyclerView.Adapter<TransactionTypeHolder>() {
     private var list : List<myTypes> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionTypeHolder {
         val l = LayoutInflater.from(parent.context)
@@ -39,21 +43,11 @@ class TransactionTypeAdapter:RecyclerView.Adapter<TransactionTypeHolder>() {
             "Transportation" -> holder.image.setImageResource(R.drawable.transportation_icon)
             else -> holder.image.setImageResource(R.drawable.ic_entertainment)
         }
-
-//        "Credit Card Due",
-//        "Bills",
-//        "DineOut",
-//        "Dividend",
-//        "Entertainment",
-//        "Fuel",
-//        "Groceries",
-//        "Investment",
-//        "Profit Returns",
-//        "Salary",
-//        "Shopping",
-//        "Stationary",
-//        "Suspense",
-//        "Transportation"
+//        setting the onclick listener
+        holder.layout.setOnClickListener{
+            val action = DetailedTransactionAnalysisDirections.actionDetailedTransactionAnalysisToDetailedCategoryTransactionsFragment(item.name.toString(),fragment.startDate,fragment.endDate)
+            Navigation.findNavController(holder.layout).navigate(action)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -71,4 +65,5 @@ class TransactionTypeHolder(view: View):RecyclerView.ViewHolder(view){
     val amount = view.findViewById<TextView>(R.id.transactionTypeAmount)
     val count = view.findViewById<TextView>(R.id.transactionTypeCount)
     val image = view.findViewById<ImageView>(R.id.transactionTypeIcon)
+    val layout = view.findViewById<CardView>(R.id.transactionTypeLayout)
 }
