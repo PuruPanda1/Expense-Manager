@@ -68,13 +68,18 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
             }
         }
 
-    val readSingleTransactionType : LiveData<myTypes> = Transformations.switchMap(transactionTypeDetails){
-        if (it.startDate == 0L) {
-            repository.getMonthlySingleTransactionType(it.transactionType,it.startDate,it.endDate)
-        } else {
-            repository.getSingleTransactionType(it.transactionType, it.startDate, it.endDate)
+    val readSingleTransactionType: LiveData<myTypes> =
+        Transformations.switchMap(transactionTypeDetails) {
+            if (it.startDate == 0L) {
+                repository.getMonthlySingleTransactionType(
+                    it.transactionType,
+                    it.startDate,
+                    it.endDate
+                )
+            } else {
+                repository.getSingleTransactionType(it.transactionType, it.startDate, it.endDate)
+            }
         }
-    }
 
     fun setTransactionTypeData(details: TransactionTypeData) {
         transactionTypeDetails.value = details

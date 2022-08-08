@@ -104,7 +104,7 @@ class DetailedTransactionAnalysis : Fragment() {
         dateRangePicker.addOnPositiveButtonClickListener {
             startDate = it.first
             endDate = it.second
-            viewModel.setCustomDurationData(listOf(it.first, it.second))
+            viewModel.setCustomDurationData(listOf(it.first, (it.second+86400000)))
         }
         viewModel.readTransactionTypeAmount.removeObservers(viewLifecycleOwner)
         viewModel.expenseSum.removeObservers(viewLifecycleOwner)
