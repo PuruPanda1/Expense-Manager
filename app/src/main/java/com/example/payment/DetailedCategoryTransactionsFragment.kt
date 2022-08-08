@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.payment.databinding.FragmentDetailedCategoryTransactionsBinding
@@ -14,8 +15,24 @@ import com.example.payment.rcAdapter.TransactionsCategoryWiseAdapter
 import com.example.payment.transactionDb.Transaction
 import com.example.payment.viewModel.TransactionTypeData
 import com.example.payment.viewModel.TransactionViewModel
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DetailedCategoryTransactionsFragment : Fragment() {
+    private val months = listOf(
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "November",
+        "December"
+    )
     private lateinit var viewModel : TransactionViewModel
     private var _binding : FragmentDetailedCategoryTransactionsBinding? = null
     private val args by navArgs<DetailedCategoryTransactionsFragmentArgs>()
@@ -25,6 +42,30 @@ class DetailedCategoryTransactionsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailedCategoryTransactionsBinding.inflate(layoutInflater,container,false)
+
+//        setting the back button
+        binding.backToSummary.setOnClickListener {
+            Navigation.findNavController(binding.root).navigate(R.id.action_detailedCategoryTransactionsFragment_to_detailedTransactionAnalysis)
+        }
+
+//        onclick for the calender icon
+        binding.categoryRangePicker.setOnClickListener {
+            openRangePicker()
+        }
+
+//        setting the month
+        if(args.startDate==0L){
+            val month = months[Calendar.getInstance().get(Calendar.MONTH)]
+            binding.categoryDuration.text =
+                String.format(getString(R.string.monthlyDuration, month))
+        } else{
+            val simpleDateFormat = SimpleDateFormat("dd MMM YY")
+            binding.categoryDuration.text = getString(
+                R.string.monthlyDuration,
+                "${simpleDateFormat.format(args.startDate)} - ${simpleDateFormat.format(args.endDate)}"
+            )
+        }
+
 
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         binding.categoryName.text = args.categoryName
@@ -51,6 +92,37 @@ class DetailedCategoryTransactionsFragment : Fragment() {
 
         return binding.root
     }
+
+    private fun openRangePicker() {
+        val simpleDateFormat = SimpleDateFormat("dd MMM YY")
+        val dateRangePicker = MaterialDatePicker.Builder
+            .dateRangePicker()
+            .setTitleText("Choose duration")
+            .build()
+
+        dateRangePicker.show(requireActivity().supportFragmentManager, "datepicker")
+
+        dateRangePicker.addOnPositiveButtonClickListener {
+            viewModel.setTransactionTypeData(TransactionTypeData(args.categoryName,it.first,it.second))
+        }
+        viewModel.sumAccordingToDate.observe(viewLifecycleOwner) {
+            if (it == null) {
+                binding.categoryTotalAmount.text =
+                    String.format(getString(R.string.amountInRupee, "0"))
+            } else {
+                binding.categoryTotalAmount.text =
+                    String.format(getString(R.string.amountInRupee, it.toString()))
+            }
+        }
+//        setting the duration in the card view
+        viewModel.transactionTypeDetails.observe(viewLifecycleOwner) {
+            binding.categoryDuration.text = getString(
+                R.string.monthlyDuration,
+                "${simpleDateFormat.format(it.startDate)} - ${simpleDateFormat.format(it.endDate)}"
+            )
+        }
+    }
+
 
     fun deleteTransaction(transaction: Transaction) {
         viewModel.deleteTransaction(transaction)
