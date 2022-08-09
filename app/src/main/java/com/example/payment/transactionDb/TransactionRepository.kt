@@ -11,6 +11,7 @@ class TransactionRepository(private val transactionDao: TransactionDao) {
     val monthlySpends: LiveData<Float> = transactionDao.getMonthlySpends()
     val incomeSum = transactionDao.getIncomeSum()
     val expenseSum = transactionDao.getExpenseSum()
+    val readAccountDetails = transactionDao.getAccountDetails()
 
     fun getRangeTransactionsData(transactionType:String,startDate: Long,endDate: Long):LiveData<List<Transaction>>{
         return transactionDao.getRangeTransactionsData(transactionType,startDate,endDate)

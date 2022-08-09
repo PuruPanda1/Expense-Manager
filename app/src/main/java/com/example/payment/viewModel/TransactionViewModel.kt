@@ -2,10 +2,7 @@ package com.example.payment.viewModel
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.payment.transactionDb.Transaction
-import com.example.payment.transactionDb.TransactionDatabase
-import com.example.payment.transactionDb.TransactionRepository
-import com.example.payment.transactionDb.myTypes
+import com.example.payment.transactionDb.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -18,6 +15,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     var readMonthlySpends: LiveData<Float>
     var incomeSum: LiveData<Float>
     var expenseSum: LiveData<Float>
+    var readAccountDetails : LiveData<List<AccountDetails>>
     private val repository: TransactionRepository
 
     init {
@@ -31,6 +29,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
         incomeSum = repository.incomeSum
         expenseSum = repository.expenseSum
         readTransactionTypeAmount = repository.amountCategory
+        readAccountDetails = repository.readAccountDetails
     }
 
     val dates: MutableLiveData<List<Long>> = MutableLiveData()

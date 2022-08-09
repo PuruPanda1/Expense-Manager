@@ -6,43 +6,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import com.example.payment.R
-import com.example.payment.cryptoDb.CryptoViewModel
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.payment.databinding.FragmentWalletBinding
-import java.util.zip.Inflater
+import com.example.payment.rcAdapter.AccountsAdapter
+import com.example.payment.rcAdapter.WalletAccountDetailsAdapter
+import com.example.payment.viewModel.TransactionViewModel
 
 class Wallet : Fragment() {
-    private lateinit var viewModel:CryptoViewModel
+    private lateinit var transactionViewModel : TransactionViewModel
     private var _binding: FragmentWalletBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentWalletBinding.inflate(layoutInflater,container,false)
 
-        binding.cryptoCardView.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_Wallet_to_cryptoTransactionList)
+        transactionViewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+        val adapter = WalletAccountDetailsAdapter()
+        binding.walletAccountsRecyclerView.adapter = adapter
+        binding.walletAccountsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        transactionViewModel.readAccountDetails.observe(viewLifecycleOwner){
+            adapter.setData(it)
         }
 
-        viewModel = ViewModelProvider(requireActivity())[CryptoViewModel::class.java]
+        binding.addAccount.setOnClickListener {
 
-        viewModel.getTotalAmount()
-
-        viewModel.totalAmount.observe(viewLifecycleOwner){
-            if (it == null) {
-                binding.balanceAmount1.text = "₹0"
-            } else {
-                val number3digits = Math.round(it * 1000.0) / 1000.0
-                val number2digits = Math.round(number3digits * 100.0) / 100.0
-                val amount = Math.round(number2digits * 10.0) / 10.0
-                binding.balanceAmount1.text = "₹${amount}"
-            }
         }
-
-
 
         return binding.root
     }
