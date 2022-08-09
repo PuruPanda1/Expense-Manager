@@ -46,7 +46,8 @@ class Stats : Fragment() {
                     0,
                     0,
                     0,
-                    0f
+                    0f,
+                    ""
                 )
             )
             Navigation.findNavController(binding.root).navigate(action)

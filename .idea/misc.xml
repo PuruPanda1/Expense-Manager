@@ -27,11 +27,12 @@
         <entry key="app/src/main/res/drawable/ic_wolverine.xml" value="0.352" />
         <entry key="app/src/main/res/drawable/sqaure_image.xml" value="0.318" />
         <entry key="app/src/main/res/drawable/text_background.xml" value="0.3355" />
+        <entry key="app/src/main/res/layout/account_row.xml" value="0.20888157894736842" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/crypto_list_row.xml" value="0.3296875" />
         <entry key="app/src/main/res/layout/detailed_analysis_row.xml" value="0.3307291666666667" />
         <entry key="app/src/main/res/layout/fragment_add_crypto_transaction.xml" value="0.3307291666666667" />
-        <entry key="app/src/main/res/layout/fragment_add_transaction.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_add_transaction.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_crypto_list.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_crypto_portfolio.xml" value="0.3307291666666667" />
         <entry key="app/src/main/res/layout/fragment_crypto_transaction_list.xml" value="0.3307291666666667" />

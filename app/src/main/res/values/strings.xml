@@ -15,4 +15,5 @@
     <string name="percentageBudget">%s%% of the budget</string>
     <string name="changeDateInstruction">Note: To change the Transaction date, Click on the Calender icon</string>
     <string name="totalValue">Total: ₹%s</string>
+    <string name="paidViaString">Paid via %s</string>
 </resources>

@@ -11,6 +11,7 @@
     <color name="primary_blue">#4843BE</color>
     <color name="GrayText">#B4B8C1</color>
     <color name="background">#F8F9FD</color>
+    <color name="optionsBackground">#E6E6FA</color>
     <color name="ivory">#FFFFF0</color>
     <color name="roundImage">#dbbfd4</color>
     <color name="primaryTextColor">#FFFFFFFF</color>

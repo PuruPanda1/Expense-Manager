@@ -48,7 +48,7 @@
         tools:layout="@layout/fragment_launch_payment" />
     <fragment
         android:id="@+id/addTransaction"
-        android:name="com.example.payment.fragments.stats.addTranasactions.addTransaction"
+        android:name="com.example.payment.fragments.stats.addTranasactions.AddTransaction"
         android:label="fragment_add_transaction"
         tools:layout="@layout/fragment_add_transaction" >
         <action

@@ -15,20 +15,25 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.payment.R
+import com.example.payment.accountsDb.Accounts
 import com.example.payment.databinding.FragmentAddTransactionBinding
+import com.example.payment.rcAdapter.AccountsAdapter
 import com.example.payment.transactionDb.Transaction
+import com.example.payment.viewModel.AccountViewModel
 import com.example.payment.viewModel.TransactionViewModel
 
 
-class addTransaction : Fragment() {
-    private val args by navArgs<addTransactionArgs>()
+class AddTransaction : Fragment() {
+    private val args by navArgs<AddTransactionArgs>()
+    private lateinit var modeOfPayment: String
     private var day: Int = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
     private var week: Int = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1
     private var month: Int = Calendar.getInstance().get(Calendar.MONTH) + 1
     private var incomeAmount = 0f
     private var expenseAmount = 0f
-    val cal = Calendar.getInstance()
+    private val cal: Calendar = Calendar.getInstance()
     val y = cal.get(Calendar.YEAR)
     val m = cal.get(Calendar.MONTH)
     val d = cal.get(Calendar.DAY_OF_MONTH)
@@ -48,21 +53,9 @@ class addTransaction : Fragment() {
         "Suspense",
         "Transportation"
     )
-    private val months = listOf<String>(
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "November",
-        "December"
-    )
     private var _binding: FragmentAddTransactionBinding? = null
     private lateinit var viewModel: TransactionViewModel
+    private lateinit var accountViewModel: AccountViewModel
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,13 +65,27 @@ class addTransaction : Fragment() {
 //        setting the today's date
         cal.set(y, m, d)
         date = cal.timeInMillis
-        Log.d("checkingDate", "onCreateView: " + date)
 
         // Inflate the layout for this fragment
         _binding = FragmentAddTransactionBinding.inflate(inflater, container, false)
 
 //        setting the viewmodel
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+        accountViewModel = ViewModelProvider(requireActivity())[AccountViewModel::class.java]
+
+//        getting the accounts
+        val accountsAdapter = AccountsAdapter(this)
+        binding.accountsRecyclerView.adapter = accountsAdapter
+        binding.accountsRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        accountViewModel.readAllAccounts.observe(viewLifecycleOwner) {
+            if(it.isNotEmpty()){
+                modeOfPayment = it[0].name
+                accountsAdapter.setData(it)
+            } else{
+                accountViewModel.insertAccount(Accounts(0,"Cash"))
+                accountViewModel.insertAccount(Accounts(0,"Bank"))
+            }
+        }
 
         binding.backButton.setOnClickListener {
             Navigation.findNavController(binding.root)
@@ -134,6 +141,10 @@ class addTransaction : Fragment() {
         return binding.root
     }
 
+    fun setModeOfPayment(modeOfPayment: String) {
+        this.modeOfPayment = modeOfPayment
+    }
+
     fun hideSoftKeyboard(view: View) {
         val imm =
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -161,7 +172,8 @@ class addTransaction : Fragment() {
                     day,
                     week,
                     month,
-                    expenseAmount
+                    expenseAmount,
+                    modeOfPayment
                 )
             )
             Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT).show()
@@ -181,9 +193,9 @@ class addTransaction : Fragment() {
 
     //    datePicker function
     private fun datePicker() {
-        val datepickerdialog: DatePickerDialog = DatePickerDialog(
+        val datepickerdialog = DatePickerDialog(
             requireActivity(),
-            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+            { _, year, monthOfYear, dayOfMonth ->
                 // Display Selected date in textbox
                 cal.set(year, monthOfYear, dayOfMonth)
                 date = cal.timeInMillis
@@ -222,7 +234,8 @@ class addTransaction : Fragment() {
                     day,
                     week,
                     month,
-                    expenseAmount
+                    expenseAmount,
+                    modeOfPayment
                 )
             )
             Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()

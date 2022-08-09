@@ -15,6 +15,7 @@
     <color name="ivory">#FFFFF0</color>
     <color name="primaryTextColor">#FF000000</color>
     <color name="primaryBackground">#E6E6FA</color>
+    <color name="optionsBackground">#E6E6FA</color>
     <color name="expense_color">#FF2400</color>
     <color name="income_color">#3EB489</color>
     <color name="primaryBorder">#9B9BC4</color>

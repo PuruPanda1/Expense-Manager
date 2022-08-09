@@ -14,13 +14,17 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.payment.DetailedCategoryTransactionsFragment
 import com.example.payment.R
-import com.example.payment.transactionDb.Transaction
 import com.example.payment.fragments.stats.StatsDirections
+import com.example.payment.transactionDb.Transaction
 import java.text.SimpleDateFormat
 
-class TransactionsCategoryWiseAdapter(val fragment: DetailedCategoryTransactionsFragment) : RecyclerView.Adapter<TransactionsCategoryWiseHolder>() {
+class TransactionsCategoryWiseAdapter(val fragment: DetailedCategoryTransactionsFragment) :
+    RecyclerView.Adapter<TransactionsCategoryWiseHolder>() {
     private var data = emptyList<Transaction>()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionsCategoryWiseHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): TransactionsCategoryWiseHolder {
         val l = LayoutInflater.from(parent.context)
         val listItem = l.inflate(R.layout.transactions_row_rc, parent, false)
         return TransactionsCategoryWiseHolder(listItem)
@@ -32,28 +36,39 @@ class TransactionsCategoryWiseAdapter(val fragment: DetailedCategoryTransactions
         val item = data[position]
         val dateString = simpleDateFormat.format(item.date)
         holder.description.text = item.tDescription
-
+        holder.account.text = holder.account.context.getString(R.string.paidViaString,item.modeOfPayment)
         holder.date.text = dateString
         holder.category.text = item.transactionType
 
-        if(item.isExpense){
-            holder.amount.setTextColor(ContextCompat.getColor(holder.amount.context,
-                R.color.expense_color
-            ))
+        if (item.isExpense) {
+            holder.amount.setTextColor(
+                ContextCompat.getColor(
+                    holder.amount.context,
+                    R.color.expense_color
+                )
+            )
             val updatedAmount =
-                holder.amount.resources.getString(R.string.amountInRupee, item.expenseAmount.toString())
+                holder.amount.resources.getString(
+                    R.string.amountInRupee,
+                    item.expenseAmount.toString()
+                )
             holder.amount.text = updatedAmount
-        }
-        else{
-            holder.amount.setTextColor(ContextCompat.getColor(holder.amount.context,
-                R.color.income_color
-            ))
+        } else {
+            holder.amount.setTextColor(
+                ContextCompat.getColor(
+                    holder.amount.context,
+                    R.color.income_color
+                )
+            )
             val updatedAmount =
-                holder.amount.resources.getString(R.string.amountInRupee, item.incomeAmount.toString())
+                holder.amount.resources.getString(
+                    R.string.amountInRupee,
+                    item.incomeAmount.toString()
+                )
             holder.amount.text = updatedAmount
         }
 
-        when(item.transactionType){
+        when (item.transactionType) {
             "DineOut" -> holder.image.setImageResource(R.drawable.pizza_icon)
             "Bills" -> holder.image.setImageResource(R.drawable.bill_icon)
             "Credit Card Due" -> holder.image.setImageResource(R.drawable.creditcard_icon)
@@ -128,4 +143,5 @@ class TransactionsCategoryWiseHolder(val view: View) : RecyclerView.ViewHolder(v
     val date: TextView = view.findViewById(R.id.dateShowRC)
     val layout: CardView = view.findViewById(R.id.eachRowLayout)
     val image: ImageView = view.findViewById(R.id.floatingTransactionIcon)
+    val account: TextView = view.findViewById(R.id.accountRC)
 }

@@ -13,9 +13,9 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.payment.R
-import com.example.payment.transactionDb.Transaction
 import com.example.payment.fragments.stats.Stats
 import com.example.payment.fragments.stats.StatsDirections
+import com.example.payment.transactionDb.Transaction
 import java.text.SimpleDateFormat
 
 class TransactionsAdapter(val fragment: Stats) : RecyclerView.Adapter<Myholder>() {
@@ -32,7 +32,7 @@ class TransactionsAdapter(val fragment: Stats) : RecyclerView.Adapter<Myholder>(
         val item = data[position]
         val dateString = simpleDateFormat.format(item.date)
         holder.description.text = item.tDescription
-
+        holder.account.text = holder.account.context.getString(R.string.paidViaString,item.modeOfPayment)
         holder.date.text = dateString
         holder.category.text = item.transactionType
 
@@ -128,4 +128,5 @@ class Myholder(val view: View) : RecyclerView.ViewHolder(view) {
     val date: TextView = view.findViewById(R.id.dateShowRC)
     val layout: CardView = view.findViewById(R.id.eachRowLayout)
     val image: ImageView = view.findViewById(R.id.floatingTransactionIcon)
+    val account: TextView = view.findViewById(R.id.accountRC)
 }

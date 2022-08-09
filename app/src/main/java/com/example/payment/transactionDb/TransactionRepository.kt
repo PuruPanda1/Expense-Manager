@@ -28,7 +28,7 @@ class TransactionRepository(private val transactionDao: TransactionDao) {
         return transactionDao.getSingleTransactionType(transactionType,startDate, endDate)
     }
 
-    fun getMonthlySingleTransactionType(transactionType:String,startDate: Long, endDate: Long): LiveData<myTypes> {
+    fun getMonthlySingleTransactionType(transactionType:String): LiveData<myTypes> {
         return transactionDao.getMonthlySingleTransactionType(transactionType)
     }
 

@@ -19,7 +19,8 @@ data class Transaction(
     val day:Int,
     val week:Int,
     val month:Int,
-    val expenseAmount: Float
+    val expenseAmount: Float,
+    val modeOfPayment: String
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -31,7 +32,8 @@ data class Transaction(
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
-        parcel.readFloat()
+        parcel.readFloat(),
+        parcel.readString()!!
     )
     override fun describeContents(): Int {
         TODO("Not yet implemented")

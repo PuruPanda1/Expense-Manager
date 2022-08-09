@@ -72,9 +72,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
         Transformations.switchMap(transactionTypeDetails) {
             if (it.startDate == 0L) {
                 repository.getMonthlySingleTransactionType(
-                    it.transactionType,
-                    it.startDate,
-                    it.endDate
+                    it.transactionType
                 )
             } else {
                 repository.getSingleTransactionType(it.transactionType, it.startDate, it.endDate)
