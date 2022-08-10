@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,12 +33,12 @@ class AddTransaction : Fragment() {
     private var incomeAmount = 0f
     private var expenseAmount = 0f
     private val cal: Calendar = Calendar.getInstance()
-    val y = cal.get(Calendar.YEAR)
-    val m = cal.get(Calendar.MONTH)
-    val d = cal.get(Calendar.DAY_OF_MONTH)
+    private val y = cal.get(Calendar.YEAR)
+    private val m = cal.get(Calendar.MONTH)
+    private val d = cal.get(Calendar.DAY_OF_MONTH)
     private var date: Long = 0L
     private var isExpense = true
-    private val expenseCategory = listOf<String>(
+    private val expenseCategory = listOf(
         "Credit Card Due",
         "Bills",
         "DineOut",
@@ -145,7 +144,7 @@ class AddTransaction : Fragment() {
         this.modeOfPayment = modeOfPayment
     }
 
-    fun hideSoftKeyboard(view: View) {
+    private fun hideSoftKeyboard(view: View) {
         val imm =
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)

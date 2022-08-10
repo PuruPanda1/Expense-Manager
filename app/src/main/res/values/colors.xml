@@ -19,6 +19,7 @@
     <color name="expense_color">#FF2400</color>
     <color name="income_color">#3EB489</color>
     <color name="primaryBorder">#9B9BC4</color>
+    <color name="bottomSheetBackground">#fff</color>
 
     <color name="Color1">#b71528</color>
     <color name="Color2">#f83a44</color>

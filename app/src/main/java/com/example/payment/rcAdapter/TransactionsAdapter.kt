@@ -65,6 +65,7 @@ class TransactionsAdapter(val fragment: Stats) : RecyclerView.Adapter<Myholder>(
             "Suspense" -> holder.image.setImageResource(R.drawable.general_icon)
             "Transportation" -> holder.image.setImageResource(R.drawable.transportation_icon)
             "Salary" -> holder.image.setImageResource(R.drawable.salary_icon)
+            "Updated Balance" -> holder.image.setImageResource(R.drawable.salary_icon)
             "Income" -> holder.image.setImageResource(R.drawable.income_icon)
             else -> holder.image.setImageResource(R.drawable.ic_entertainment)
         }

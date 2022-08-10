@@ -39,9 +39,7 @@ data class Transaction(
         TODO("Not yet implemented")
     }
 
-    override fun writeToParcel(p0: Parcel?, p1: Int) {
-        TODO("Not yet implemented")
-    }
+    override fun writeToParcel(p0: Parcel?, p1: Int) = Unit
 
     companion object CREATOR : Parcelable.Creator<Transaction> {
         override fun createFromParcel(parcel: Parcel): Transaction {

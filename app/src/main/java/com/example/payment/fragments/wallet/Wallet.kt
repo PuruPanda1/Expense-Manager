@@ -1,19 +1,29 @@
 package com.example.payment.fragments.wallet
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.payment.R
+import com.example.payment.accountsDb.Accounts
 import com.example.payment.databinding.FragmentWalletBinding
-import com.example.payment.rcAdapter.AccountsAdapter
 import com.example.payment.rcAdapter.WalletAccountDetailsAdapter
+import com.example.payment.transactionDb.Transaction
+import com.example.payment.viewModel.AccountViewModel
 import com.example.payment.viewModel.TransactionViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import java.util.*
 
 class Wallet : Fragment() {
-    private lateinit var transactionViewModel : TransactionViewModel
+    private lateinit var transactionViewModel: TransactionViewModel
+    private lateinit var accountViewModel: AccountViewModel
     private var _binding: FragmentWalletBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -21,22 +31,81 @@ class Wallet : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentWalletBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentWalletBinding.inflate(layoutInflater, container, false)
 
-        transactionViewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+        transactionViewModel =
+            ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+        accountViewModel = ViewModelProvider(requireActivity())[AccountViewModel::class.java]
         val adapter = WalletAccountDetailsAdapter()
         binding.walletAccountsRecyclerView.adapter = adapter
         binding.walletAccountsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        transactionViewModel.readAccountDetails.observe(viewLifecycleOwner){
-            adapter.setData(it)
+        transactionViewModel.readAccountDetails.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                adapter.setData(it)
+            }
         }
 
         binding.addAccount.setOnClickListener {
-
+            showBottomSheetLayout(requireContext())
         }
 
+
         return binding.root
+    }
+
+    private fun showBottomSheetLayout(context: Context) {
+        val view: View = layoutInflater.inflate(R.layout.bottom_sheet_layout, null)
+        val bottomSheet = BottomSheetDialog(requireContext(), R.style.BottomSheetDialog)
+        bottomSheet.setContentView(view)
+
+        val accountName = bottomSheet.findViewById<EditText>(R.id.accountNameTextView)
+        val accountBalance = bottomSheet.findViewById<EditText>(R.id.balanceAmountTextView)
+        val submitButton = bottomSheet.findViewById<Button>(R.id.addUpdateButton)
+
+
+        if (submitButton != null && accountName != null && accountBalance != null) {
+            submitButton.setOnClickListener {
+                val aName = accountName.text.toString()
+                val aBalance = accountBalance.text.toString()
+                if (aBalance.isBlank() && aName.isBlank()) {
+                    Toast.makeText(context, "Fields can not be empty", Toast.LENGTH_SHORT).show()
+                } else {
+                    val cal = Calendar.getInstance()
+                    val y = cal.get(android.icu.util.Calendar.YEAR)
+                    val m = cal.get(android.icu.util.Calendar.MONTH)
+                    val d = cal.get(android.icu.util.Calendar.DAY_OF_MONTH)
+                    cal.set(y, m, d)
+                    val date = cal.timeInMillis
+                    accountViewModel.insertAccount(Accounts(0, aName))
+                    transactionViewModel.insertTransaction(
+                        Transaction(
+                            0,
+                            "Updated Balance",
+                            aBalance.toFloat(),
+                            false,
+                            date,
+                            "Updated Balance",
+                            d,
+                            (cal.get(Calendar.WEEK_OF_YEAR) - 1),
+                            m,
+                            0f,
+                            aName
+                        )
+                    )
+                    Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show()
+                    bottomSheet.dismiss()
+                }
+            }
+        }
+
+
+//        close button onclick listener
+        bottomSheet.findViewById<Button>(R.id.closeButton)?.setOnClickListener {
+            bottomSheet.dismiss()
+        }
+
+        bottomSheet.show()
     }
 
     override fun onDestroyView() {

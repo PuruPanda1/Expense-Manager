@@ -49,22 +49,21 @@ class MainScreen : Fragment() {
         _binding = FragmentMainScreenBinding.inflate(inflater, container, false)
 
 //        setting the greeting text
-        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-        when (hour) {
+        when (Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) {
             in 12..16 -> {
-                binding.greetingMsg.text = "Good Afternoon!";
+                binding.greetingMsg.text = getString(R.string.afternoon)
             }
             in 17..20 -> {
-                binding.greetingMsg.text = "Good Evening!";
+                binding.greetingMsg.text = getString(R.string.evening)
             }
             in 21..23 -> {
-                binding.greetingMsg.text = "Good Night!";
+                binding.greetingMsg.text = getString(R.string.night)
             }
             in 23 downTo 7 -> {
-                binding.greetingMsg.text = "Good Night!";
+                binding.greetingMsg.text = getString(R.string.night)
             }
             else -> {
-                binding.greetingMsg.text = "Good Morning!";
+                binding.greetingMsg.text = getString(R.string.morning)
             }
         }
 
@@ -79,7 +78,7 @@ class MainScreen : Fragment() {
                 binding.userName.text = it.username
                 binding.userBudget.text = getString(R.string.userBudget, it.userBudget.toString())
                 budget = it.userBudget
-                val per = ((it.userBudget / budget) * 100).toInt().toString()
+                val per = ((it.userBudget / budget) * 100).toString()
                 binding.expensePercentage.text = getString(R.string.percentageBudget, per)
             }
         }
@@ -278,6 +277,8 @@ class MainScreen : Fragment() {
             "Stationary" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.stationary_icon)
             "Suspense" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.general_icon)
             "Transportation" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.transportation_icon)
+            "Salary" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.salary_icon)
+            "Updated Balance" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.salary_icon)
             else -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.ic_entertainment)
         }
         when (transactionList[1].transactionType) {
@@ -289,6 +290,8 @@ class MainScreen : Fragment() {
             "Groceries" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.grocery_icon)
             "Shopping" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.shopping_icon)
             "Stationary" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.stationary_icon)
+            "Salary" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.salary_icon)
+            "Updated Balance" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.salary_icon)
             "Suspense" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.general_icon)
             "Transportation" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.transportation_icon)
             else -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.ic_entertainment)
@@ -302,6 +305,8 @@ class MainScreen : Fragment() {
             "Groceries" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.grocery_icon)
             "Shopping" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.shopping_icon)
             "Stationary" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.stationary_icon)
+            "Salary" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.salary_icon)
+            "Updated Balance" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.salary_icon)
             "Suspense" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.general_icon)
             "Transportation" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.transportation_icon)
             else -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.ic_entertainment)
