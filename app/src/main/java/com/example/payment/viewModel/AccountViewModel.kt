@@ -32,4 +32,9 @@ class AccountViewModel(application: Application):AndroidViewModel(application) {
         }
     }
 
+    fun deleteAccount(accounts: Accounts){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.deleteAccount(accounts)
+        }
+    }
 }

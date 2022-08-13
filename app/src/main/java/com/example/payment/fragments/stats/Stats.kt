@@ -63,7 +63,7 @@ class Stats : Fragment() {
             viewModel.readAllTransaction.removeObservers(viewLifecycleOwner)
             viewModel.readAllExpenseTransaction.removeObservers(viewLifecycleOwner)
             viewModel.readAllIncomeTransaction.observe(viewLifecycleOwner) {
-                adapter.setData(it)
+                adapter.submitList(it)
             }
         }
 
@@ -72,7 +72,7 @@ class Stats : Fragment() {
             viewModel.readAllTransaction.removeObservers(viewLifecycleOwner)
             viewModel.readAllIncomeTransaction.removeObservers(viewLifecycleOwner)
             viewModel.readAllExpenseTransaction.observe(viewLifecycleOwner){
-                adapter.setData(it)
+                adapter.submitList(it)
             }
         }
 
@@ -82,13 +82,13 @@ class Stats : Fragment() {
             viewModel.readAllIncomeTransaction.removeObservers(viewLifecycleOwner)
             viewModel.readAllTransactionDate.removeObservers(viewLifecycleOwner)
             viewModel.readAllTransaction.observe(viewLifecycleOwner){
-                adapter.setData(it)
+                adapter.submitList(it)
             }
         }
 
 //        setting the observer
         viewModel.readAllTransaction.observe(viewLifecycleOwner){
-            adapter.setData(it)
+            adapter.submitList(it)
         }
 
         return binding.root
@@ -107,9 +107,9 @@ class Stats : Fragment() {
         }
         viewModel.readAllTransaction.removeObservers(viewLifecycleOwner)
         //        calender icon
-        viewModel.readAllTransactionDate.observe(viewLifecycleOwner) { list ->
-            adapter.setData(list)
-        }
+//        viewModel.readAllTransactionDate.observe(viewLifecycleOwner) { list ->
+//            adapter.submitList(list)
+//        }
     }
 
 

@@ -42,14 +42,13 @@ class Wallet : Fragment() {
 
         transactionViewModel.readAccountDetails.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
-                adapter.setData(it)
+                adapter.submitList(it)
             }
         }
 
         binding.addAccount.setOnClickListener {
             showBottomSheetLayout(requireContext())
         }
-
 
         return binding.root
     }

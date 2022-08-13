@@ -4,39 +4,48 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.payment.R
-import com.example.payment.fragments.stats.addTranasactions.AddTransaction
 import com.example.payment.transactionDb.AccountDetails
 
-class WalletAccountDetailsAdapter() : RecyclerView.Adapter<WalletAccountDetailsHolder>() {
-    private var data = emptyList<AccountDetails>()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletAccountDetailsHolder {
-        val l = LayoutInflater.from(parent.context)
-        val listItem = l.inflate(R.layout.wallet_accounts_row, parent, false)
-        return WalletAccountDetailsHolder(listItem)
+class WalletAccountDetailsAdapter :
+    ListAdapter<AccountDetails, WalletAccountDetailsAdapter.AccountViewHolder>(Comparator()) {
+
+    class AccountViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val name: TextView = view.findViewById(R.id.walletAccountNameRC)
+        private val balance: TextView = view.findViewById(R.id.walletAccountBalanceRC)
+
+        fun bind(item: AccountDetails) {
+            name.text = item.accountName
+            balance.text = balance.context.getString(
+                R.string.amountInRupee,
+                item.accountBalance.toString()
+            )
+        }
+
     }
 
-    override fun onBindViewHolder(holder: WalletAccountDetailsHolder, position: Int) {
-        // set the values to the Views using holder variable
-        val item = data[position]
-        holder.name.text = item.accountName
-        holder.balance.text = holder.balance.context.getString(R.string.amountInRupee,item.accountBalance.toString())
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.wallet_accounts_row, parent, false)
+        return AccountViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        // return the size of the list
-        return data.size
+    override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
+        val item = getItem(position)
+        holder.bind(item)
     }
 
-    fun setData(list: List<AccountDetails>) {
-        data = list
-        notifyDataSetChanged()
-    }
-}
+    class Comparator : DiffUtil.ItemCallback<AccountDetails>(){
+        override fun areItemsTheSame(oldItem: AccountDetails, newItem: AccountDetails): Boolean {
+            return oldItem.accountName == newItem.accountName
+        }
 
-class WalletAccountDetailsHolder(val view: View) : RecyclerView.ViewHolder(view) {
-    val name: TextView = view.findViewById(R.id.walletAccountNameRC)
-    val balance: TextView = view.findViewById(R.id.walletAccountBalanceRC)
-//    val layout: ConstraintLayout = view.findViewById<ConstraintLayout>(R.id.accountLayoutRC)
+        override fun areContentsTheSame(oldItem: AccountDetails, newItem: AccountDetails): Boolean {
+            return oldItem == newItem
+        }
+
+    }
 }
