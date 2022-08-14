@@ -7,63 +7,146 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.payment.DetailedTransactionAnalysis
 import com.example.payment.DetailedTransactionAnalysisDirections
 import com.example.payment.R
 import com.example.payment.transactionDb.myTypes
 
-class TransactionTypeAdapter(private val fragment:DetailedTransactionAnalysis):RecyclerView.Adapter<TransactionTypeHolder>() {
-    private var list : List<myTypes> = emptyList()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionTypeHolder {
-        val l = LayoutInflater.from(parent.context)
-        val listItem = l.inflate(R.layout.detailed_analysis_row, parent, false)
-        return TransactionTypeHolder(listItem)
-    }
+class TransactionTypeAdapter(val fragment: DetailedTransactionAnalysis) :
+    ListAdapter<myTypes, TransactionTypeAdapter.TransactionTypeViewHolder>(Comparator()) {
 
-    override fun onBindViewHolder(holder: TransactionTypeHolder, position: Int) {
-        val item = list[position]
-        holder.name.text = String.format(holder.name.context.getString(R.string.transactionTypeName,item.name))
-        holder.amount.text = String.format(holder.name.context.getString(R.string.amountInRupee,item.amount.toString()))
-        if(item.count>1){
-            holder.count.text = String.format(holder.name.context.getString(R.string.transactionTypeCount,item.count))
-        } else{
-            holder.count.text = String.format(holder.name.context.getString(R.string.transactionTypeCountSingular,item.count))
-        }
-        when(item.name){
-            "DineOut" -> holder.image.setImageResource(R.drawable.pizza_icon)
-            "Bills" -> holder.image.setImageResource(R.drawable.bill_icon)
-            "Credit Card Due" -> holder.image.setImageResource(R.drawable.creditcard_icon)
-            "Entertainment" -> holder.image.setImageResource(R.drawable.entertainment_icon)
-            "Fuel" -> holder.image.setImageResource(R.drawable.fuel_icon)
-            "Groceries" -> holder.image.setImageResource(R.drawable.grocery_icon)
-            "Shopping" -> holder.image.setImageResource(R.drawable.shopping_icon)
-            "Stationary" -> holder.image.setImageResource(R.drawable.stationary_icon)
-            "Suspense" -> holder.image.setImageResource(R.drawable.general_icon)
-            "Transportation" -> holder.image.setImageResource(R.drawable.transportation_icon)
-            else -> holder.image.setImageResource(R.drawable.ic_entertainment)
-        }
+
+    class TransactionTypeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val name: TextView = view.findViewById(R.id.transactionTypeName)
+        val amount: TextView = view.findViewById(R.id.transactionTypeAmount)
+        private val count: TextView = view.findViewById(R.id.transactionTypeCount)
+        private val image: ImageView = view.findViewById(R.id.transactionTypeIcon)
+        val layout: CardView = view.findViewById(R.id.transactionTypeLayout)
+
+        fun bind(item: myTypes, fragment: DetailedTransactionAnalysis) {
+            name.text =
+                String.format(name.context.getString(R.string.transactionTypeName, item.name))
+            amount.text = String.format(
+                name.context.getString(
+                    R.string.amountInRupee,
+                    item.amount.toString()
+                )
+            )
+            if (item.count > 1) {
+                count.text =
+                    String.format(name.context.getString(R.string.transactionTypeCount, item.count))
+            } else {
+                count.text = String.format(
+                    name.context.getString(
+                        R.string.transactionTypeCountSingular,
+                        item.count
+                    )
+                )
+            }
+            when (item.name) {
+                "DineOut" -> image.setImageResource(R.drawable.pizza_icon)
+                "Bills" -> image.setImageResource(R.drawable.bill_icon)
+                "Credit Card Due" -> image.setImageResource(R.drawable.creditcard_icon)
+                "Entertainment" -> image.setImageResource(R.drawable.entertainment_icon)
+                "Fuel" -> image.setImageResource(R.drawable.fuel_icon)
+                "Groceries" -> image.setImageResource(R.drawable.grocery_icon)
+                "Shopping" -> image.setImageResource(R.drawable.shopping_icon)
+                "Stationary" -> image.setImageResource(R.drawable.stationary_icon)
+                "Suspense" -> image.setImageResource(R.drawable.general_icon)
+                "Transportation" -> image.setImageResource(R.drawable.transportation_icon)
+                else -> image.setImageResource(R.drawable.ic_entertainment)
+            }
 //        setting the onclick listener
-        holder.layout.setOnClickListener{
-            val action = DetailedTransactionAnalysisDirections.actionDetailedTransactionAnalysisToDetailedCategoryTransactionsFragment(item.name.toString(),fragment.startDate,fragment.endDate)
-            Navigation.findNavController(holder.layout).navigate(action)
+            layout.setOnClickListener {
+                val action =
+                    DetailedTransactionAnalysisDirections.actionDetailedTransactionAnalysisToDetailedCategoryTransactionsFragment(
+                        item.name,
+                        fragment.startDate,
+                        fragment.endDate
+                    )
+                Navigation.findNavController(layout).navigate(action)
+            }
         }
     }
 
-    override fun getItemCount(): Int {
-        return list.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionTypeViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.detailed_analysis_row, parent, false)
+        return TransactionTypeViewHolder(view)
     }
 
-    fun setDataList(dataList: List<myTypes>){
-        list = dataList
-        notifyDataSetChanged()
+    override fun onBindViewHolder(holder: TransactionTypeViewHolder, position: Int) {
+        val item = getItem(position)
+        holder.bind(item, fragment)
+    }
+
+    class Comparator : DiffUtil.ItemCallback<myTypes>() {
+        override fun areItemsTheSame(oldItem: myTypes, newItem: myTypes): Boolean {
+            return oldItem.name == newItem.name
+        }
+
+        override fun areContentsTheSame(oldItem: myTypes, newItem: myTypes): Boolean {
+            return oldItem == newItem
+        }
+
     }
 }
 
-class TransactionTypeHolder(view: View):RecyclerView.ViewHolder(view){
-    val name = view.findViewById<TextView>(R.id.transactionTypeName)
-    val amount = view.findViewById<TextView>(R.id.transactionTypeAmount)
-    val count = view.findViewById<TextView>(R.id.transactionTypeCount)
-    val image = view.findViewById<ImageView>(R.id.transactionTypeIcon)
-    val layout = view.findViewById<CardView>(R.id.transactionTypeLayout)
-}
+
+//class TransactionTypeAdapter(private val fragment:DetailedTransactionAnalysis):RecyclerView.Adapter<TransactionTypeHolder>() {
+//    private var list : List<myTypes> = emptyList()
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionTypeHolder {
+//        val l = LayoutInflater.from(parent.context)
+//        val listItem = l.inflate(R.layout.detailed_analysis_row, parent, false)
+//        return TransactionTypeHolder(listItem)
+//    }
+//
+//    override fun onBindViewHolder(holder: TransactionTypeHolder, position: Int) {
+//        val item = list[position]
+//        holder.name.text = String.format(holder.name.context.getString(R.string.transactionTypeName,item.name))
+//        holder.amount.text = String.format(holder.name.context.getString(R.string.amountInRupee,item.amount.toString()))
+//        if(item.count>1){
+//            holder.count.text = String.format(holder.name.context.getString(R.string.transactionTypeCount,item.count))
+//        } else{
+//            holder.count.text = String.format(holder.name.context.getString(R.string.transactionTypeCountSingular,item.count))
+//        }
+//        when(item.name){
+//            "DineOut" -> holder.image.setImageResource(R.drawable.pizza_icon)
+//            "Bills" -> holder.image.setImageResource(R.drawable.bill_icon)
+//            "Credit Card Due" -> holder.image.setImageResource(R.drawable.creditcard_icon)
+//            "Entertainment" -> holder.image.setImageResource(R.drawable.entertainment_icon)
+//            "Fuel" -> holder.image.setImageResource(R.drawable.fuel_icon)
+//            "Groceries" -> holder.image.setImageResource(R.drawable.grocery_icon)
+//            "Shopping" -> holder.image.setImageResource(R.drawable.shopping_icon)
+//            "Stationary" -> holder.image.setImageResource(R.drawable.stationary_icon)
+//            "Suspense" -> holder.image.setImageResource(R.drawable.general_icon)
+//            "Transportation" -> holder.image.setImageResource(R.drawable.transportation_icon)
+//            else -> holder.image.setImageResource(R.drawable.ic_entertainment)
+//        }
+////        setting the onclick listener
+//        holder.layout.setOnClickListener{
+//            val action = DetailedTransactionAnalysisDirections.actionDetailedTransactionAnalysisToDetailedCategoryTransactionsFragment(item.name.toString(),fragment.startDate,fragment.endDate)
+//            Navigation.findNavController(holder.layout).navigate(action)
+//        }
+//    }
+//
+//    override fun getItemCount(): Int {
+//        return list.size
+//    }
+//
+//    fun setDataList(dataList: List<myTypes>){
+//        list = dataList
+//        notifyDataSetChanged()
+//    }
+//}
+//
+//class TransactionTypeHolder(view: View):RecyclerView.ViewHolder(view){
+//    val name = view.findViewById<TextView>(R.id.transactionTypeName)
+//    val amount = view.findViewById<TextView>(R.id.transactionTypeAmount)
+//    val count = view.findViewById<TextView>(R.id.transactionTypeCount)
+//    val image = view.findViewById<ImageView>(R.id.transactionTypeIcon)
+//    val layout = view.findViewById<CardView>(R.id.transactionTypeLayout)
+//}

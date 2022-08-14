@@ -102,7 +102,7 @@ class DetailedCategoryTransactionsFragment : Fragment() {
             }
         }
         viewModel.transactionsCategoryWise.observe(viewLifecycleOwner) {
-            adapter.setData(it)
+            adapter.submitList(it)
         }
 
         binding.categoryTransactions.adapter

@@ -107,9 +107,9 @@ class Stats : Fragment() {
         }
         viewModel.readAllTransaction.removeObservers(viewLifecycleOwner)
         //        calender icon
-//        viewModel.readAllTransactionDate.observe(viewLifecycleOwner) { list ->
-//            adapter.submitList(list)
-//        }
+        viewModel.readAllTransactionDate.observe(viewLifecycleOwner) { list ->
+            adapter.submitList(list)
+        }
     }
 
 

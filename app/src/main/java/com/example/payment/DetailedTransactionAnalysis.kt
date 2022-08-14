@@ -82,7 +82,7 @@ class DetailedTransactionAnalysis : Fragment() {
             openRangePicker(adapter)
         }
         viewModel.readTransactionTypeAmount.observe(viewLifecycleOwner) {
-            adapter.setDataList(it)
+            adapter.submitList(it)
             updateChart(it)
         }
 
@@ -104,13 +104,13 @@ class DetailedTransactionAnalysis : Fragment() {
         dateRangePicker.addOnPositiveButtonClickListener {
             startDate = it.first
             endDate = it.second
-            viewModel.setCustomDurationData(listOf(it.first, (it.second+86400000)))
+            viewModel.setCustomDurationData(listOf(it.first, (it.second + 86400000)))
         }
         viewModel.readTransactionTypeAmount.removeObservers(viewLifecycleOwner)
         viewModel.expenseSum.removeObservers(viewLifecycleOwner)
         //        calender icon
         viewModel.listAccordingToDate.observe(viewLifecycleOwner) { list ->
-            adapter.setDataList(list)
+            adapter.submitList(list)
             updateChart(list)
         }
         viewModel.sumAccordingToDate.observe(viewLifecycleOwner) {
