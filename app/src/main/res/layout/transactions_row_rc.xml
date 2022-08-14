@@ -88,9 +88,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:fontFamily="@font/autour_one"
+            android:fontFamily="@font/open_sans_medium"
             android:padding="2dp"
             android:text="@string/amountInRupee"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@id/accountRC"
             android:textColor="@color/income_color"
             app:layout_constraintEnd_toEndOf="parent"/>

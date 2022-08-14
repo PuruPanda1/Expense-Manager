@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,11 +15,14 @@ import com.example.payment.viewModel.TransactionViewModel
 import com.example.payment.rcAdapter.TransactionsAdapter
 import com.example.payment.databinding.FragmentStatsBinding
 import com.example.payment.transactionDb.Transaction
+import com.example.payment.userDb.UserViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 
 class Stats : Fragment() {
     private var _binding: FragmentStatsBinding? = null
     private lateinit var viewModel: TransactionViewModel
+    private lateinit var userViewModel: UserViewModel
+    private var currency = MutableLiveData("INR")
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,10 +33,21 @@ class Stats : Fragment() {
 
 //        setting the viewModel
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
 
-        val adapter = TransactionsAdapter(this)
-        binding.transactionsRC.layoutManager = LinearLayoutManager(requireContext())
-        binding.transactionsRC.adapter = adapter
+
+        lateinit var adapter:TransactionsAdapter
+
+//        live data for currency
+        userViewModel.userDetails.observe(viewLifecycleOwner){
+            if(it!=null){
+                currency.value = it.userCurrency
+            }
+            adapter = TransactionsAdapter(this,currency.value!!)
+            binding.transactionsRC.layoutManager = LinearLayoutManager(requireContext())
+            binding.transactionsRC.adapter = adapter
+//            adapter = TransactionsAdapter(this,currency.value!!)
+        }
 
 //          add new transaction onclick listener
         binding.addBtn.setOnClickListener {

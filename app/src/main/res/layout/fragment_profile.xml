@@ -1,283 +1,287 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryBackground"
+    android:scrollbars="none"
     tools:context=".fragments.profile.Profile">
 
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent">-->
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/waveSquare"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:src="@drawable/sqaure_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/wave"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="-10dp"
-        android:src="@drawable/ic_wave"
-        android:tint="@color/primary_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/waveSquare" />
-
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/userPhoto"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="-150dp"
-        android:cropToPadding="true"
-        android:padding="5dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/instagram_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/wave"
-        app:shapeAppearanceOverlay="@style/CircleImage"
-        app:strokeColor="@color/primary_blue"
-        app:strokeWidth="5dp" />
-
-    <EditText
-        android:id="@+id/userName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:autofillHints="username"
-        android:fontFamily="@font/autour_one"
-        android:inputType="textPersonName"
-        android:text="@string/devName"
-        android:textColor="@color/primaryTextColor"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userPhoto" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/shapeableImageView"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="5dp"
-        android:src="@drawable/verification_icon"
-        app:layout_constraintBottom_toBottomOf="@id/userName"
-        app:layout_constraintStart_toEndOf="@id/userName"
-        app:layout_constraintTop_toTopOf="@id/userName"
-        app:shapeAppearanceOverlay="@style/CircleImage" />
-
-    <EditText
-        android:id="@+id/userBio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:fontFamily="@font/poppins"
-        android:imeOptions="actionDone"
-        android:inputType="textMultiLine"
-        android:padding="5dp"
-        android:text="@string/devBio"
-        android:textColor="@color/primaryTextColor"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userName" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/budgetCardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardElevation="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userBio">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/waveSquare"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/primaryBackground"
-            android:padding="10dp">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/budgetIcon"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="10dp"
-                android:src="@drawable/budget_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/CircleImage" />
-
-            <TextView
-                android:id="@+id/budgetTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:fontFamily="@font/poppins"
-                android:text="Budget: "
-                android:textColor="@color/primaryTextColor"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/budgetIcon"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/userBudget"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:gravity="end"
-                android:inputType="number"
-                android:text="4000"
-                android:textColor="@color/primaryTextColor"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/budgetTextView"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:id="@+id/userCurrency"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/open_sans_light"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:text="Currency: Indian INR ( $ )"
-        android:textColor="@color/primaryTextColor"
-        android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/budgetCardView" />
-
-    <Button
-        android:id="@+id/editButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:paddingStart="50dp"
-        android:paddingEnd="50dp"
-        android:text="EDIT"
-        android:textColor="@color/buttonColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userCurrency" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/devDataCardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editButton">
+            android:layout_height="150dp"
+            android:src="@drawable/sqaure_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/devloperCard"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/wave"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="-10dp"
+            android:src="@drawable/ic_wave"
+            android:tint="@color/primary_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/waveSquare" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/userPhoto"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="-150dp"
+            android:cropToPadding="true"
+            android:padding="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/instagram_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/wave"
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            app:strokeColor="@color/primary_blue"
+            app:strokeWidth="5dp" />
+
+        <EditText
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:autofillHints="username"
+            android:fontFamily="@font/autour_one"
+            android:inputType="textPersonName"
+            android:text="@string/devName"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userPhoto" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shapeableImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/verification_icon"
+            app:layout_constraintBottom_toBottomOf="@id/userName"
+            app:layout_constraintStart_toEndOf="@id/userName"
+            app:layout_constraintTop_toTopOf="@id/userName"
+            app:shapeAppearanceOverlay="@style/CircleImage" />
+
+        <EditText
+            android:id="@+id/userBio"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/primary_blue"
-            android:padding="10dp">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/poppins"
+            android:imeOptions="actionDone"
+            android:inputType="textMultiLine"
+            android:padding="5dp"
+            android:text="@string/devBio"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userName" />
 
-            <TextView
-                android:id="@+id/heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/poppins"
-                android:text="Follow Purab Modi on :"
-                android:textColor="@color/buttonColor"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/budgetCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardElevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userBio">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:weightSum="4"
-                app:layout_constraintBottom_toBottomOf="@id/devloperCard"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/heading">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/primaryBackground"
+                android:padding="10dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/instagram_icon"
+                    android:id="@+id/budgetIcon"
                     android:layout_width="45dp"
-                    android:layout_height="55dp"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:src="@drawable/instagram_icon"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/budget_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:shapeAppearanceOverlay="@style/CircleImage" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/twitter_icon"
-                    android:layout_width="45dp"
-                    android:layout_height="55dp"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:src="@drawable/twitter_icon"
-                    app:shapeAppearanceOverlay="@style/CircleImage" />
+                <TextView
+                    android:id="@+id/budgetTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Budget: "
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/budgetIcon"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/github_icon"
-                    android:layout_width="45dp"
-                    android:layout_height="55dp"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:src="@drawable/github_icon"
-                    app:shapeAppearanceOverlay="@style/CircleImage" />
+                <EditText
+                    android:id="@+id/userBudget"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:gravity="end"
+                    android:inputType="number"
+                    android:text="4000"
+                    android:textColor="@color/primaryTextColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/budgetTextView"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/linkedIn_icon"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:src="@drawable/linkedin_icon"
-                    app:shapeAppearanceOverlay="@style/CircleImage" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/userCurrency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/open_sans_light"
+            android:gravity="center"
+            android:text="Currency: Indian INR ( $ )"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/budgetCardView" />
 
-    </com.google.android.material.card.MaterialCardView>
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
+            android:text="EDIT"
+            android:textColor="@color/buttonColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userCurrency" />
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/changeProfilePhoto"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="100dp"
-        android:backgroundTint="@color/primary_blue"
-        android:clickable="true"
-        android:visibility="gone"
-        app:icon="@drawable/ic_edit"
-        app:iconSize="24dp"
-        app:iconTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/userPhoto"
-        app:layout_constraintStart_toStartOf="@id/userPhoto" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/devDataCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editButton">
 
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/devloperCard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/primary_blue"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Follow Purab Modi on :"
+                    android:textColor="@color/buttonColor"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:weightSum="4"
+                    app:layout_constraintBottom_toBottomOf="@id/devloperCard"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/heading">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/instagram_icon"
+                        android:layout_width="45dp"
+                        android:layout_height="55dp"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:src="@drawable/instagram_icon"
+                        app:shapeAppearanceOverlay="@style/CircleImage" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/twitter_icon"
+                        android:layout_width="45dp"
+                        android:layout_height="55dp"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:src="@drawable/twitter_icon"
+                        app:shapeAppearanceOverlay="@style/CircleImage" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/github_icon"
+                        android:layout_width="45dp"
+                        android:layout_height="55dp"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:src="@drawable/github_icon"
+                        app:shapeAppearanceOverlay="@style/CircleImage" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/linkedIn_icon"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:src="@drawable/linkedin_icon"
+                        app:shapeAppearanceOverlay="@style/CircleImage" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/changeProfilePhoto"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="100dp"
+            android:backgroundTint="@color/primary_blue"
+            android:clickable="true"
+            android:visibility="gone"
+            app:icon="@drawable/ic_edit"
+            app:iconSize="24dp"
+            app:iconTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/userPhoto"
+            app:layout_constraintStart_toStartOf="@id/userPhoto" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

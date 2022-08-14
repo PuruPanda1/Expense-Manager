@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.payment.databinding.FragmentDetailedTransactionAnalysisBinding
 import com.example.payment.rcAdapter.TransactionTypeAdapter
 import com.example.payment.transactionDb.myTypes
+import com.example.payment.userDb.UserViewModel
 import com.example.payment.viewModel.TransactionViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
@@ -19,6 +21,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -39,6 +42,10 @@ class DetailedTransactionAnalysis : Fragment() {
         "November",
         "December"
     )
+    private var amount = 0f
+    private var currency = MutableLiveData("INR")
+    private var currencyFormatter = NumberFormat.getCurrencyInstance()
+    private lateinit var userViewModel: UserViewModel
     private lateinit var viewModel: TransactionViewModel
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -54,9 +61,19 @@ class DetailedTransactionAnalysis : Fragment() {
             Navigation.findNavController(binding.root)
                 .navigate(R.id.action_detailedTransactionAnalysis_to_MainScreen)
         }
+//        defaults for the currency Formatter
+        currencyFormatter.maximumFractionDigits = 1
+        currencyFormatter.currency = Currency.getInstance(currency.value)
 
+        //        setting the curreny Formater for the page
+        currency.observe(viewLifecycleOwner) {
+            currencyFormatter.currency = Currency.getInstance(currency.value)
+            setAmount()
+        }
+
+//      setting the viewModels
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
-
 
 //        set monthly balance amount
         val month = months[Calendar.getInstance().get(Calendar.MONTH)]
@@ -65,17 +82,23 @@ class DetailedTransactionAnalysis : Fragment() {
 //        observer for balance
         viewModel.readMonthlySpends.observe(viewLifecycleOwner) {
             if (it == null) {
-                binding.detailedmonthlyExpense.text =
-                    String.format(getString(R.string.amountInRupee, "0"))
+                amount = 0f
             } else {
-                binding.detailedmonthlyExpense.text =
-                    String.format(getString(R.string.amountInRupee, it.toString()))
+                amount = it
             }
+            setAmount()
+        }
+//      setting the adapter for the recyclerview
+        lateinit var adapter: TransactionTypeAdapter
+        userViewModel.userDetails.observe(viewLifecycleOwner) {
+            if (it != null) {
+                currency.value = it.userCurrency
+            }
+            adapter = TransactionTypeAdapter(this, currency.value!!)
+            binding.transactionTypeRC.layoutManager = LinearLayoutManager(requireContext())
+            binding.transactionTypeRC.adapter = adapter
         }
 
-        val adapter = TransactionTypeAdapter(this)
-        binding.transactionTypeRC.layoutManager = LinearLayoutManager(requireContext())
-        binding.transactionTypeRC.adapter = adapter
 
 //        setting the rangePicker
         binding.rangePicker.setOnClickListener {
@@ -90,6 +113,10 @@ class DetailedTransactionAnalysis : Fragment() {
         setupAnalysisPieChart()
 
         return binding.root
+    }
+
+    private fun setAmount() {
+        binding.detailedmonthlyExpense.text = currencyFormatter.format(amount)
     }
 
     private fun openRangePicker(adapter: TransactionTypeAdapter) {
@@ -115,11 +142,9 @@ class DetailedTransactionAnalysis : Fragment() {
         }
         viewModel.sumAccordingToDate.observe(viewLifecycleOwner) {
             if (it == null) {
-                binding.detailedmonthlyExpense.text =
-                    String.format(getString(R.string.amountInRupee, "0"))
+                binding.detailedmonthlyExpense.text = currencyFormatter.format(0)
             } else {
-                binding.detailedmonthlyExpense.text =
-                    String.format(getString(R.string.amountInRupee, it.toString()))
+                binding.detailedmonthlyExpense.text = currencyFormatter.format(it)
             }
         }
 //        setting the duration in the card view

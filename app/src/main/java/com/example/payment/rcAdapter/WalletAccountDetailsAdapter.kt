@@ -9,20 +9,22 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.payment.R
 import com.example.payment.transactionDb.AccountDetails
+import java.text.NumberFormat
+import java.util.*
 
-class WalletAccountDetailsAdapter :
+class WalletAccountDetailsAdapter(private val currency:String) :
     ListAdapter<AccountDetails, WalletAccountDetailsAdapter.AccountViewHolder>(Comparator()) {
 
     class AccountViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.walletAccountNameRC)
         private val balance: TextView = view.findViewById(R.id.walletAccountBalanceRC)
 
-        fun bind(item: AccountDetails) {
+        fun bind(item: AccountDetails,currency: String) {
+            val currencyFormatter = NumberFormat.getCurrencyInstance()
+            currencyFormatter.maximumFractionDigits = 1
+            currencyFormatter.currency = Currency.getInstance(currency)
             name.text = item.accountName
-            balance.text = balance.context.getString(
-                R.string.amountInRupee,
-                item.accountBalance.toString()
-            )
+            balance.text = currencyFormatter.format(item.accountBalance)
         }
 
     }
@@ -35,7 +37,7 @@ class WalletAccountDetailsAdapter :
 
     override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item,currency)
     }
 
     class Comparator : DiffUtil.ItemCallback<AccountDetails>(){

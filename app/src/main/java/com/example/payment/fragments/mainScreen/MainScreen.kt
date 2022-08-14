@@ -5,14 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.payment.R
 import com.example.payment.databinding.FragmentMainScreenBinding
-import com.example.payment.transactionDb.Transaction
 import com.example.payment.transactionDb.myTypes
 import com.example.payment.userDb.UserViewModel
 import com.example.payment.viewModel.TransactionViewModel
@@ -22,7 +20,6 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 class MainScreen : Fragment() {
@@ -45,7 +42,9 @@ class MainScreen : Fragment() {
     private lateinit var viewModel: TransactionViewModel
     private lateinit var userViewModel: UserViewModel
     private val binding get() = _binding!!
-
+    private var balanceAmount = 0f
+    private var monthlyAmount = 0f
+    private var budget = 4000
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,32 +71,44 @@ class MainScreen : Fragment() {
             }
         }
 
+//        default values for currency formatter
+        currencyFormatter.maximumFractionDigits = 1
+        currencyFormatter.currency = Currency.getInstance(currency.value)
+
+//        change in the currency
+        currency.observe(viewLifecycleOwner) {
+            currencyFormatter.currency = Currency.getInstance(it!!)
+            setAmount()
+        }
+
 //        setting viewModel
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
 
 //        Setting the userName
-        var budget = 4000
         userViewModel.userDetails.observe(viewLifecycleOwner) {
             if (it != null) {
                 currency.value = it.userCurrency
-                currencyFormatter.maximumFractionDigits = 2
+                currencyFormatter.maximumFractionDigits = 1
                 currencyFormatter.currency = Currency.getInstance(currency.value)
                 binding.userName.text = it.username
-                binding.userBudget.text = currencyFormatter.format(it.userBudget)
                 budget = it.userBudget
                 val per = ((it.userBudget / budget) * 100).toString()
                 binding.expensePercentage.text = getString(R.string.percentageBudget, per)
+            } else {
+                binding.expensePercentage.text = getString(R.string.percentageBudget, "0")
             }
+            setAmount()
         }
 
 //        set balance amount
         viewModel.readDifferenceSum.observe(viewLifecycleOwner) {
             if (it != null) {
-                binding.balanceAmount.text = currencyFormatter.format(it)
+                balanceAmount = it
             } else {
-                binding.balanceAmount.text = currencyFormatter.format(0)
+                balanceAmount = 0f
             }
+            setAmount()
         }
 
 //        set monthly balance amount
@@ -106,7 +117,7 @@ class MainScreen : Fragment() {
 //        observer for balance
         viewModel.readMonthlySpends.observe(viewLifecycleOwner) {
             if (it != null) {
-                binding.monthlyExpense.text = "${currencyFormatter.format(it)} / "
+                monthlyAmount = it
                 val per = ((it / budget) * 100).toInt().toString()
                 binding.expensePercentage.text = getString(R.string.percentageBudget, per)
                 if (it > budget) {
@@ -125,8 +136,9 @@ class MainScreen : Fragment() {
                     )
                 }
             } else {
-                binding.monthlyExpense.text = "${currencyFormatter.format(0)} / "
+                monthlyAmount = 0f
             }
+            setAmount()
         }
 
 //         setting the pie chart
@@ -144,148 +156,18 @@ class MainScreen : Fragment() {
         }
 
 //      setting the data for the recent transactions
-        viewModel.readAllTransaction.observe(viewLifecycleOwner) { transactionList ->
-            if (transactionList.isEmpty() || transactionList.size < 3) {
-                binding.eachRowLayout1.isVisible = false
-                binding.eachRowLayout2.isVisible = false
-                binding.eachRowLayout3.isVisible = false
-            } else {
-                setRecentTransaction(transactionList!!)
-            }
-        }
+//        viewModel.readAllTransaction.observe(viewLifecycleOwner) { transactionList ->
+//           left to implement
+//        }
         return binding.root
     }
 
-    private fun setRecentTransaction(transactionList: List<Transaction>) {
-        //            setting amount for the 1st transaction
-        if (transactionList[0].isExpense) {
-            binding.amountShowMainScreen1.text =
-                currencyFormatter.format(transactionList[0].expenseAmount)
-            binding.amountShowMainScreen1.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.expense_color
-                )
-            )
-        } else {
-            binding.amountShowMainScreen1.text =
-                currencyFormatter.format(transactionList[0].incomeAmount)
-            binding.amountShowMainScreen1.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.income_color
-                )
-            )
-        }
-//            setting amount for the 2nd transaction
-        if (transactionList[1].isExpense) {
-            binding.amountShowMainScreen2.text =
-                currencyFormatter.format(transactionList[1].expenseAmount)
-            binding.amountShowMainScreen2.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.expense_color
-                )
-            )
-        } else {
-            binding.amountShowMainScreen2.text =
-                currencyFormatter.format(transactionList[1].incomeAmount)
-            binding.amountShowMainScreen2.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.income_color
-                )
-            )
-        }
-//            setting amount for the 3rd transaction
-        if (transactionList[2].isExpense) {
-            binding.amountShowMainScreen3.text =
-                currencyFormatter.format(transactionList[2].expenseAmount)
-            binding.amountShowMainScreen3.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.expense_color
-                )
-            )
-        } else {
-            binding.amountShowMainScreen3.text =
-                currencyFormatter.format(transactionList[2].incomeAmount)
-            binding.amountShowMainScreen3.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.income_color
-                )
-            )
-        }
-//            setting date
-        val simpleDateFormat = SimpleDateFormat("dd MMM")
-        var dateString = simpleDateFormat.format(transactionList[0].date)
-        binding.dateShowMainScreen1.text = dateString
-        dateString = simpleDateFormat.format(transactionList[1].date)
-        binding.dateShowMainScreen2.text = dateString
-        dateString = simpleDateFormat.format(transactionList[2].date)
-        binding.dateShowMainScreen3.text = dateString
-//            setting category values
-        binding.categoryShowMainScreen1.text =
-            transactionList[0].transactionType
-        binding.categoryShowMainScreen2.text =
-            transactionList[1].transactionType
-        binding.categoryShowMainScreen3.text =
-            transactionList[2].transactionType
-//            setting description
-        binding.descriptionShowMainScreen1.text =
-            transactionList[0].tDescription
-        binding.descriptionShowMainScreen2.text =
-            transactionList[1].tDescription
-        binding.descriptionShowMainScreen3.text =
-            transactionList[2].tDescription
-//                setting the image
-        when (transactionList[0].transactionType) {
-            "DineOut" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.pizza_icon)
-            "Bills" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.bill_icon)
-            "Credit Card Due" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.creditcard_icon)
-            "Entertainment" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.entertainment_icon)
-            "Fuel" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.fuel_icon)
-            "Groceries" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.grocery_icon)
-            "Shopping" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.shopping_icon)
-            "Stationary" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.stationary_icon)
-            "Suspense" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.general_icon)
-            "Transportation" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.transportation_icon)
-            "Salary" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.salary_icon)
-            "Updated Balance" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.salary_icon)
-            else -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.ic_entertainment)
-        }
-        when (transactionList[1].transactionType) {
-            "DineOut" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.pizza_icon)
-            "Bills" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.bill_icon)
-            "Credit Card Due" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.creditcard_icon)
-            "Entertainment" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.entertainment_icon)
-            "Fuel" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.fuel_icon)
-            "Groceries" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.grocery_icon)
-            "Shopping" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.shopping_icon)
-            "Stationary" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.stationary_icon)
-            "Salary" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.salary_icon)
-            "Updated Balance" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.salary_icon)
-            "Suspense" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.general_icon)
-            "Transportation" -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.transportation_icon)
-            else -> binding.transactionTypeFloatingIcon2.setImageResource(R.drawable.ic_entertainment)
-        }
-        when (transactionList[2].transactionType) {
-            "DineOut" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.pizza_icon)
-            "Bills" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.bill_icon)
-            "Credit Card Due" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.creditcard_icon)
-            "Entertainment" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.entertainment_icon)
-            "Fuel" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.fuel_icon)
-            "Groceries" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.grocery_icon)
-            "Shopping" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.shopping_icon)
-            "Stationary" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.stationary_icon)
-            "Salary" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.salary_icon)
-            "Updated Balance" -> binding.transactionTypeFloatingIcon1.setImageResource(R.drawable.salary_icon)
-            "Suspense" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.general_icon)
-            "Transportation" -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.transportation_icon)
-            else -> binding.transactionTypeFloatingIcon3.setImageResource(R.drawable.ic_entertainment)
-        }
+    private fun setAmount() {
+        binding.monthlyExpense.text = currencyFormatter.format(monthlyAmount)
+        binding.balanceAmount.text = currencyFormatter.format(balanceAmount)
+        binding.userBudget.text = " / ${currencyFormatter.format(budget)}"
     }
+
 
     private fun setupPieChart() {
         binding.pieChart.isDrawHoleEnabled = true

@@ -21,7 +21,6 @@ import com.example.payment.userDb.UserViewModel
 import com.example.payment.viewModel.AccountViewModel
 import com.example.payment.viewModel.TransactionViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import java.text.NumberFormat
 import java.util.*
 
 class Wallet : Fragment() {
@@ -31,7 +30,6 @@ class Wallet : Fragment() {
     private var _binding: FragmentWalletBinding? = null
     private val binding get() = _binding!!
     private var currency: MutableLiveData<String> = MutableLiveData("INR")
-    private val currencyFormatter = NumberFormat.getCurrencyInstance()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,16 +41,17 @@ class Wallet : Fragment() {
         transactionViewModel =
             ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         accountViewModel = ViewModelProvider(requireActivity())[AccountViewModel::class.java]
-        val adapter = WalletAccountDetailsAdapter()
-        binding.walletAccountsRecyclerView.adapter = adapter
-        binding.walletAccountsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        lateinit var adapter: WalletAccountDetailsAdapter
 
         userViewModel.userDetails.observe(viewLifecycleOwner) {
             if (it != null) {
                 currency.value = it.userCurrency
-                currencyFormatter.maximumFractionDigits = 0
-                currencyFormatter.currency = Currency.getInstance(currency.value)
             }
+            adapter = WalletAccountDetailsAdapter(currency.value!!)
+            binding.walletAccountsRecyclerView.adapter = adapter
+            binding.walletAccountsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
         }
 
         transactionViewModel.readAccountDetails.observe(viewLifecycleOwner) {
