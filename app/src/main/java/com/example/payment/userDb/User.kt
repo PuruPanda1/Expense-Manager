@@ -12,5 +12,6 @@ data class User (
     val username:String,
     val userBio: String,
     val userBudget:Int,
-    val userPhoto: String
+    val userPhoto: String,
+    val userCurrency: String
         )

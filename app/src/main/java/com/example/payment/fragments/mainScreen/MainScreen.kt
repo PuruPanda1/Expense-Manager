@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.payment.R
@@ -20,11 +21,14 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MainScreen : Fragment() {
     private var _binding: FragmentMainScreenBinding? = null
+    private var currency: MutableLiveData<String> = MutableLiveData("INR")
+    private val currencyFormatter = NumberFormat.getCurrencyInstance()
     private val months = listOf(
         "January",
         "February",
@@ -41,6 +45,7 @@ class MainScreen : Fragment() {
     private lateinit var viewModel: TransactionViewModel
     private lateinit var userViewModel: UserViewModel
     private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,7 +64,7 @@ class MainScreen : Fragment() {
             in 21..23 -> {
                 binding.greetingMsg.text = getString(R.string.night)
             }
-            in 23 downTo 7 -> {
+            in 1..7 -> {
                 binding.greetingMsg.text = getString(R.string.night)
             }
             else -> {
@@ -75,8 +80,11 @@ class MainScreen : Fragment() {
         var budget = 4000
         userViewModel.userDetails.observe(viewLifecycleOwner) {
             if (it != null) {
+                currency.value = it.userCurrency
+                currencyFormatter.maximumFractionDigits = 2
+                currencyFormatter.currency = Currency.getInstance(currency.value)
                 binding.userName.text = it.username
-                binding.userBudget.text = getString(R.string.userBudget, it.userBudget.toString())
+                binding.userBudget.text = currencyFormatter.format(it.userBudget)
                 budget = it.userBudget
                 val per = ((it.userBudget / budget) * 100).toString()
                 binding.expensePercentage.text = getString(R.string.percentageBudget, per)
@@ -86,11 +94,9 @@ class MainScreen : Fragment() {
 //        set balance amount
         viewModel.readDifferenceSum.observe(viewLifecycleOwner) {
             if (it != null) {
-                binding.balanceAmount.text =
-                    String.format(getString(R.string.amountInRupee, it.toString()))
+                binding.balanceAmount.text = currencyFormatter.format(it)
             } else {
-                binding.balanceAmount.text =
-                    String.format(getString(R.string.amountInRupee, "0"))
+                binding.balanceAmount.text = currencyFormatter.format(0)
             }
         }
 
@@ -100,8 +106,7 @@ class MainScreen : Fragment() {
 //        observer for balance
         viewModel.readMonthlySpends.observe(viewLifecycleOwner) {
             if (it != null) {
-                binding.monthlyExpense.text =
-                    String.format(getString(R.string.amountInRupee, it.toString()))
+                binding.monthlyExpense.text = "${currencyFormatter.format(it)} / "
                 val per = ((it / budget) * 100).toInt().toString()
                 binding.expensePercentage.text = getString(R.string.percentageBudget, per)
                 if (it > budget) {
@@ -120,8 +125,7 @@ class MainScreen : Fragment() {
                     )
                 }
             } else {
-                binding.monthlyExpense.text =
-                    String.format(getString(R.string.amountInRupee, "0"))
+                binding.monthlyExpense.text = "${currencyFormatter.format(0)} / "
             }
         }
 
@@ -156,12 +160,7 @@ class MainScreen : Fragment() {
         //            setting amount for the 1st transaction
         if (transactionList[0].isExpense) {
             binding.amountShowMainScreen1.text =
-                String.format(
-                    getString(
-                        R.string.amountInRupee,
-                        transactionList[0].expenseAmount.toString()
-                    )
-                )
+                currencyFormatter.format(transactionList[0].expenseAmount)
             binding.amountShowMainScreen1.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -170,12 +169,7 @@ class MainScreen : Fragment() {
             )
         } else {
             binding.amountShowMainScreen1.text =
-                String.format(
-                    getString(
-                        R.string.amountInRupee,
-                        transactionList[0].incomeAmount.toString()
-                    )
-                )
+                currencyFormatter.format(transactionList[0].incomeAmount)
             binding.amountShowMainScreen1.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -186,12 +180,7 @@ class MainScreen : Fragment() {
 //            setting amount for the 2nd transaction
         if (transactionList[1].isExpense) {
             binding.amountShowMainScreen2.text =
-                String.format(
-                    getString(
-                        R.string.amountInRupee,
-                        transactionList[1].expenseAmount.toString()
-                    )
-                )
+                currencyFormatter.format(transactionList[1].expenseAmount)
             binding.amountShowMainScreen2.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -200,12 +189,7 @@ class MainScreen : Fragment() {
             )
         } else {
             binding.amountShowMainScreen2.text =
-                String.format(
-                    getString(
-                        R.string.amountInRupee,
-                        transactionList[1].incomeAmount.toString()
-                    )
-                )
+                currencyFormatter.format(transactionList[1].incomeAmount)
             binding.amountShowMainScreen2.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -216,12 +200,7 @@ class MainScreen : Fragment() {
 //            setting amount for the 3rd transaction
         if (transactionList[2].isExpense) {
             binding.amountShowMainScreen3.text =
-                String.format(
-                    getString(
-                        R.string.amountInRupee,
-                        transactionList[2].expenseAmount.toString()
-                    )
-                )
+                currencyFormatter.format(transactionList[2].expenseAmount)
             binding.amountShowMainScreen3.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -230,12 +209,7 @@ class MainScreen : Fragment() {
             )
         } else {
             binding.amountShowMainScreen3.text =
-                String.format(
-                    getString(
-                        R.string.amountInRupee,
-                        transactionList[2].incomeAmount.toString()
-                    )
-                )
+                currencyFormatter.format(transactionList[2].incomeAmount)
             binding.amountShowMainScreen3.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),

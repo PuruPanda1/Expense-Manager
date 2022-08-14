@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.payment.R
@@ -16,16 +17,21 @@ import com.example.payment.accountsDb.Accounts
 import com.example.payment.databinding.FragmentWalletBinding
 import com.example.payment.rcAdapter.WalletAccountDetailsAdapter
 import com.example.payment.transactionDb.Transaction
+import com.example.payment.userDb.UserViewModel
 import com.example.payment.viewModel.AccountViewModel
 import com.example.payment.viewModel.TransactionViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import java.text.NumberFormat
 import java.util.*
 
 class Wallet : Fragment() {
     private lateinit var transactionViewModel: TransactionViewModel
     private lateinit var accountViewModel: AccountViewModel
+    private lateinit var userViewModel: UserViewModel
     private var _binding: FragmentWalletBinding? = null
     private val binding get() = _binding!!
+    private var currency: MutableLiveData<String> = MutableLiveData("INR")
+    private val currencyFormatter = NumberFormat.getCurrencyInstance()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,12 +39,21 @@ class Wallet : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentWalletBinding.inflate(layoutInflater, container, false)
 
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         transactionViewModel =
             ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         accountViewModel = ViewModelProvider(requireActivity())[AccountViewModel::class.java]
         val adapter = WalletAccountDetailsAdapter()
         binding.walletAccountsRecyclerView.adapter = adapter
         binding.walletAccountsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        userViewModel.userDetails.observe(viewLifecycleOwner) {
+            if (it != null) {
+                currency.value = it.userCurrency
+                currencyFormatter.maximumFractionDigits = 0
+                currencyFormatter.currency = Currency.getInstance(currency.value)
+            }
+        }
 
         transactionViewModel.readAccountDetails.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {

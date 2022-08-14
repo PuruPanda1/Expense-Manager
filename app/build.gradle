@@ -40,6 +40,8 @@ android {
 dependencies {
     def roomVersion = "2.4.3"
     def lifecycle_version = "2.6.0-alpha01"
+//    currency Selector
+    implementation 'com.github.midorikocak:currency-picker-android:1.2.1'
 //    retrofit dependency
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'

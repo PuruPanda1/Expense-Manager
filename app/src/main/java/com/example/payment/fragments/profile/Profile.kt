@@ -2,9 +2,11 @@ package com.example.payment.fragments.profile
 
 import android.app.Activity
 import android.content.Intent
+import android.icu.util.Currency
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,12 +23,14 @@ import com.example.payment.databinding.FragmentProfileBinding
 import com.example.payment.userDb.User
 import com.example.payment.userDb.UserViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.mynameismidori.currencypicker.CurrencyPicker
+import com.mynameismidori.currencypicker.CurrencyPickerListener
 
 class Profile : Fragment() {
     private lateinit var viewModel: UserViewModel
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-
+    private var currencyCode: String = "INR"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,6 +61,7 @@ class Profile : Fragment() {
         binding.userName.isEnabled = false
         binding.userBio.isEnabled = false
         binding.userBudget.isEnabled = false
+        binding.userCurrency.isEnabled = false
 
 //        setting the user image
         binding.changeProfilePhoto.setOnClickListener {
@@ -81,13 +86,18 @@ class Profile : Fragment() {
                         getString(R.string.devName),
                         getString(R.string.devBio),
                         4000,
-                        userPhoto.toString()
+                        userPhoto.toString(),
+                        "INR"
                     )
                 )
             } else {
                 binding.userName.setText(it.username)
                 binding.userBudget.setText(it.userBudget.toString())
                 binding.userBio.setText(it.userBio)
+                val currencyName = Currency.getInstance(it.userCurrency).displayName
+                val currencySymbol = Currency.getInstance(it.userCurrency).symbol
+                binding.userCurrency.text = "$currencyName ( $currencySymbol )"
+                currencyCode = it.userCurrency
                 userPhoto = Uri.parse(it.userPhoto)
                 Glide.with(requireContext())
                     .load(it.userPhoto)
@@ -103,19 +113,43 @@ class Profile : Fragment() {
                 binding.userName.isEnabled = true
                 binding.userBio.isEnabled = true
                 binding.userBudget.isEnabled = true
+                binding.userCurrency.isEnabled = true
                 binding.changeProfilePhoto.isVisible = true
             } else {
                 isEditable = !isEditable
                 binding.editButton.text = "edit"
                 binding.userName.isEnabled = false
+                binding.userCurrency.isEnabled = false
                 binding.userBio.isEnabled = false
                 binding.changeProfilePhoto.isVisible = false
                 binding.userBudget.isEnabled = false
                 var username = binding.userName.text.toString()
                 var userBio = binding.userBio.text.toString()
                 var userBudget = binding.userBudget.text.toString().toInt()
-                viewModel.updateUser(User(1, username, userBio, userBudget, userPhoto.toString()))
+                viewModel.updateUser(
+                    User(
+                        1,
+                        username,
+                        userBio,
+                        userBudget,
+                        userPhoto.toString(),
+                        currencyCode
+                    )
+                )
             }
+        }
+
+        binding.userCurrency.setOnClickListener {
+            val picker = CurrencyPicker.newInstance("Select Currency");  // dialog title
+            picker.setListener{ name, code, symbol, flagInt ->
+                currencyCode = code
+                Log.d("currencyValue", "onCreateView: "+code)
+                val currencyName = Currency.getInstance(currencyCode).displayName
+                val currencySymbol = Currency.getInstance(currencyCode).symbol
+                binding.userCurrency.text = "$currencyName ( $currencySymbol )"
+                picker.dismiss()
+            }
+            picker.show(requireActivity().supportFragmentManager, "CURRENCY_PICKER");
         }
 
         binding.instagramIcon.setOnClickListener {

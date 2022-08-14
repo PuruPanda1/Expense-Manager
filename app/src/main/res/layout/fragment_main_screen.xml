@@ -120,7 +120,7 @@
                     android:fontFamily="@font/autour_one"
                     android:text="@string/amountInRupee"
                     android:textColor="@color/white"
-                    android:textSize="45sp"
+                    android:textSize="25sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
