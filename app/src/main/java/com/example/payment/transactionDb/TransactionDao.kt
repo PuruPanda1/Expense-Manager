@@ -66,6 +66,6 @@ interface TransactionDao {
     @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE transactionType = :transactionType AND month = strftime('%m','now') GROUP BY transactionType")
     fun getMonthlySingleTransactionType(transactionType: String): LiveData<myTypes>
 
-    @Query("SELECT modeOfPayment as accountName,SUM(incomeAmount)-SUM(expenseAmount) as accountBalance FROM transactions GROUP BY modeOfPayment")
+    @Query("SELECT modeOfPayment as accountName,SUM(incomeAmount)-SUM(expenseAmount) as accountBalance FROM transactions GROUP BY modeOfPayment ORDER BY modeOfPayment ASC")
     fun getAccountDetails():LiveData<List<AccountDetails>>
 }
