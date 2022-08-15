@@ -142,7 +142,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailedTransactionAnalysis"
-        android:name="com.example.payment.DetailedTransactionAnalysis"
+        android:name="com.example.payment.fragments.mainScreen.detailedTransactions.totalAnalysis.DetailedTransactionAnalysis"
         android:label="fragment_detailed_transaction_analysis"
         tools:layout="@layout/fragment_detailed_transaction_analysis" >
         <action
@@ -158,7 +158,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailedCategoryTransactionsFragment"
-        android:name="com.example.payment.DetailedCategoryTransactionsFragment"
+        android:name="com.example.payment.fragments.mainScreen.detailedTransactions.categoryAnalysis.DetailedCategoryTransactionsFragment"
         android:label="fragment_detailed_category_transactions"
         tools:layout="@layout/fragment_detailed_category_transactions" >
         <action

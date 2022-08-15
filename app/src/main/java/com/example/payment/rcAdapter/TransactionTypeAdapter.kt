@@ -10,16 +10,28 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.payment.DetailedTransactionAnalysis
-import com.example.payment.DetailedTransactionAnalysisDirections
+import com.example.payment.fragments.mainScreen.detailedTransactions.totalAnalysis.DetailedTransactionAnalysis
 import com.example.payment.R
+import com.example.payment.fragments.mainScreen.detailedTransactions.totalAnalysis.DetailedTransactionAnalysisDirections
 import com.example.payment.transactionDb.myTypes
 import java.text.NumberFormat
 import java.util.*
 
-class TransactionTypeAdapter(val fragment: DetailedTransactionAnalysis,val currency: String) :
+class TransactionTypeAdapter(val fragment: DetailedTransactionAnalysis, private val currency: String) :
     ListAdapter<myTypes, TransactionTypeAdapter.TransactionTypeViewHolder>(Comparator()) {
 
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionTypeViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.detailed_analysis_row, parent, false)
+        return TransactionTypeViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: TransactionTypeViewHolder, position: Int) {
+        val item = getItem(position)
+        holder.bind(item, fragment, currency)
+    }
 
     class TransactionTypeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.transactionTypeName)
@@ -28,7 +40,7 @@ class TransactionTypeAdapter(val fragment: DetailedTransactionAnalysis,val curre
         private val image: ImageView = view.findViewById(R.id.transactionTypeIcon)
         val layout: CardView = view.findViewById(R.id.transactionTypeLayout)
 
-        fun bind(item: myTypes, fragment: DetailedTransactionAnalysis,currency: String) {
+        fun bind(item: myTypes, fragment: DetailedTransactionAnalysis, currency: String) {
             val currencyFormatter = NumberFormat.getCurrencyInstance()
             currencyFormatter.maximumFractionDigits = 1
             currencyFormatter.currency = Currency.getInstance(currency)
@@ -70,17 +82,6 @@ class TransactionTypeAdapter(val fragment: DetailedTransactionAnalysis,val curre
                 Navigation.findNavController(layout).navigate(action)
             }
         }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionTypeViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.detailed_analysis_row, parent, false)
-        return TransactionTypeViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: TransactionTypeViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item, fragment, currency)
     }
 
     class Comparator : DiffUtil.ItemCallback<myTypes>() {

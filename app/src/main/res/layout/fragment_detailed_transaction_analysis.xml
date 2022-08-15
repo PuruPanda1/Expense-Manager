@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/primaryBackground"
     app:layoutDescription="@xml/fragment_detailed_transaction_analysis_scene"
-    tools:context=".DetailedTransactionAnalysis">
+    tools:context=".fragments.mainScreen.detailedTransactions.totalAnalysis.DetailedTransactionAnalysis">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/waveSquare"

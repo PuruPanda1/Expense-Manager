@@ -1,4 +1,4 @@
-package com.example.payment
+package com.example.payment.fragments.mainScreen.detailedTransactions.totalAnalysis
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.payment.R
 import com.example.payment.databinding.FragmentDetailedTransactionAnalysisBinding
 import com.example.payment.rcAdapter.TransactionTypeAdapter
 import com.example.payment.transactionDb.myTypes
@@ -81,11 +82,7 @@ class DetailedTransactionAnalysis : Fragment() {
             String.format(getString(R.string.monthlyDuration, month))
 //        observer for balance
         viewModel.readMonthlySpends.observe(viewLifecycleOwner) {
-            if (it == null) {
-                amount = 0f
-            } else {
-                amount = it
-            }
+            amount = it ?: 0f
             setAmount()
         }
 //      setting the adapter for the recyclerview

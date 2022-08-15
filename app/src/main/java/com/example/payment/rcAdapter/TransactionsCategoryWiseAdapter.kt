@@ -14,11 +14,16 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.payment.DetailedCategoryTransactionsFragment
 import com.example.payment.R
+import com.example.payment.fragments.mainScreen.detailedTransactions.categoryAnalysis.DetailedCategoryTransactionsFragment
 import com.example.payment.transactionDb.Transaction
+import java.text.NumberFormat
+import java.util.*
 
-class TransactionsCategoryWiseAdapter(val fragment: DetailedCategoryTransactionsFragment) :
+class TransactionsCategoryWiseAdapter(
+    val fragment: DetailedCategoryTransactionsFragment,
+    val currency: String
+) :
     ListAdapter<Transaction, TransactionsCategoryWiseAdapter.TransactionsCategoryWiseHolder>(
         Comparator()
     ) {
@@ -34,7 +39,7 @@ class TransactionsCategoryWiseAdapter(val fragment: DetailedCategoryTransactions
 
     override fun onBindViewHolder(holder: TransactionsCategoryWiseHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, fragment)
+        holder.bind(item, fragment, currency)
     }
 
     class TransactionsCategoryWiseHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -47,7 +52,14 @@ class TransactionsCategoryWiseAdapter(val fragment: DetailedCategoryTransactions
         private val image: ImageView = view.findViewById(R.id.floatingTransactionIcon)
         private val account: TextView = view.findViewById(R.id.accountRC)
 
-        fun bind(item: Transaction, fragment: DetailedCategoryTransactionsFragment) {
+        fun bind(
+            item: Transaction,
+            fragment: DetailedCategoryTransactionsFragment,
+            currency: String
+        ) {
+            val currencyFormatter = NumberFormat.getCurrencyInstance()
+            currencyFormatter.maximumFractionDigits = 1
+            currencyFormatter.currency = Currency.getInstance(currency)
             // set the values to the Views using holder variable
             val simpleDateFormat = SimpleDateFormat("dd MMM")
             val dateString = simpleDateFormat.format(item.date)
@@ -64,11 +76,7 @@ class TransactionsCategoryWiseAdapter(val fragment: DetailedCategoryTransactions
                         R.color.expense_color
                     )
                 )
-                val updatedAmount =
-                    amount.resources.getString(
-                        R.string.amountInRupee,
-                        item.expenseAmount.toString()
-                    )
+                val updatedAmount = currencyFormatter.format(item.expenseAmount)
                 amount.text = updatedAmount
             } else {
                 amount.setTextColor(
@@ -77,11 +85,7 @@ class TransactionsCategoryWiseAdapter(val fragment: DetailedCategoryTransactions
                         R.color.income_color
                     )
                 )
-                val updatedAmount =
-                    amount.resources.getString(
-                        R.string.amountInRupee,
-                        item.incomeAmount.toString()
-                    )
+                val updatedAmount = currencyFormatter.format(item.incomeAmount)
                 amount.text = updatedAmount
             }
 

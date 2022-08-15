@@ -1,4 +1,4 @@
-package com.example.payment
+package com.example.payment.fragments.mainScreen.detailedTransactions.categoryAnalysis
 
 import android.os.Bundle
 import android.util.Log
@@ -7,16 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.payment.R
 import com.example.payment.databinding.FragmentDetailedCategoryTransactionsBinding
 import com.example.payment.rcAdapter.TransactionsCategoryWiseAdapter
 import com.example.payment.transactionDb.Transaction
+import com.example.payment.userDb.UserViewModel
 import com.example.payment.viewModel.TransactionTypeData
 import com.example.payment.viewModel.TransactionViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,9 +39,13 @@ class DetailedCategoryTransactionsFragment : Fragment() {
         "December"
     )
     private lateinit var viewModel: TransactionViewModel
+    private lateinit var userViewModel: UserViewModel
     private var _binding: FragmentDetailedCategoryTransactionsBinding? = null
     private val args by navArgs<DetailedCategoryTransactionsFragmentArgs>()
     private val binding get() = _binding!!
+    private val currency = MutableLiveData("INR")
+    private val currencyFormatter = NumberFormat.getCurrencyInstance()
+    private var amount = 0f
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,6 +57,20 @@ class DetailedCategoryTransactionsFragment : Fragment() {
         binding.backToSummary.setOnClickListener {
             Navigation.findNavController(binding.root)
                 .navigate(R.id.action_detailedCategoryTransactionsFragment_to_detailedTransactionAnalysis)
+        }
+
+//        setting the default currency formater
+        currencyFormatter.maximumFractionDigits = 1
+        currencyFormatter.currency = Currency.getInstance(currency.value)
+
+//        observer for currency change
+        lateinit var adapter : TransactionsCategoryWiseAdapter
+        currency.observe(viewLifecycleOwner) {
+            currencyFormatter.currency = Currency.getInstance(it!!)
+            adapter = TransactionsCategoryWiseAdapter(this,it!!)
+            binding.categoryTransactions.adapter = adapter
+            binding.categoryTransactions.layoutManager = LinearLayoutManager(requireContext())
+            setAmount()
         }
 
 //        onclick for the calender icon
@@ -71,11 +93,15 @@ class DetailedCategoryTransactionsFragment : Fragment() {
 
 
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         binding.categoryName.text = args.categoryName
 
-        val adapter = TransactionsCategoryWiseAdapter(this)
-        binding.categoryTransactions.adapter = adapter
-        binding.categoryTransactions.layoutManager = LinearLayoutManager(requireContext())
+//        setting the adapter with the user viewModel for the currency
+        userViewModel.userDetails.observe(viewLifecycleOwner){
+            currency.value = it.userCurrency
+        }
+
+
 
         viewModel.setTransactionTypeData(
             TransactionTypeData(
@@ -87,8 +113,7 @@ class DetailedCategoryTransactionsFragment : Fragment() {
 
         viewModel.readSingleTransactionType.observe(viewLifecycleOwner) {
             if (it != null) {
-                binding.categoryTotalAmount.text =
-                    getString(R.string.totalValue, it.amount.toString())
+                amount = it.amount
                 if (it.count > 1) {
                     binding.categoryNumberOfExpenses.text =
                         getString(R.string.transactionTypeCount, it.count)
@@ -97,9 +122,10 @@ class DetailedCategoryTransactionsFragment : Fragment() {
                         getString(R.string.transactionTypeCountSingular, it.count)
                 }
             } else {
-                binding.categoryTotalAmount.text = getString(R.string.totalValue, "0")
+                amount = 0f
                 binding.categoryNumberOfExpenses.text = getString(R.string.transactionTypeCount, 0)
             }
+            setAmount()
         }
         viewModel.transactionsCategoryWise.observe(viewLifecycleOwner) {
             adapter.submitList(it)
@@ -108,6 +134,10 @@ class DetailedCategoryTransactionsFragment : Fragment() {
         binding.categoryTransactions.adapter
 
         return binding.root
+    }
+
+    private fun setAmount() {
+        binding.categoryTotalAmount.text = "Total: ${currencyFormatter.format(amount)}"
     }
 
     private fun openRangePicker() {
@@ -120,29 +150,27 @@ class DetailedCategoryTransactionsFragment : Fragment() {
         dateRangePicker.show(requireActivity().supportFragmentManager, "datepicker")
 
         dateRangePicker.addOnPositiveButtonClickListener {
-            Log.d("checkingDate", "openRangePicker: ${it.first} and ${it.second}")
             viewModel.setTransactionTypeData(
                 TransactionTypeData(
                     args.categoryName,
                     it.first,
-                    (it.second+86400000)
+                    (it.second + 86400000)
                 )
             )
         }
         viewModel.sumAccordingToDate.observe(viewLifecycleOwner) {
             if (it == null) {
-                binding.categoryTotalAmount.text =
-                    String.format(getString(R.string.amountInRupee, "0"))
+                amount = 0f
             } else {
-                binding.categoryTotalAmount.text =
-                    String.format(getString(R.string.amountInRupee, it.toString()))
+                amount = it
             }
+            setAmount()
         }
 //        setting the duration in the card view
         viewModel.transactionTypeDetails.observe(viewLifecycleOwner) {
             binding.categoryDuration.text = getString(
                 R.string.monthlyDuration,
-                "${simpleDateFormat.format(it.startDate)} - ${simpleDateFormat.format(it.endDate-86400000)}"
+                "${simpleDateFormat.format(it.startDate)} - ${simpleDateFormat.format(it.endDate - 86400000)}"
             )
         }
     }
