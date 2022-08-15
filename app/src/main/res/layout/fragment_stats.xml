@@ -107,23 +107,18 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         tools:listitem="@layout/transactions_row_rc" />
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/addBtn"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addBtn"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/purple_500"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
         android:clickable="true"
-        android:textSize="12sp"
-        android:contentDescription="Add new Transaction"
-        android:textColor="@color/buttonColor"
-        android:text="Add Transaction"
+        android:src="@drawable/ic_add"
+        app:tint="@color/white"
+        app:backgroundTint="@color/primary_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:icon="@drawable/ic_add"
-        app:iconTint="@color/white"
-        />
+        app:layout_constraintStart_toStartOf="parent"/>
 
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

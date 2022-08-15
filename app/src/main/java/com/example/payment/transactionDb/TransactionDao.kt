@@ -30,10 +30,10 @@ interface TransactionDao {
     @Query("SELECT SUM(expenseAmount) FROM transactions WHERE month = strftime('%m', 'now')")
     fun getMonthlySpends(): LiveData<Float>
 
-    @Query("SELECT SUM(incomeAmount) FROM transactions WHERE isExpense=0 AND month = strftime('%m','now')")
+    @Query("SELECT SUM(incomeAmount) FROM transactions")
     fun getIncomeSum(): LiveData<Float>
 
-    @Query("SELECT SUM(expenseAmount) FROM transactions WHERE isExpense=1 AND month = strftime('%m','now')")
+    @Query("SELECT SUM(expenseAmount) FROM transactions")
     fun getExpenseSum(): LiveData<Float>
 
     @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE isExpense=1 AND month = strftime('%m','now') GROUP BY transactionType")

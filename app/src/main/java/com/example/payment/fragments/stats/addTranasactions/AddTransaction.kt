@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -20,8 +21,11 @@ import com.example.payment.accountsDb.Accounts
 import com.example.payment.databinding.FragmentAddTransactionBinding
 import com.example.payment.rcAdapter.AccountsAdapter
 import com.example.payment.transactionDb.Transaction
+import com.example.payment.userDb.UserViewModel
 import com.example.payment.viewModel.AccountViewModel
 import com.example.payment.viewModel.TransactionViewModel
+import java.text.NumberFormat
+import java.util.*
 
 
 class AddTransaction : Fragment() {
@@ -37,6 +41,7 @@ class AddTransaction : Fragment() {
     private val m = cal.get(Calendar.MONTH)
     private val d = cal.get(Calendar.DAY_OF_MONTH)
     private var date: Long = 0L
+    private var currency = MutableLiveData("INR")
     private var isExpense = true
     private val expenseCategory = listOf(
         "Credit Card Due",
@@ -55,6 +60,7 @@ class AddTransaction : Fragment() {
     private var _binding: FragmentAddTransactionBinding? = null
     private lateinit var viewModel: TransactionViewModel
     private lateinit var accountViewModel: AccountViewModel
+    private lateinit var userViewModel:UserViewModel
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,12 +71,25 @@ class AddTransaction : Fragment() {
         cal.set(y, m, d)
         date = cal.timeInMillis
 
+//        currency
+        currency.observe(viewLifecycleOwner){
+            binding.currencyDisplay.text = Currency.getInstance(currency.value).symbol
+        }
+
         // Inflate the layout for this fragment
         _binding = FragmentAddTransactionBinding.inflate(inflater, container, false)
 
 //        setting the viewmodel
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         accountViewModel = ViewModelProvider(requireActivity())[AccountViewModel::class.java]
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+
+//        getting the currency
+        userViewModel.userDetails.observe(viewLifecycleOwner){
+            if(it!=null){
+                currency.value = it.userCurrency
+            }
+        }
 
 //        getting the accounts
         val accountsAdapter = AccountsAdapter(this)

@@ -131,7 +131,7 @@ class DetailedTransactionAnalysis : Fragment() {
             viewModel.setCustomDurationData(listOf(it.first, (it.second + 86400000)))
         }
         viewModel.readTransactionTypeAmount.removeObservers(viewLifecycleOwner)
-        viewModel.expenseSum.removeObservers(viewLifecycleOwner)
+        viewModel.readMonthlySpends.removeObservers(viewLifecycleOwner)
         //        calender icon
         viewModel.listAccordingToDate.observe(viewLifecycleOwner) { list ->
             adapter.submitList(list)

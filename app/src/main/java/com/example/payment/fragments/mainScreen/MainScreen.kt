@@ -110,6 +110,20 @@ class MainScreen : Fragment() {
             }
             setAmount()
         }
+//        set income and expense amount
+        viewModel.incomeSum.observe(viewLifecycleOwner) {
+            when {
+                it != null -> binding.incomeAmount.text = currencyFormatter.format(it)
+                else -> binding.incomeAmount.text = currencyFormatter.format(0)
+            }
+        }
+
+        viewModel.expenseSum.observe(viewLifecycleOwner) {
+            when {
+                it != null -> binding.expenseAmount.text = currencyFormatter.format(it)
+                else -> binding.expenseAmount.text = currencyFormatter.format(0)
+            }
+        }
 
 //        set monthly balance amount
         val month = months[Calendar.getInstance().get(Calendar.MONTH)]

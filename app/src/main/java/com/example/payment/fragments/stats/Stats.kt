@@ -1,21 +1,20 @@
 package com.example.payment.fragments.stats
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.LifecycleOwner
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.payment.viewModel.TransactionViewModel
-import com.example.payment.rcAdapter.TransactionsAdapter
 import com.example.payment.databinding.FragmentStatsBinding
+import com.example.payment.rcAdapter.TransactionsAdapter
 import com.example.payment.transactionDb.Transaction
 import com.example.payment.userDb.UserViewModel
+import com.example.payment.viewModel.TransactionViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 
 class Stats : Fragment() {
@@ -36,14 +35,14 @@ class Stats : Fragment() {
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
 
 
-        lateinit var adapter:TransactionsAdapter
+        lateinit var adapter: TransactionsAdapter
 
 //        live data for currency
-        userViewModel.userDetails.observe(viewLifecycleOwner){
-            if(it!=null){
+        userViewModel.userDetails.observe(viewLifecycleOwner) {
+            if (it != null) {
                 currency.value = it.userCurrency
             }
-            adapter = TransactionsAdapter(this,currency.value!!)
+            adapter = TransactionsAdapter(this, currency.value!!)
             binding.transactionsRC.layoutManager = LinearLayoutManager(requireContext())
             binding.transactionsRC.adapter = adapter
 //            adapter = TransactionsAdapter(this,currency.value!!)
@@ -79,7 +78,9 @@ class Stats : Fragment() {
             viewModel.readAllTransaction.removeObservers(viewLifecycleOwner)
             viewModel.readAllExpenseTransaction.removeObservers(viewLifecycleOwner)
             viewModel.readAllIncomeTransaction.observe(viewLifecycleOwner) {
-                adapter.submitList(it)
+                adapter.submitList(it) {
+                    binding.transactionsRC.post { binding.transactionsRC.smoothScrollToPosition(0) }
+                }
             }
         }
 
@@ -87,8 +88,10 @@ class Stats : Fragment() {
         binding.expenseTransactions.setOnClickListener {
             viewModel.readAllTransaction.removeObservers(viewLifecycleOwner)
             viewModel.readAllIncomeTransaction.removeObservers(viewLifecycleOwner)
-            viewModel.readAllExpenseTransaction.observe(viewLifecycleOwner){
-                adapter.submitList(it)
+            viewModel.readAllExpenseTransaction.observe(viewLifecycleOwner) {
+                adapter.submitList(it) {
+                    binding.transactionsRC.post { binding.transactionsRC.smoothScrollToPosition(0) }
+                }
             }
         }
 
@@ -97,14 +100,18 @@ class Stats : Fragment() {
             viewModel.readAllExpenseTransaction.removeObservers(viewLifecycleOwner)
             viewModel.readAllIncomeTransaction.removeObservers(viewLifecycleOwner)
             viewModel.readAllTransactionDate.removeObservers(viewLifecycleOwner)
-            viewModel.readAllTransaction.observe(viewLifecycleOwner){
-                adapter.submitList(it)
+            viewModel.readAllTransaction.observe(viewLifecycleOwner) {
+                adapter.submitList(it) {
+                    binding.transactionsRC.post { binding.transactionsRC.smoothScrollToPosition(0) }
+                }
             }
         }
 
 //        setting the observer
-        viewModel.readAllTransaction.observe(viewLifecycleOwner){
-            adapter.submitList(it)
+        viewModel.readAllTransaction.observe(viewLifecycleOwner) {
+            adapter.submitList(it) {
+                binding.transactionsRC.post { binding.transactionsRC.smoothScrollToPosition(0) }
+            }
         }
 
         return binding.root
@@ -119,7 +126,7 @@ class Stats : Fragment() {
         dateRangePicker.show(requireActivity().supportFragmentManager, "datepicker")
 
         dateRangePicker.addOnPositiveButtonClickListener {
-            viewModel.setCustomDurationData(listOf(it.first, it.second+86400000))
+            viewModel.setCustomDurationData(listOf(it.first, it.second + 86400000))
         }
         viewModel.readAllTransaction.removeObservers(viewLifecycleOwner)
         //        calender icon

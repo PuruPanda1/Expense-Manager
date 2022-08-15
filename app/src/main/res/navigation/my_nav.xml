@@ -13,20 +13,14 @@
         <action
             android:id="@+id/action_MainScreen_to_detailedTransactionAnalysis"
             app:destination="@id/detailedTransactionAnalysis"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/Wallet"
         android:name="com.example.payment.fragments.wallet.Wallet"
         android:label="Wallet"
-        tools:layout="@layout/fragment_wallet" >
-        <action
-            android:id="@+id/action_Wallet_to_cryptoTransactionList"
-            app:destination="@id/cryptoPortfolio"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
-    </fragment>
+        tools:layout="@layout/fragment_wallet" />
     <fragment
         android:id="@+id/Stats"
         android:name="com.example.payment.fragments.stats.Stats"
@@ -44,11 +38,6 @@
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
-        android:id="@+id/Scanner"
-        android:name="com.example.payment.fragments.payment.launchPayment"
-        android:label="fragment_launch_payment"
-        tools:layout="@layout/fragment_launch_payment" />
-    <fragment
         android:id="@+id/addTransaction"
         android:name="com.example.payment.fragments.stats.addTranasactions.AddTransaction"
         android:label="fragment_add_transaction"
@@ -56,89 +45,11 @@
         <action
             android:id="@+id/action_addTransaction_to_Stats"
             app:destination="@id/Stats"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <argument
             android:name="transaction"
             app:argType="com.example.payment.transactionDb.Transaction" />
-    </fragment>
-    <fragment
-        android:id="@+id/cryptoListFragment"
-        android:name="com.example.payment.fragments.wallet.cryptoList.cryptoListFragment"
-        android:label="fragment_crypto_list"
-        tools:layout="@layout/fragment_crypto_list" >
-        <action
-            android:id="@+id/action_cryptoListFragment_to_addCryptoTransaction"
-            app:destination="@id/addCryptoTransaction"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
-        <action
-            android:id="@+id/action_cryptoListFragment_to_cryptoTransactionList"
-            app:destination="@id/cryptoPortfolio"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/addCryptoTransaction"
-        android:name="com.example.payment.fragments.wallet.addCryptoTransaction.addCryptoTransaction"
-        android:label="fragment_add_crypto_transaction"
-        tools:layout="@layout/fragment_add_crypto_transaction" >
-        <action
-            android:id="@+id/action_addCryptoTransaction_to_cryptoListFragment"
-            app:destination="@id/cryptoListFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
-        <argument
-            android:name="cryptoName"
-            app:argType="string" />
-        <argument
-            android:name="cryptoPrice"
-            app:argType="float" />
-        <argument
-            android:name="cryptoSymbol"
-            app:argType="string" />
-        <argument
-            android:name="cryptoId"
-            app:argType="string" />
-        <argument
-            android:name="isUpdate"
-            app:argType="boolean"
-            android:defaultValue="false" />
-        <argument
-            android:name="buyingPrice"
-            app:argType="float"
-            android:defaultValue="0" />
-        <argument
-            android:name="numberOfCoins"
-            app:argType="float"
-            android:defaultValue="0" />
-        <argument
-            android:name="date"
-            app:argType="long"
-            android:defaultValue="0L" />
-        <argument
-            android:name="sid"
-            app:argType="integer"
-            android:defaultValue="0" />
-    </fragment>
-    <fragment
-        android:id="@+id/cryptoPortfolio"
-        android:name="com.example.payment.fragments.wallet.cryptoPortfolio.CryptoPortfolio"
-        android:label="fragment_crypto_transaction_list"
-        tools:layout="@layout/fragment_crypto_portfolio" >
-        <action
-            android:id="@+id/action_cryptoPortfolio_to_Wallet"
-            app:destination="@id/Wallet"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
-        <action
-            android:id="@+id/action_cryptoPortfolio_to_cryptoListFragment"
-            app:destination="@id/cryptoListFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
-        <action
-            android:id="@+id/action_cryptoPortfolio_to_addCryptoTransaction"
-            app:destination="@id/addCryptoTransaction" />
     </fragment>
     <fragment
         android:id="@+id/detailedTransactionAnalysis"
@@ -148,13 +59,13 @@
         <action
             android:id="@+id/action_detailedTransactionAnalysis_to_MainScreen"
             app:destination="@id/MainScreen"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_detailedTransactionAnalysis_to_detailedCategoryTransactionsFragment"
             app:destination="@id/detailedCategoryTransactionsFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/detailedCategoryTransactionsFragment"
@@ -164,8 +75,8 @@
         <action
             android:id="@+id/action_detailedCategoryTransactionsFragment_to_detailedTransactionAnalysis"
             app:destination="@id/detailedTransactionAnalysis"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <argument
             android:name="categoryName"
             app:argType="string" />

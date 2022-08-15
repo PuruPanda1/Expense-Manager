@@ -22,6 +22,7 @@
         <entry key="app/src/main/res/drawable/ic_notification.xml" value="0.352" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.2985" />
         <entry key="app/src/main/res/drawable/ic_rupee.xml" value="0.352" />
+        <entry key="app/src/main/res/drawable/ic_scanner.xml" value="0.3545" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_stats.xml" value="0.2985" />
         <entry key="app/src/main/res/drawable/ic_wallet.xml" value="0.2985" />
@@ -31,6 +32,7 @@
         <entry key="app/src/main/res/drawable/rounded_dialog.xml" value="0.3065" />
         <entry key="app/src/main/res/drawable/sqaure_image.xml" value="0.318" />
         <entry key="app/src/main/res/drawable/text_background.xml" value="0.3355" />
+        <entry key="app/src/main/res/drawable/transparent_background.xml" value="0.3065" />
         <entry key="app/src/main/res/layout/account_row.xml" value="0.20888157894736842" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/bottom_sheet_layout.xml" value="0.2082236842105263" />
@@ -46,7 +48,7 @@
         <entry key="app/src/main/res/layout/fragment_launch_payment.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_main_screen.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.22302631578947368" />
-        <entry key="app/src/main/res/layout/fragment_stats.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_stats.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_view_pager_holder.xml" value="0.20888157894736842" />
         <entry key="app/src/main/res/layout/fragment_wallet.xml" value="0.22" />
         <entry key="app/src/main/res/layout/portfolio_row.xml" value="0.3307291666666667" />

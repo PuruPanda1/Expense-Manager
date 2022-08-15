@@ -98,7 +98,9 @@ class DetailedCategoryTransactionsFragment : Fragment() {
 
 //        setting the adapter with the user viewModel for the currency
         userViewModel.userDetails.observe(viewLifecycleOwner){
-            currency.value = it.userCurrency
+            if(it!=null){
+                currency.value = it.userCurrency
+            }
         }
 
 
