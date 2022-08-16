@@ -24,7 +24,6 @@ import com.example.payment.userDb.User
 import com.example.payment.userDb.UserViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.mynameismidori.currencypicker.CurrencyPicker
-import com.mynameismidori.currencypicker.CurrencyPickerListener
 
 class Profile : Fragment() {
     private lateinit var viewModel: UserViewModel
@@ -37,7 +36,7 @@ class Profile : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
-        var isEditable: Boolean = false
+        var isEditable = false
         var userPhoto: Uri = Uri.parse("android.resource://com.example.payment/drawable/dev_photo")
 
 //        imagePicker calling activity result
@@ -123,9 +122,9 @@ class Profile : Fragment() {
                 binding.userBio.isEnabled = false
                 binding.changeProfilePhoto.isVisible = false
                 binding.userBudget.isEnabled = false
-                var username = binding.userName.text.toString()
-                var userBio = binding.userBio.text.toString()
-                var userBudget = binding.userBudget.text.toString().toInt()
+                val username = binding.userName.text.toString()
+                val userBio = binding.userBio.text.toString()
+                val userBudget = binding.userBudget.text.toString().toInt()
                 viewModel.updateUser(
                     User(
                         1,
@@ -140,16 +139,15 @@ class Profile : Fragment() {
         }
 
         binding.userCurrency.setOnClickListener {
-            val picker = CurrencyPicker.newInstance("Select Currency");  // dialog title
+            val picker = CurrencyPicker.newInstance("Select Currency")  // dialog title
             picker.setListener{ name, code, symbol, flagInt ->
                 currencyCode = code
-                Log.d("currencyValue", "onCreateView: "+code)
                 val currencyName = Currency.getInstance(currencyCode).displayName
                 val currencySymbol = Currency.getInstance(currencyCode).symbol
                 binding.userCurrency.text = "$currencyName ( $currencySymbol )"
                 picker.dismiss()
             }
-            picker.show(requireActivity().supportFragmentManager, "CURRENCY_PICKER");
+            picker.show(requireActivity().supportFragmentManager, "CURRENCY_PICKER")
         }
 
         binding.instagramIcon.setOnClickListener {
@@ -171,7 +169,7 @@ class Profile : Fragment() {
         return binding.root
     }
 
-    fun socialMediaLinks(option: Int) {
+    private fun socialMediaLinks(option: Int) {
         val uri: Uri = when (option) {
             1 -> Uri.parse("https://www.instagram.com/purab_here/")
             2 -> Uri.parse("https://twitter.com/Purab__here")

@@ -10,7 +10,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     var readAllTransaction: LiveData<List<Transaction>>
     var readAllIncomeTransaction: LiveData<List<Transaction>>
     var readAllExpenseTransaction: LiveData<List<Transaction>>
-    var readTransactionTypeAmount: LiveData<List<myTypes>>
+    var readTransactionTypeAmount: LiveData<List<MyTypes>>
     var readDifferenceSum: LiveData<Float>
     var readMonthlySpends: LiveData<Float>
     var incomeSum: LiveData<Float>
@@ -35,7 +35,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     val dates: MutableLiveData<List<Long>> = MutableLiveData()
 
     //    setting the detailed analysis list according to the dates
-    val listAccordingToDate: LiveData<List<myTypes>> = Transformations.switchMap(dates) { it ->
+    val listAccordingToDate: LiveData<List<MyTypes>> = Transformations.switchMap(dates) {
         repository.getCustomDurationData(it[0], it[1])
     }
     val sumAccordingToDate: LiveData<Float> = Transformations.switchMap(dates) {
@@ -46,14 +46,6 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     val readAllTransactionDate: LiveData<List<Transaction>> = Transformations.switchMap(dates) {
         repository.getAllTransactionsByDate(it[0], it[1])
     }
-    val readAllIncomeTransactionDate: LiveData<List<Transaction>> =
-        Transformations.switchMap(dates) {
-            repository.getAllIncomeTransactionsByDate(it[0], it[1])
-        }
-    val readAllExpenseTransactionDate: LiveData<List<Transaction>> =
-        Transformations.switchMap(dates) {
-            repository.getAllExpenseTransactionsByDate(it[0], it[1])
-        }
 
     var transactionTypeDetails: MutableLiveData<TransactionTypeData> = MutableLiveData()
 
@@ -67,7 +59,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
             }
         }
 
-    val readSingleTransactionType: LiveData<myTypes> =
+    val readSingleTransactionType: LiveData<MyTypes> =
         Transformations.switchMap(transactionTypeDetails) {
             if (it.startDate == 0L) {
                 repository.getMonthlySingleTransactionType(

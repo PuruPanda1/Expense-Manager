@@ -14,17 +14,16 @@ abstract class TransactionDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: TransactionDatabase? = null
         fun getInstance(context: Context): TransactionDatabase {
-            var tempIns = INSTANCE
+            val tempIns = INSTANCE
             if (tempIns != null) {
                 return tempIns
             }
             synchronized(this) {
-                val instance = Room.databaseBuilder(
+                return Room.databaseBuilder(
                     context.applicationContext,
                     TransactionDatabase::class.java,
                     "transaction_database"
                 ).build()
-                return instance
             }
         }
     }

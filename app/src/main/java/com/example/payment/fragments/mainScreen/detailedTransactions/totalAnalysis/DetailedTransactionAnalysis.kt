@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.payment.R
 import com.example.payment.databinding.FragmentDetailedTransactionAnalysisBinding
 import com.example.payment.rcAdapter.TransactionTypeAdapter
-import com.example.payment.transactionDb.myTypes
+import com.example.payment.transactionDb.MyTypes
 import com.example.payment.userDb.UserViewModel
 import com.example.payment.viewModel.TransactionViewModel
 import com.github.mikephil.charting.animation.Easing
@@ -158,7 +158,7 @@ class DetailedTransactionAnalysis : Fragment() {
         binding.analysisPieChart.setUsePercentValues(true)
         binding.analysisPieChart.setEntryLabelTextSize(8f)
         binding.analysisPieChart.holeRadius = 65f
-        binding.analysisPieChart.isRotationEnabled = false
+        binding.analysisPieChart.isRotationEnabled = true
         binding.analysisPieChart.setEntryLabelColor(
             ContextCompat.getColor(
                 requireContext(),
@@ -177,7 +177,7 @@ class DetailedTransactionAnalysis : Fragment() {
         binding.analysisPieChart.setExtraOffsets(10f, 10f, 10f, 10f)
     }
 
-    private fun updateChart(list: List<myTypes>) {
+    private fun updateChart(list: List<MyTypes>) {
         val entries = mutableListOf<PieEntry>()
         val colors = ArrayList<Int>()
 

@@ -1,7 +1,6 @@
 package com.example.payment.fragments.mainScreen.detailedTransactions.categoryAnalysis
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,7 +66,7 @@ class DetailedCategoryTransactionsFragment : Fragment() {
         lateinit var adapter : TransactionsCategoryWiseAdapter
         currency.observe(viewLifecycleOwner) {
             currencyFormatter.currency = Currency.getInstance(it!!)
-            adapter = TransactionsCategoryWiseAdapter(this,it!!)
+            adapter = TransactionsCategoryWiseAdapter(this, it)
             binding.categoryTransactions.adapter = adapter
             binding.categoryTransactions.layoutManager = LinearLayoutManager(requireContext())
             setAmount()
@@ -161,11 +160,7 @@ class DetailedCategoryTransactionsFragment : Fragment() {
             )
         }
         viewModel.sumAccordingToDate.observe(viewLifecycleOwner) {
-            if (it == null) {
-                amount = 0f
-            } else {
-                amount = it
-            }
+            amount = it ?: 0f
             setAmount()
         }
 //        setting the duration in the card view

@@ -37,10 +37,10 @@ interface TransactionDao {
     fun getExpenseSum(): LiveData<Float>
 
     @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE isExpense=1 AND month = strftime('%m','now') GROUP BY transactionType")
-    fun getTotal(): LiveData<List<myTypes>>
+    fun getTotal(): LiveData<List<MyTypes>>
 
     @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE isExpense=1 AND date BETWEEN :startDate AND :endDate GROUP BY transactionType")
-    fun getCustomDurationData(startDate: Long, endDate: Long): LiveData<List<myTypes>>
+    fun getCustomDurationData(startDate: Long, endDate: Long): LiveData<List<MyTypes>>
 
     @Query("SELECT SUM(expenseAmount) FROM transactions WHERE isExpense=1 AND date BETWEEN :startDate AND :endDate")
     fun getCustomDurationDataSum(startDate: Long, endDate: Long): LiveData<Float>
@@ -61,10 +61,10 @@ interface TransactionDao {
     fun getRangeTransactionsData(transactionType: String,startDate: Long,endDate: Long):LiveData<List<Transaction>>
 
     @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE transactionType = :transactionType AND date BETWEEN :startDate AND :endDate GROUP BY transactionType")
-    fun getSingleTransactionType(transactionType:String,startDate:Long,endDate:Long): LiveData<myTypes>
+    fun getSingleTransactionType(transactionType:String,startDate:Long,endDate:Long): LiveData<MyTypes>
 
     @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE transactionType = :transactionType AND month = strftime('%m','now') GROUP BY transactionType")
-    fun getMonthlySingleTransactionType(transactionType: String): LiveData<myTypes>
+    fun getMonthlySingleTransactionType(transactionType: String): LiveData<MyTypes>
 
     @Query("SELECT modeOfPayment as accountName,SUM(incomeAmount)-SUM(expenseAmount) as accountBalance FROM transactions GROUP BY modeOfPayment ORDER BY modeOfPayment ASC")
     fun getAccountDetails():LiveData<List<AccountDetails>>

@@ -1,6 +1,5 @@
 package com.example.payment.accountsDb
 
-import android.accounts.Account
 import androidx.lifecycle.LiveData
 import androidx.room.*
 

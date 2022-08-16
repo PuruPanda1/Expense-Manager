@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 class UserViewModel(application: Application):AndroidViewModel(application) {
     val userDetails : LiveData<User>
     val userBudget : LiveData<Int>
-    val repository : UserRepository
+    private val repository : UserRepository
 
     init {
         val dao = UserDatabase.getInstance(application).UserDao()

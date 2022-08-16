@@ -20,4 +20,10 @@
     <string name="evening">Good Evening!</string>
     <string name="night">Good Night!</string>
     <string name="morning">Good Morning!</string>
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="see_expense_summary">See Expense Summary</string>
+    <string name="expense">Expense</string>
+    <string name="income">Income</string>
+    <string name="total_balance">Total Balance</string>
+    <string name="dev_name">PuruPanda</string>
 </resources>

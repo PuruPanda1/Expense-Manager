@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.payment.fragments.mainScreen.detailedTransactions.totalAnalysis.DetailedTransactionAnalysis
 import com.example.payment.R
 import com.example.payment.fragments.mainScreen.detailedTransactions.totalAnalysis.DetailedTransactionAnalysisDirections
-import com.example.payment.transactionDb.myTypes
+import com.example.payment.transactionDb.MyTypes
 import java.text.NumberFormat
 import java.util.*
 
 class TransactionTypeAdapter(val fragment: DetailedTransactionAnalysis, private val currency: String) :
-    ListAdapter<myTypes, TransactionTypeAdapter.TransactionTypeViewHolder>(Comparator()) {
+    ListAdapter<MyTypes, TransactionTypeAdapter.TransactionTypeViewHolder>(Comparator()) {
 
 
 
@@ -40,7 +40,7 @@ class TransactionTypeAdapter(val fragment: DetailedTransactionAnalysis, private 
         private val image: ImageView = view.findViewById(R.id.transactionTypeIcon)
         val layout: CardView = view.findViewById(R.id.transactionTypeLayout)
 
-        fun bind(item: myTypes, fragment: DetailedTransactionAnalysis, currency: String) {
+        fun bind(item: MyTypes, fragment: DetailedTransactionAnalysis, currency: String) {
             val currencyFormatter = NumberFormat.getCurrencyInstance()
             currencyFormatter.maximumFractionDigits = 1
             currencyFormatter.currency = Currency.getInstance(currency)
@@ -84,12 +84,12 @@ class TransactionTypeAdapter(val fragment: DetailedTransactionAnalysis, private 
         }
     }
 
-    class Comparator : DiffUtil.ItemCallback<myTypes>() {
-        override fun areItemsTheSame(oldItem: myTypes, newItem: myTypes): Boolean {
+    class Comparator : DiffUtil.ItemCallback<MyTypes>() {
+        override fun areItemsTheSame(oldItem: MyTypes, newItem: MyTypes): Boolean {
             return oldItem.name == newItem.name
         }
 
-        override fun areContentsTheSame(oldItem: myTypes, newItem: myTypes): Boolean {
+        override fun areContentsTheSame(oldItem: MyTypes, newItem: MyTypes): Boolean {
             return oldItem == newItem
         }
 

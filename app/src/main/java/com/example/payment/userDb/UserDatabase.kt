@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 
 @Database(entities = [User::class], version = 1, exportSchema = false)
 abstract class UserDatabase :RoomDatabase(){
@@ -14,17 +13,16 @@ abstract class UserDatabase :RoomDatabase(){
         @Volatile
         private var INSTANCE: UserDatabase? = null
         fun getInstance(context: Context): UserDatabase {
-            var tempIns = INSTANCE
+            val tempIns = INSTANCE
             if (tempIns != null) {
                 return tempIns
             }
             synchronized(this) {
-                val instance = Room.databaseBuilder(
+                return Room.databaseBuilder(
                     context.applicationContext,
                     UserDatabase::class.java,
                     "user_details"
                 ).build()
-                return instance
             }
         }
     }

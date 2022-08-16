@@ -2,7 +2,7 @@ package com.example.payment.transactionDb
 
 import androidx.room.ColumnInfo
 
-data class myTypes(
+data class MyTypes(
     @ColumnInfo(name="name")
     val name: String,
     @ColumnInfo(name="amount")

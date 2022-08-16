@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.payment.R
 import com.example.payment.databinding.FragmentMainScreenBinding
-import com.example.payment.transactionDb.myTypes
+import com.example.payment.transactionDb.MyTypes
 import com.example.payment.userDb.UserViewModel
 import com.example.payment.viewModel.TransactionViewModel
 import com.github.mikephil.charting.animation.Easing
@@ -103,11 +103,7 @@ class MainScreen : Fragment() {
 
 //        set balance amount
         viewModel.readDifferenceSum.observe(viewLifecycleOwner) {
-            if (it != null) {
-                balanceAmount = it
-            } else {
-                balanceAmount = 0f
-            }
+            balanceAmount = it ?: 0f
             setAmount()
         }
 //        set income and expense amount
@@ -187,7 +183,7 @@ class MainScreen : Fragment() {
         binding.pieChart.isDrawHoleEnabled = true
         binding.pieChart.setUsePercentValues(true)
         binding.pieChart.setEntryLabelTextSize(8f)
-        binding.pieChart.isRotationEnabled = false
+        binding.pieChart.isRotationEnabled = true
         binding.pieChart.holeRadius = 65f
         binding.pieChart.setEntryLabelColor(
             ContextCompat.getColor(
@@ -204,7 +200,7 @@ class MainScreen : Fragment() {
     }
 
 
-    private fun updateChart(list: List<myTypes>) {
+    private fun updateChart(list: List<MyTypes>) {
         val entries = mutableListOf<PieEntry>()
         val colors = ArrayList<Int>()
 
