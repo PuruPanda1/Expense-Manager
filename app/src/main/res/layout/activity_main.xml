@@ -32,6 +32,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:itemHorizontalTranslationEnabled="false"
         app:itemIconSize="24dp"
+        app:itemRippleColor="@color/primaryBackground"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/menu_bottom" />
 

@@ -29,8 +29,8 @@
         <action
             android:id="@+id/action_Stats_to_addTransaction"
             app:destination="@id/addTransaction"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/Profile"
@@ -46,7 +46,9 @@
             android:id="@+id/action_addTransaction_to_Stats"
             app:destination="@id/Stats"
             app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
+            app:exitAnim="@android:anim/fade_out"
+            app:popUpTo="@id/Stats"
+            app:popUpToInclusive="true" />
         <argument
             android:name="transaction"
             app:argType="com.example.payment.transactionDb.Transaction" />
@@ -60,7 +62,9 @@
             android:id="@+id/action_detailedTransactionAnalysis_to_MainScreen"
             app:destination="@id/MainScreen"
             app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
+            app:exitAnim="@android:anim/fade_out"
+            app:popUpTo="@id/MainScreen"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_detailedTransactionAnalysis_to_detailedCategoryTransactionsFragment"
             app:destination="@id/detailedCategoryTransactionsFragment"
@@ -76,7 +80,9 @@
             android:id="@+id/action_detailedCategoryTransactionsFragment_to_detailedTransactionAnalysis"
             app:destination="@id/detailedTransactionAnalysis"
             app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
+            app:exitAnim="@android:anim/fade_out"
+            app:popUpTo="@id/detailedTransactionAnalysis"
+            app:popUpToInclusive="true" />
         <argument
             android:name="categoryName"
             app:argType="string" />
