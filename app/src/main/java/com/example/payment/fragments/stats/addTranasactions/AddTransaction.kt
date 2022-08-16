@@ -24,7 +24,6 @@ import com.example.payment.transactionDb.Transaction
 import com.example.payment.userDb.UserViewModel
 import com.example.payment.viewModel.AccountViewModel
 import com.example.payment.viewModel.TransactionViewModel
-import java.text.NumberFormat
 import java.util.*
 
 
@@ -100,11 +99,12 @@ class AddTransaction : Fragment() {
                 modeOfPayment = it[0].name
                 accountsAdapter.setData(it)
             } else{
-                accountViewModel.insertAccount(Accounts(0,"Cash"))
-                accountViewModel.insertAccount(Accounts(0,"Bank"))
+                accountViewModel.insertAccount(Accounts(0,"CASH"))
+                accountViewModel.insertAccount(Accounts(0,"BANK"))
             }
         }
 
+//        handling back button
         binding.backButton.setOnClickListener {
             Navigation.findNavController(binding.root)
                 .navigate(R.id.action_addTransaction_to_Stats)
@@ -112,7 +112,7 @@ class AddTransaction : Fragment() {
 
 //        edit mode
         if (args.transaction.id != -1) {
-            if (isExpense) {
+            if (args.transaction.isExpense) {
                 binding.transactionAmount.setText(args.transaction.expenseAmount.toString())
             } else {
                 binding.transactionAmount.setText(args.transaction.incomeAmount.toString())
@@ -120,6 +120,7 @@ class AddTransaction : Fragment() {
             binding.transactionDescription.setText(args.transaction.tDescription)
             binding.transactionType.setText(args.transaction.transactionType)
             date = args.transaction.date
+            accountsAdapter.setSelectedItem(args.transaction.modeOfPayment)
             binding.addExpenseBtn.setOnClickListener {
                 updateTransaction()
             }
@@ -127,6 +128,7 @@ class AddTransaction : Fragment() {
             binding.addExpenseBtn.setOnClickListener {
                 insertTransaction()
             }
+            accountsAdapter.setSelectedItem("CASH")
         }
 
 //      setting autoComplete textview for transaction type

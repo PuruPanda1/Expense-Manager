@@ -13,8 +13,8 @@
         <action
             android:id="@+id/action_MainScreen_to_detailedTransactionAnalysis"
             app:destination="@id/detailedTransactionAnalysis"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/Wallet"
@@ -29,8 +29,8 @@
         <action
             android:id="@+id/action_Stats_to_addTransaction"
             app:destination="@id/addTransaction"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/Profile"
@@ -45,8 +45,8 @@
         <action
             android:id="@+id/action_addTransaction_to_Stats"
             app:destination="@id/Stats"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down"
             app:popUpTo="@id/Stats"
             app:popUpToInclusive="true" />
         <argument
@@ -61,15 +61,15 @@
         <action
             android:id="@+id/action_detailedTransactionAnalysis_to_MainScreen"
             app:destination="@id/MainScreen"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down"
             app:popUpTo="@id/MainScreen"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_detailedTransactionAnalysis_to_detailedCategoryTransactionsFragment"
             app:destination="@id/detailedCategoryTransactionsFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/detailedCategoryTransactionsFragment"
@@ -79,8 +79,8 @@
         <action
             android:id="@+id/action_detailedCategoryTransactionsFragment_to_detailedTransactionAnalysis"
             app:destination="@id/detailedTransactionAnalysis"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down"
             app:popUpTo="@id/detailedTransactionAnalysis"
             app:popUpToInclusive="true" />
         <argument

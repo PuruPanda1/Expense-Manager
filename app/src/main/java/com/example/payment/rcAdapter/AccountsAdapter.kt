@@ -12,7 +12,7 @@ import com.example.payment.R
 
 class AccountsAdapter(val fragment: AddTransaction) : RecyclerView.Adapter<AccountsHolder>() {
     private var data = emptyList<Accounts>()
-    private var selectedItem = 0
+    private var selectedItem = "CASH"
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountsHolder {
         val l = LayoutInflater.from(parent.context)
         val listItem = l.inflate(R.layout.account_row, parent, false)
@@ -23,7 +23,7 @@ class AccountsAdapter(val fragment: AddTransaction) : RecyclerView.Adapter<Accou
         // set the values to the Views using holder variable
         val item = data[position]
         holder.name.text = item.name
-        if(selectedItem == position){
+        if(selectedItem == item.name){
             holder.layout.setBackgroundColor(holder.layout.context.getColor(R.color.primary_blue))
             holder.name.setTextColor(holder.layout.context.getColor(R.color.white))
         } else {
@@ -32,7 +32,7 @@ class AccountsAdapter(val fragment: AddTransaction) : RecyclerView.Adapter<Accou
         }
 
         holder.layout.setOnClickListener {
-            selectedItem = holder.adapterPosition
+            selectedItem = item.name
             fragment.setModeOfPayment(item.name)
             notifyDataSetChanged()
         }
@@ -47,9 +47,14 @@ class AccountsAdapter(val fragment: AddTransaction) : RecyclerView.Adapter<Accou
         data = list
         notifyDataSetChanged()
     }
+
+    fun setSelectedItem(selectedItem:String){
+        this.selectedItem = selectedItem
+        notifyDataSetChanged()
+    }
 }
 
 class AccountsHolder(val view: View) : RecyclerView.ViewHolder(view) {
-    val name: TextView = view.findViewById<TextView>(R.id.accountNameRC)
-    val layout: ConstraintLayout = view.findViewById<ConstraintLayout>(R.id.accountLayoutRC)
+    val name: TextView = view.findViewById(R.id.accountNameRC)
+    val layout: ConstraintLayout = view.findViewById(R.id.accountLayoutRC)
 }
