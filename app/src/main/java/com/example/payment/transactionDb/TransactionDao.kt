@@ -30,10 +30,10 @@ interface TransactionDao {
     @Query("SELECT SUM(expenseAmount) FROM transactions WHERE month = strftime('%m', 'now')")
     fun getMonthlySpends(): LiveData<Float>
 
-    @Query("SELECT SUM(incomeAmount) FROM transactions")
+    @Query("SELECT SUM(incomeAmount) FROM transactions WHERE month = strftime('%m', 'now')")
     fun getIncomeSum(): LiveData<Float>
 
-    @Query("SELECT SUM(expenseAmount) FROM transactions")
+    @Query("SELECT SUM(expenseAmount) FROM transactions WHERE month = strftime('%m', 'now')")
     fun getExpenseSum(): LiveData<Float>
 
     @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE isExpense=1 AND month = strftime('%m','now') GROUP BY transactionType")
@@ -58,14 +58,22 @@ interface TransactionDao {
     fun getMonthlyTransactionsData(transactionType: String): LiveData<List<Transaction>>
 
     @Query("SELECT * FROM transactions WHERE transactionType=:transactionType AND date BETWEEN :startDate AND :endDate ORDER BY date DESC")
-    fun getRangeTransactionsData(transactionType: String,startDate: Long,endDate: Long):LiveData<List<Transaction>>
+    fun getRangeTransactionsData(
+        transactionType: String,
+        startDate: Long,
+        endDate: Long
+    ): LiveData<List<Transaction>>
 
     @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE transactionType = :transactionType AND date BETWEEN :startDate AND :endDate GROUP BY transactionType")
-    fun getSingleTransactionType(transactionType:String,startDate:Long,endDate:Long): LiveData<MyTypes>
+    fun getSingleTransactionType(
+        transactionType: String,
+        startDate: Long,
+        endDate: Long
+    ): LiveData<MyTypes>
 
     @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE transactionType = :transactionType AND month = strftime('%m','now') GROUP BY transactionType")
     fun getMonthlySingleTransactionType(transactionType: String): LiveData<MyTypes>
 
     @Query("SELECT modeOfPayment as accountName,SUM(incomeAmount)-SUM(expenseAmount) as accountBalance FROM transactions GROUP BY modeOfPayment ORDER BY modeOfPayment ASC")
-    fun getAccountDetails():LiveData<List<AccountDetails>>
+    fun getAccountDetails(): LiveData<List<AccountDetails>>
 }
