@@ -36,6 +36,7 @@ class MainScreen : Fragment() {
         "July",
         "August",
         "September",
+        "October",
         "November",
         "December"
     )

@@ -2,6 +2,7 @@ package com.example.payment.viewModel
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.payment.modals.customData
 import com.example.payment.transactionDb.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -76,6 +77,15 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
 
     fun setCustomDurationData(dates: List<Long>) {
         this.dates.value = dates
+    }
+    private var customData = MutableLiveData<customData>()
+
+    val readCustomDefinedData:LiveData<List<Transaction>> = Transformations.switchMap(customData){
+        repository.getCustomData(it.categoryList,it.accountList,it.monthList)
+    }
+
+    fun setCustomData(data:customData){
+        this.customData.value = data
     }
 
 

@@ -76,4 +76,8 @@ interface TransactionDao {
 
     @Query("SELECT modeOfPayment as accountName,SUM(incomeAmount)-SUM(expenseAmount) as accountBalance FROM transactions GROUP BY modeOfPayment ORDER BY modeOfPayment ASC")
     fun getAccountDetails(): LiveData<List<AccountDetails>>
+
+//    custom filtering
+    @Query("SELECT * FROM transactions WHERE transactionType IN (:categoryList) AND modeOfPayment IN (:accountList) AND month IN (:monthList) ORDER BY date DESC")
+    fun getCustomData(categoryList:List<String>,accountList:List<String>,monthList:List<Int>):LiveData<List<Transaction>>
 }

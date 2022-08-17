@@ -13,6 +13,10 @@ class TransactionRepository(private val transactionDao: TransactionDao) {
     val expenseSum = transactionDao.getExpenseSum()
     val readAccountDetails = transactionDao.getAccountDetails()
 
+    fun getCustomData(categoryList:List<String>,accountList:List<String>,monthList:List<Int>):LiveData<List<Transaction>>{
+        return transactionDao.getCustomData(categoryList,accountList,monthList)
+    }
+
     fun getRangeTransactionsData(transactionType:String,startDate: Long,endDate: Long):LiveData<List<Transaction>>{
         return transactionDao.getRangeTransactionsData(transactionType,startDate,endDate)
     }

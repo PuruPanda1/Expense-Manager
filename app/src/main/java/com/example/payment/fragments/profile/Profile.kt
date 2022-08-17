@@ -140,7 +140,7 @@ class Profile : Fragment() {
 
         binding.userCurrency.setOnClickListener {
             val picker = CurrencyPicker.newInstance("Select Currency")  // dialog title
-            picker.setListener{ name, code, symbol, flagInt ->
+            picker.setListener{ _, code, _, _ ->
                 currencyCode = code
                 val currencyName = Currency.getInstance(currencyCode).displayName
                 val currencySymbol = Currency.getInstance(currencyCode).symbol

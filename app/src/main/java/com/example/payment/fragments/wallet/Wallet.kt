@@ -101,7 +101,7 @@ class Wallet : Fragment() {
                             "Updated Balance",
                             d,
                             (cal.get(Calendar.WEEK_OF_YEAR) - 1),
-                            m,
+                            (m+1),
                             0f,
                             aName
                         )
