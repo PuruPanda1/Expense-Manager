@@ -12,7 +12,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     var readAllTransaction: LiveData<List<Transaction>>
     var readAllIncomeTransaction: LiveData<List<Transaction>>
     var readAllExpenseTransaction: LiveData<List<Transaction>>
-    var readTransactionTypeAmount: LiveData<List<MyTypes>>
+    var readSumByCategory: LiveData<List<MyTypes>>
     var readDifferenceSum: LiveData<Float>
     var readMonthlySpends: LiveData<Float>
     var incomeSum: LiveData<Float>
@@ -23,39 +23,32 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     init {
         val transactionDao = TransactionDatabase.getInstance(application).transacitonDao()
         repository = TransactionRepository(transactionDao)
-        readAllTransaction = repository.readAllData
-        readAllIncomeTransaction = repository.incomeData
-        readAllExpenseTransaction = repository.expenseData
+        readAllTransaction = repository.readAllTransactions
+        readAllIncomeTransaction = repository.readIncomeTransactions
+        readAllExpenseTransaction = repository.readExpenseTransactions
         readDifferenceSum = repository.differenceSum
         readMonthlySpends = repository.monthlySpends
         incomeSum = repository.incomeSum
         expenseSum = repository.expenseSum
-        readTransactionTypeAmount = repository.amountCategory
+        readSumByCategory = repository.readSumByCategory
         readAccountDetails = repository.readAccountDetails
     }
 
     val dates: MutableLiveData<List<Long>> = MutableLiveData()
 
-    //    setting the detailed analysis list according to the dates
-    val listAccordingToDate: LiveData<List<MyTypes>> = Transformations.switchMap(dates) {
-        repository.getCustomDurationData(it[0], it[1])
+    val readCategoriesByDuration: LiveData<List<MyTypes>> = Transformations.switchMap(dates) {
+        repository.readCategoriesByDuration(it[0], it[1])
     }
-    val sumAccordingToDate: LiveData<Float> = Transformations.switchMap(dates) {
-        repository.getCustomDurationDataSum(it[0], it[1])
-    }
-
-    //    setting the transactions list according to the dates
-    val readAllTransactionDate: LiveData<List<Transaction>> = Transformations.switchMap(dates) {
-        repository.getAllTransactionsByDate(it[0], it[1])
+    val readExpenseSumByDuration: LiveData<Float> = Transformations.switchMap(dates) {
+        repository.readExpenseSumByDuration(it[0], it[1])
     }
 
     var transactionTypeDetails: MutableLiveData<TransactionTypeData> = MutableLiveData()
 
-    //    transactions according to transactionstype and date asked
-    val transactionsCategoryWise: LiveData<List<Transaction>> =
+    val readTransactionsByCategory: LiveData<List<Transaction>> =
         Transformations.switchMap(transactionTypeDetails) {
             if (it.startDate == 0L) {
-                repository.getMonthlyTransactionsData(it.transactionType)
+                repository.getTransactionsByCategory(it.transactionType)
             } else {
                 repository.getRangeTransactionsData(it.transactionType, it.startDate, it.endDate)
             }
@@ -82,19 +75,26 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
 
     private var customTimeData = MutableLiveData<CustomTimeData>()
 
-    val readCustomDefinedTimeData: LiveData<List<Transaction>> = Transformations.switchMap(customTimeData) {
-        repository.getCustomTimeData(it.categoryList,it.accountList,it.startDate,it.endDate)
-    }
+    val readTransactionsByDuration: LiveData<List<Transaction>> =
+        Transformations.switchMap(customTimeData) {
+            repository.readTransactionsByDuration(
+                it.categoryList,
+                it.accountList,
+                it.startDate,
+                it.endDate
+            )
+        }
 
-    fun setCustomTimeData(data:CustomTimeData){
+    fun setCustomTimeData(data: CustomTimeData) {
         this.customTimeData.value = data
     }
 
     private var customData = MutableLiveData<customData>()
 
-    val readCustomDefinedData: LiveData<List<Transaction>> = Transformations.switchMap(customData) {
-        repository.getCustomData(it.categoryList, it.accountList, it.monthList)
-    }
+    val readTransactionsByMonth: LiveData<List<Transaction>> =
+        Transformations.switchMap(customData) {
+            repository.readTransactionsByMonth(it.categoryList, it.accountList, it.monthList)
+        }
 
     fun setCustomData(data: customData) {
         this.customData.value = data
@@ -119,7 +119,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
-    fun deleteAccountTransaction(accountName:String){
+    fun deleteAccountTransaction(accountName: String) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAccountTransactions(accountName)
         }

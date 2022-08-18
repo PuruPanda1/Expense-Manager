@@ -101,7 +101,7 @@ class DetailedTransactionAnalysis : Fragment() {
         binding.rangePicker.setOnClickListener {
             openRangePicker(adapter)
         }
-        viewModel.readTransactionTypeAmount.observe(viewLifecycleOwner) {
+        viewModel.readSumByCategory.observe(viewLifecycleOwner) {
             adapter.submitList(it)
             updateChart(it)
         }
@@ -130,14 +130,14 @@ class DetailedTransactionAnalysis : Fragment() {
             endDate = it.second
             viewModel.setCustomDurationData(listOf(it.first, (it.second + 86400000)))
         }
-        viewModel.readTransactionTypeAmount.removeObservers(viewLifecycleOwner)
+        viewModel.readSumByCategory.removeObservers(viewLifecycleOwner)
         viewModel.readMonthlySpends.removeObservers(viewLifecycleOwner)
         //        calender icon
-        viewModel.listAccordingToDate.observe(viewLifecycleOwner) { list ->
+        viewModel.readCategoriesByDuration.observe(viewLifecycleOwner) { list ->
             adapter.submitList(list)
             updateChart(list)
         }
-        viewModel.sumAccordingToDate.observe(viewLifecycleOwner) {
+        viewModel.readExpenseSumByDuration.observe(viewLifecycleOwner) {
             if (it == null) {
                 binding.detailedmonthlyExpense.text = currencyFormatter.format(0)
             } else {

@@ -155,7 +155,7 @@ class MainScreen : Fragment() {
 //         setting the pie chart
         setupPieChart()
 //        observer for pie chart
-        viewModel.readTransactionTypeAmount.observe(viewLifecycleOwner) {
+        viewModel.readSumByCategory.observe(viewLifecycleOwner) {
             updateChart(it)
         }
 

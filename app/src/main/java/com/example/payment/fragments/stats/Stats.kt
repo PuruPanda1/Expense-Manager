@@ -243,11 +243,11 @@ class Stats : Fragment() {
                     CustomTimeData(
                         categoryList,
                         accountList,
-                        startDate.value!!-820000,
+                        startDate.value!!-86400000,
                         endDate.value!!
                     )
                 )
-                viewModel.readCustomDefinedTimeData.observe(viewLifecycleOwner) {
+                viewModel.readTransactionsByDuration.observe(viewLifecycleOwner) {
                     adapter.submitList(it)
                 }
                 reDeclareValues()
@@ -258,7 +258,7 @@ class Stats : Fragment() {
                 Toast.makeText(context, "Select Start Date", Toast.LENGTH_SHORT).show()
             } else {
                 viewModel.setCustomData(customData(categoryList, accountList, monthList))
-                viewModel.readCustomDefinedData.observe(viewLifecycleOwner) {
+                viewModel.readTransactionsByMonth.observe(viewLifecycleOwner) {
                     adapter.submitList(it)
                 }
                 reDeclareValues()

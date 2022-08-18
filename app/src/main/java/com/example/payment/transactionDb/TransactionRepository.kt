@@ -3,62 +3,74 @@ package com.example.payment.transactionDb
 import androidx.lifecycle.LiveData
 
 class TransactionRepository(private val transactionDao: TransactionDao) {
-    val readAllData: LiveData<List<Transaction>> = transactionDao.getAllTransaction()
-    val incomeData: LiveData<List<Transaction>> = transactionDao.getIncomeTransactions()
-    val expenseData: LiveData<List<Transaction>> = transactionDao.getExpenseTransactions()
-    val amountCategory: LiveData<List<MyTypes>> = transactionDao.getTotal()
+    val readAllTransactions: LiveData<List<Transaction>> = transactionDao.getAllTransaction()
+    val readIncomeTransactions: LiveData<List<Transaction>> = transactionDao.getIncomeTransactions()
+    val readExpenseTransactions: LiveData<List<Transaction>> =
+        transactionDao.getExpenseTransactions()
+    val readSumByCategory: LiveData<List<MyTypes>> = transactionDao.getTotal()
     val differenceSum: LiveData<Float> = transactionDao.getDifferenceSum()
     val monthlySpends: LiveData<Float> = transactionDao.getMonthlySpends()
     val incomeSum = transactionDao.getIncomeSum()
     val expenseSum = transactionDao.getExpenseSum()
     val readAccountDetails = transactionDao.getAccountDetails()
 
-
-    suspend fun deleteAccountTransactions(accountName:String){
+    suspend fun deleteAccountTransactions(accountName: String) {
         transactionDao.deleteAccountTransactions(accountName)
     }
 
-    fun getCustomData(categoryList:List<String>,accountList:List<String>,monthList:List<Int>):LiveData<List<Transaction>>{
-        return transactionDao.getCustomData(categoryList,accountList,monthList)
+    fun readTransactionsByMonth(
+        categoryList: List<String>,
+        accountList: List<String>,
+        monthList: List<Int>
+    ): LiveData<List<Transaction>> {
+        return transactionDao.readTransactionsByMonth(categoryList, accountList, monthList)
     }
 
-    fun getCustomTimeData(categoryList:List<String>,accountList:List<String>,startDate: Long,endDate: Long):LiveData<List<Transaction>>{
-        return transactionDao.getCustomTimeData(categoryList,accountList,startDate,endDate)
+    fun readTransactionsByDuration(
+        categoryList: List<String>,
+        accountList: List<String>,
+        startDate: Long,
+        endDate: Long
+    ): LiveData<List<Transaction>> {
+        return transactionDao.readTransactionsByDuration(
+            categoryList,
+            accountList,
+            startDate,
+            endDate
+        )
     }
 
 
-    fun getRangeTransactionsData(transactionType:String,startDate: Long,endDate: Long):LiveData<List<Transaction>>{
-        return transactionDao.getRangeTransactionsData(transactionType,startDate,endDate)
+    fun getRangeTransactionsData(
+        transactionType: String,
+        startDate: Long,
+        endDate: Long
+    ): LiveData<List<Transaction>> {
+        return transactionDao.getRangeTransactionsData(transactionType, startDate, endDate)
     }
 
-    fun getMonthlyTransactionsData(transactionType:String):LiveData<List<Transaction>>{
-        return transactionDao.getMonthlyTransactionsData(transactionType)
+    fun getTransactionsByCategory(transactionType: String): LiveData<List<Transaction>> {
+        return transactionDao.getTransactionsByCategory(transactionType)
     }
 
-    fun getCustomDurationData(startDate: Long, endDate: Long): LiveData<List<MyTypes>> {
-        return transactionDao.getCustomDurationData(startDate, endDate)
+    fun readCategoriesByDuration(startDate: Long, endDate: Long): LiveData<List<MyTypes>> {
+        return transactionDao.readCategoriesByDuration(startDate, endDate)
     }
 
-    fun getSingleTransactionType(transactionType:String,startDate: Long, endDate: Long): LiveData<MyTypes> {
-        return transactionDao.getSingleTransactionType(transactionType,startDate, endDate)
+    fun getSingleTransactionType(
+        transactionType: String,
+        startDate: Long,
+        endDate: Long
+    ): LiveData<MyTypes> {
+        return transactionDao.getSingleTransactionType(transactionType, startDate, endDate)
     }
 
-    fun getMonthlySingleTransactionType(transactionType:String): LiveData<MyTypes> {
+    fun getMonthlySingleTransactionType(transactionType: String): LiveData<MyTypes> {
         return transactionDao.getMonthlySingleTransactionType(transactionType)
     }
 
-    fun getCustomDurationDataSum(startDate: Long, endDate: Long): LiveData<Float> {
-        return transactionDao.getCustomDurationDataSum(startDate, endDate)
-    }
-
-    fun getAllTransactionsByDate(startDate: Long,endDate: Long): LiveData<List<Transaction>>{
-        return transactionDao.getAllTransactionsByDate(startDate, endDate)
-    }
-    fun getAllIncomeTransactionsByDate(startDate: Long,endDate: Long): LiveData<List<Transaction>>{
-        return transactionDao.getAllIncomeTransactionsByDate(startDate, endDate)
-    }
-    fun getAllExpenseTransactionsByDate(startDate: Long,endDate: Long): LiveData<List<Transaction>>{
-        return transactionDao.getAllExpenseTransactionsByDate(startDate, endDate)
+    fun readExpenseSumByDuration(startDate: Long, endDate: Long): LiveData<Float> {
+        return transactionDao.readExpenseSumByDuration(startDate, endDate)
     }
 
     suspend fun insertTransaction(transaction: Transaction) {

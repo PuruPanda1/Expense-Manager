@@ -40,22 +40,13 @@ interface TransactionDao {
     fun getTotal(): LiveData<List<MyTypes>>
 
     @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE isExpense=1 AND date BETWEEN :startDate AND :endDate GROUP BY transactionType")
-    fun getCustomDurationData(startDate: Long, endDate: Long): LiveData<List<MyTypes>>
+    fun readCategoriesByDuration(startDate: Long, endDate: Long): LiveData<List<MyTypes>>
 
-    @Query("SELECT SUM(expenseAmount) FROM transactions WHERE isExpense=1 AND date BETWEEN :startDate AND :endDate")
-    fun getCustomDurationDataSum(startDate: Long, endDate: Long): LiveData<Float>
-
-    @Query("SELECT * FROM transactions WHERE date BETWEEN :startDate AND :endDate ORDER BY date DESC")
-    fun getAllTransactionsByDate(startDate: Long, endDate: Long): LiveData<List<Transaction>>
-
-    @Query("SELECT * FROM transactions WHERE isExpense=1 AND date BETWEEN :startDate AND :endDate ORDER BY date DESC")
-    fun getAllExpenseTransactionsByDate(startDate: Long, endDate: Long): LiveData<List<Transaction>>
-
-    @Query("SELECT * FROM transactions WHERE isExpense=0 AND date BETWEEN :startDate AND :endDate ORDER BY date DESC")
-    fun getAllIncomeTransactionsByDate(startDate: Long, endDate: Long): LiveData<List<Transaction>>
+    @Query("SELECT SUM(expenseAmount) FROM transactions WHERE date BETWEEN :startDate AND :endDate")
+    fun readExpenseSumByDuration(startDate: Long, endDate: Long): LiveData<Float>
 
     @Query("SELECT * FROM transactions WHERE transactionType=:transactionType AND month = strftime('%m','now') ORDER BY date DESC")
-    fun getMonthlyTransactionsData(transactionType: String): LiveData<List<Transaction>>
+    fun getTransactionsByCategory(transactionType: String): LiveData<List<Transaction>>
 
     @Query("SELECT * FROM transactions WHERE transactionType=:transactionType AND date BETWEEN :startDate AND :endDate ORDER BY date DESC")
     fun getRangeTransactionsData(
@@ -77,14 +68,23 @@ interface TransactionDao {
     @Query("SELECT modeOfPayment as accountName,SUM(incomeAmount)-SUM(expenseAmount) as accountBalance FROM transactions GROUP BY modeOfPayment ORDER BY modeOfPayment ASC")
     fun getAccountDetails(): LiveData<List<AccountDetails>>
 
-//    custom filtering
+    //    custom filtering
     @Query("SELECT * FROM transactions WHERE transactionType IN (:categoryList) AND modeOfPayment IN (:accountList) AND month IN (:monthList) ORDER BY date DESC")
-    fun getCustomData(categoryList:List<String>,accountList:List<String>,monthList:List<Int>):LiveData<List<Transaction>>
+    fun readTransactionsByMonth(
+        categoryList: List<String>,
+        accountList: List<String>,
+        monthList: List<Int>
+    ): LiveData<List<Transaction>>
 
     @Query("SELECT * FROM transactions WHERE transactionType IN (:categoryList) AND modeOfPayment IN (:accountList) AND date BETWEEN (:startDate) AND (:endDate) ORDER BY date DESC")
-    fun getCustomTimeData(categoryList:List<String>,accountList:List<String>,startDate: Long,endDate: Long):LiveData<List<Transaction>>
+    fun readTransactionsByDuration(
+        categoryList: List<String>,
+        accountList: List<String>,
+        startDate: Long,
+        endDate: Long
+    ): LiveData<List<Transaction>>
 
     @Query("DELETE FROM transactions WHERE modeOfPayment = :accountName")
-    suspend fun deleteAccountTransactions(accountName:String)
+    suspend fun deleteAccountTransactions(accountName: String)
 
 }

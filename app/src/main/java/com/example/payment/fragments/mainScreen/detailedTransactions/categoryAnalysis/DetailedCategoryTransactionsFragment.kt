@@ -128,7 +128,7 @@ class DetailedCategoryTransactionsFragment : Fragment() {
             }
             setAmount()
         }
-        viewModel.transactionsCategoryWise.observe(viewLifecycleOwner) {
+        viewModel.readTransactionsByCategory.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
 
@@ -159,7 +159,7 @@ class DetailedCategoryTransactionsFragment : Fragment() {
                 )
             )
         }
-        viewModel.sumAccordingToDate.observe(viewLifecycleOwner) {
+        viewModel.readExpenseSumByDuration.observe(viewLifecycleOwner) {
             amount = it ?: 0f
             setAmount()
         }

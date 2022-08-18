@@ -1,5 +1,6 @@
 package com.example.payment.rcAdapter
 
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,15 @@ class WalletAccountDetailsAdapter(private val currency: String, val fragment: Wa
             balance.text = currencyFormatter.format(item.accountBalance)
 
             layout.setOnLongClickListener {
-                deleteAccount(item.accountName, fragment)
+                val builder = AlertDialog.Builder(it.context)
+                builder.setPositiveButton("Yes") { _, _ ->
+                    deleteAccount(item.accountName, fragment)
+                }
+                builder.setNegativeButton("No") { _, _ ->
+                }
+                builder.setTitle("Delete Payment Account")
+                builder.setMessage("Deletion of Payment Account will remove all the transactions made on this payment account")
+                builder.create().show()
                 true
             }
         }
