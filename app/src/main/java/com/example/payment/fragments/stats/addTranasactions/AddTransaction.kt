@@ -98,6 +98,7 @@ class AddTransaction : Fragment() {
             if(it.isNotEmpty()){
                 modeOfPayment = it[0].name
                 accountsAdapter.setData(it)
+                accountsAdapter.setSelectedItem(it[0].name)
             } else{
                 accountViewModel.insertAccount(Accounts(0,"CASH"))
                 accountViewModel.insertAccount(Accounts(0,"BANK"))

@@ -45,6 +45,7 @@ class MainScreen : Fragment() {
     private val binding get() = _binding!!
     private var balanceAmount = 0f
     private var monthlyAmount = 0f
+    private val month = months[Calendar.getInstance().get(Calendar.MONTH)]
     private var budget = 4000
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,6 +71,16 @@ class MainScreen : Fragment() {
             else -> {
                 binding.greetingMsg.text = getString(R.string.morning)
             }
+        }
+
+        binding.incomeBox.setOnClickListener {
+            val action = MainScreenDirections.actionMainScreenToIncomeExpenseView("INCOME",month,currency.value!!)
+            Navigation.findNavController(binding.root).navigate(action)
+        }
+
+        binding.expenseBox.setOnClickListener {
+            val action = MainScreenDirections.actionMainScreenToIncomeExpenseView("EXPENSE",month,currency.value!!)
+            Navigation.findNavController(binding.root).navigate(action)
         }
 
 //        default values for currency formatter
@@ -123,7 +134,6 @@ class MainScreen : Fragment() {
         }
 
 //        set monthly balance amount
-        val month = months[Calendar.getInstance().get(Calendar.MONTH)]
         binding.monthlyDuration.text = String.format(getString(R.string.monthlyDuration, month))
 //        observer for balance
         viewModel.readMonthlySpends.observe(viewLifecycleOwner) {

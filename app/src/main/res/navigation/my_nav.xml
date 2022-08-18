@@ -15,6 +15,11 @@
             app:destination="@id/detailedTransactionAnalysis"
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/slide_down" />
+        <action
+            android:id="@+id/action_MainScreen_to_incomeExpenseView"
+            app:destination="@id/incomeExpenseView"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/Wallet"
@@ -92,5 +97,25 @@
         <argument
             android:name="endDate"
             app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/incomeExpenseView"
+        android:name="com.example.payment.fragments.mainScreen.IncomeExpenseView"
+        android:label="fragment_income_expense_view"
+        tools:layout="@layout/fragment_income_expense_view" >
+        <argument
+            android:name="typeName"
+            app:argType="string" />
+        <argument
+            android:name="month"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_incomeExpenseView_to_MainScreen"
+            app:destination="@id/MainScreen"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down" />
+        <argument
+            android:name="currency"
+            app:argType="string" />
     </fragment>
 </navigation>
