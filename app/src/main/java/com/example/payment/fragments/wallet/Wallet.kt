@@ -48,7 +48,7 @@ class Wallet : Fragment() {
             if (it != null) {
                 currency.value = it.userCurrency
             }
-            adapter = WalletAccountDetailsAdapter(currency.value!!)
+            adapter = WalletAccountDetailsAdapter(currency.value!!, this)
             binding.walletAccountsRecyclerView.adapter = adapter
             binding.walletAccountsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -101,7 +101,7 @@ class Wallet : Fragment() {
                             "Updated Balance",
                             d,
                             (cal.get(Calendar.WEEK_OF_YEAR) - 1),
-                            (m+1),
+                            (m + 1),
                             0f,
                             aName
                         )
@@ -119,6 +119,11 @@ class Wallet : Fragment() {
         }
 
         bottomSheet.show()
+    }
+
+    fun deleteBankAccount(accountName: String) {
+        transactionViewModel.deleteAccountTransaction(accountName)
+        accountViewModel.deleteAccountWithName(accountName)
     }
 
     override fun onDestroyView() {

@@ -2,6 +2,7 @@ package com.example.payment.viewModel
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.payment.modals.CustomTimeData
 import com.example.payment.modals.customData
 import com.example.payment.transactionDb.*
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +17,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     var readMonthlySpends: LiveData<Float>
     var incomeSum: LiveData<Float>
     var expenseSum: LiveData<Float>
-    var readAccountDetails : LiveData<List<AccountDetails>>
+    var readAccountDetails: LiveData<List<AccountDetails>>
     private val repository: TransactionRepository
 
     init {
@@ -78,13 +79,24 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     fun setCustomDurationData(dates: List<Long>) {
         this.dates.value = dates
     }
-    private var customData = MutableLiveData<customData>()
 
-    val readCustomDefinedData:LiveData<List<Transaction>> = Transformations.switchMap(customData){
-        repository.getCustomData(it.categoryList,it.accountList,it.monthList)
+    private var customTimeData = MutableLiveData<CustomTimeData>()
+
+    val readCustomDefinedTimeData: LiveData<List<Transaction>> = Transformations.switchMap(customTimeData) {
+        repository.getCustomTimeData(it.categoryList,it.accountList,it.startDate,it.endDate)
     }
 
-    fun setCustomData(data:customData){
+    fun setCustomTimeData(data:CustomTimeData){
+        this.customTimeData.value = data
+    }
+
+    private var customData = MutableLiveData<customData>()
+
+    val readCustomDefinedData: LiveData<List<Transaction>> = Transformations.switchMap(customData) {
+        repository.getCustomData(it.categoryList, it.accountList, it.monthList)
+    }
+
+    fun setCustomData(data: customData) {
         this.customData.value = data
     }
 
@@ -104,6 +116,12 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     fun deleteTransaction(transaction: Transaction) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteTransaction(transaction)
+        }
+    }
+
+    fun deleteAccountTransaction(accountName:String){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAccountTransactions(accountName)
         }
     }
 }

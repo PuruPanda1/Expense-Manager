@@ -10,9 +10,9 @@ import com.example.payment.accountsDb.Accounts
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AccountViewModel(application: Application):AndroidViewModel(application) {
-    private val repository:AccountRepository
-    val readAllAccounts:LiveData<List<Accounts>>
+class AccountViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository: AccountRepository
+    val readAllAccounts: LiveData<List<Accounts>>
 
     init {
         val dao = AccountDatabase.getInstance(application).accountDao()
@@ -20,21 +20,28 @@ class AccountViewModel(application: Application):AndroidViewModel(application) {
         readAllAccounts = repository.readAllAccounts
     }
 
-    fun insertAccount(accounts: Accounts){
+    fun insertAccount(accounts: Accounts) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertAccount(accounts)
         }
     }
 
-    fun updateAccount(accounts: Accounts){
+    fun updateAccount(accounts: Accounts) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateAccount(accounts)
         }
     }
 
-    fun deleteAccount(accounts: Accounts){
-        viewModelScope.launch(Dispatchers.IO){
+    fun deleteAccount(accounts: Accounts) {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAccount(accounts)
         }
     }
+
+    fun deleteAccountWithName(accountName: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAccountWithName(accountName)
+        }
+    }
+
 }

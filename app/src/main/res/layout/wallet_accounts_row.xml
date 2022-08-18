@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     app:strokeWidth="1dp"
+    android:id="@+id/accountWalletLayout"
     app:strokeColor="@color/primary_blue"
     app:cardCornerRadius="8dp"
     app:cardElevation="5dp">

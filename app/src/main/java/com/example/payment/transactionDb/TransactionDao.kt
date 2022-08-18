@@ -80,4 +80,11 @@ interface TransactionDao {
 //    custom filtering
     @Query("SELECT * FROM transactions WHERE transactionType IN (:categoryList) AND modeOfPayment IN (:accountList) AND month IN (:monthList) ORDER BY date DESC")
     fun getCustomData(categoryList:List<String>,accountList:List<String>,monthList:List<Int>):LiveData<List<Transaction>>
+
+    @Query("SELECT * FROM transactions WHERE transactionType IN (:categoryList) AND modeOfPayment IN (:accountList) AND date BETWEEN (:startDate) AND (:endDate) ORDER BY date DESC")
+    fun getCustomTimeData(categoryList:List<String>,accountList:List<String>,startDate: Long,endDate: Long):LiveData<List<Transaction>>
+
+    @Query("DELETE FROM transactions WHERE modeOfPayment = :accountName")
+    suspend fun deleteAccountTransactions(accountName:String)
+
 }

@@ -5,7 +5,6 @@ import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.payment.R
 import com.example.payment.databinding.FragmentStatsBinding
+import com.example.payment.modals.CustomTimeData
 import com.example.payment.modals.customData
 import com.example.payment.rcAdapter.TransactionsAdapter
 import com.example.payment.rcAdapter.filterAdapters.AccountFilterAdapter
@@ -239,7 +239,19 @@ class Stats : Fragment() {
             }
 
             if (startDate.value != 0L && endDate.value != 0L) {
-//                viewModel.getTimedData()
+                viewModel.setCustomTimeData(
+                    CustomTimeData(
+                        categoryList,
+                        accountList,
+                        startDate.value!!-820000,
+                        endDate.value!!
+                    )
+                )
+                viewModel.readCustomDefinedTimeData.observe(viewLifecycleOwner) {
+                    adapter.submitList(it)
+                }
+                reDeclareValues()
+                bottomsheet.dismiss()
             } else if (startDate.value != 0L && endDate.value == 0L) {
                 Toast.makeText(context, "Select End Date", Toast.LENGTH_SHORT).show()
             } else if (startDate.value == 0L && endDate.value != 0L) {
@@ -249,15 +261,16 @@ class Stats : Fragment() {
                 viewModel.readCustomDefinedData.observe(viewLifecycleOwner) {
                     adapter.submitList(it)
                 }
+                reDeclareValues()
+                bottomsheet.dismiss()
             }
-            reDeclareValues()
-            Log.d("checkingMonths", "showBottomSheetFilter: "+monthSelected.value!!)
-            bottomsheet.dismiss()
         }
         bottomsheet.show()
     }
 
     private fun reDeclareValues() {
+        startDate.value = 0L
+        endDate.value = 0L
         monthSelected.value = false
         accountSelected.value = false
         categorySelected.value = false

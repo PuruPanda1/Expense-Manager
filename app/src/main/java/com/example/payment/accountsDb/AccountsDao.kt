@@ -16,6 +16,9 @@ interface AccountsDao {
     suspend fun deleteAccount(accounts: Accounts)
 
     @Query("SELECT * FROM account_details")
-    fun getAllAccounts():LiveData<List<Accounts>>
+    fun getAllAccounts(): LiveData<List<Accounts>>
+
+    @Query("DELETE FROM account_details WHERE name = (:accountName)")
+    fun deleteAccountWithName(accountName: String)
 
 }
