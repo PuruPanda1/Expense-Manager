@@ -115,8 +115,10 @@ class AddTransaction : Fragment() {
         if (args.transaction.id != -1) {
             if (args.transaction.isExpense) {
                 binding.transactionAmount.setText(args.transaction.expenseAmount.toString())
+                binding.isExpenseSwitch.isChecked = true
             } else {
                 binding.transactionAmount.setText(args.transaction.incomeAmount.toString())
+                binding.isExpenseSwitch.isChecked = false
             }
             binding.transactionDescription.setText(args.transaction.tDescription)
             binding.transactionType.setText(args.transaction.transactionType)
