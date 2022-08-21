@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/MainScreen"
-        android:name="com.example.payment.fragments.mainScreen.MainScreen"
+        android:name="com.purabmodi.payment.fragments.mainScreen.MainScreen"
         android:label="Home"
         tools:layout="@layout/fragment_main_screen" >
         <action
@@ -23,12 +23,12 @@
     </fragment>
     <fragment
         android:id="@+id/Wallet"
-        android:name="com.example.payment.fragments.wallet.Wallet"
+        android:name="com.purabmodi.payment.fragments.wallet.Wallet"
         android:label="Wallet"
         tools:layout="@layout/fragment_wallet" />
     <fragment
         android:id="@+id/Stats"
-        android:name="com.example.payment.fragments.stats.Stats"
+        android:name="com.purabmodi.payment.fragments.stats.Stats"
         android:label="Stats"
         tools:layout="@layout/fragment_stats" >
         <action
@@ -39,12 +39,12 @@
     </fragment>
     <fragment
         android:id="@+id/Profile"
-        android:name="com.example.payment.fragments.profile.Profile"
+        android:name="com.purabmodi.payment.fragments.profile.Profile"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/addTransaction"
-        android:name="com.example.payment.fragments.stats.addTranasactions.AddTransaction"
+        android:name="com.purabmodi.payment.fragments.stats.addTranasactions.AddTransaction"
         android:label="fragment_add_transaction"
         tools:layout="@layout/fragment_add_transaction" >
         <action
@@ -56,11 +56,11 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="transaction"
-            app:argType="com.example.payment.transactionDb.Transaction" />
+            app:argType="com.purabmodi.payment.transactionDb.Transaction" />
     </fragment>
     <fragment
         android:id="@+id/detailedTransactionAnalysis"
-        android:name="com.example.payment.fragments.mainScreen.detailedTransactions.totalAnalysis.DetailedTransactionAnalysis"
+        android:name="com.purabmodi.payment.fragments.mainScreen.detailedTransactions.totalAnalysis.DetailedTransactionAnalysis"
         android:label="fragment_detailed_transaction_analysis"
         tools:layout="@layout/fragment_detailed_transaction_analysis" >
         <action
@@ -78,7 +78,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailedCategoryTransactionsFragment"
-        android:name="com.example.payment.fragments.mainScreen.detailedTransactions.categoryAnalysis.DetailedCategoryTransactionsFragment"
+        android:name="com.purabmodi.payment.fragments.mainScreen.detailedTransactions.categoryAnalysis.DetailedCategoryTransactionsFragment"
         android:label="fragment_detailed_category_transactions"
         tools:layout="@layout/fragment_detailed_category_transactions" >
         <action
@@ -100,7 +100,7 @@
     </fragment>
     <fragment
         android:id="@+id/incomeExpenseView"
-        android:name="com.example.payment.fragments.mainScreen.IncomeExpenseView"
+        android:name="com.purabmodi.payment.fragments.mainScreen.IncomeExpenseView"
         android:label="fragment_income_expense_view"
         tools:layout="@layout/fragment_income_expense_view" >
         <argument
