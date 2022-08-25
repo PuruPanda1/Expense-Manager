@@ -22,7 +22,7 @@
             android:paddingEnd="20dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:fontFamily="@font/poppins"
+            android:fontFamily="@font/sf_pro"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="15sp"

@@ -41,20 +41,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/allAcountsTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins"
-        android:text="All Accounts"
-        android:textColor="@color/buttonColor"
-        android:textSize="15sp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/walletAccountsRecyclerView"
         android:layout_width="match_parent"

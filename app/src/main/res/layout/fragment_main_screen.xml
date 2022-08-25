@@ -40,10 +40,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/poppins"
+            android:fontFamily="@font/sf_pro"
             android:text="@string/morning"
             android:textColor="@color/buttonColor"
-            android:textSize="13sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/userName"
             app:layout_constraintTop_toTopOf="parent" />
         <!--username view -->

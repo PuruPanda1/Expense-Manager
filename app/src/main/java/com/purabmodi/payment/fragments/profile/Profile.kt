@@ -23,7 +23,6 @@ import com.purabmodi.payment.userDb.User
 import com.purabmodi.payment.userDb.UserViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.mynameismidori.currencypicker.CurrencyPicker
-import java.io.InputStream
 
 class Profile : Fragment() {
     private lateinit var viewModel: UserViewModel
@@ -38,7 +37,6 @@ class Profile : Fragment() {
         _binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
         var isEditable = false
         var userPhoto: Uri = Uri.parse("android.resource://com.purabmodi.payment/drawable/dev_photo")
-        val stream:InputStream = requireContext().contentResolver.openInputStream(userPhoto)!!
 
 //        imagePicker calling activity result
         val startForProfileImageResult =
