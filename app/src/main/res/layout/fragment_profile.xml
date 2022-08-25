@@ -58,7 +58,7 @@
             android:layout_marginTop="15dp"
             android:autofillHints="username"
             android:fontFamily="@font/autour_one"
-            android:inputType="textPersonName"
+            android:inputType="textCapWords"
             android:text="@string/devName"
             android:textColor="@color/primaryTextColor"
             android:textSize="25sp"

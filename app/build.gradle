@@ -11,7 +11,7 @@ android {
         applicationId "com.purabmodi.payment"
         minSdk 26
         targetSdk 32
-        versionCode 4
+        versionCode 6
         versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -19,8 +19,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
