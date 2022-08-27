@@ -42,7 +42,7 @@ class Wallet : Fragment() {
             ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         accountViewModel = ViewModelProvider(requireActivity())[AccountViewModel::class.java]
 
-        lateinit var adapter: WalletAccountDetailsAdapter
+         var adapter = WalletAccountDetailsAdapter(currency.value!!,this)
 
         userViewModel.userDetails.observe(viewLifecycleOwner) {
             if (it != null) {

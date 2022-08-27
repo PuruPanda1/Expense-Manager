@@ -10,18 +10,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.purabmodi.payment.R
-import com.purabmodi.payment.databinding.FragmentDetailedTransactionAnalysisBinding
-import com.purabmodi.payment.rcAdapter.TransactionTypeAdapter
-import com.purabmodi.payment.transactionDb.MyTypes
-import com.purabmodi.payment.userDb.UserViewModel
-import com.purabmodi.payment.viewModel.TransactionViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.purabmodi.payment.R
+import com.purabmodi.payment.databinding.FragmentDetailedTransactionAnalysisBinding
+import com.purabmodi.payment.rcAdapter.TransactionTypeAdapter
+import com.purabmodi.payment.transactionDb.MyTypes
+import com.purabmodi.payment.userDb.UserViewModel
+import com.purabmodi.payment.viewModel.TransactionViewModel
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -154,9 +154,13 @@ class DetailedTransactionAnalysis : Fragment() {
     }
 
     private fun setupAnalysisPieChart() {
+        binding.analysisPieChart.minAngleForSlices = 40f
+        binding.analysisPieChart.centerText = "Expenses"
+        binding.analysisPieChart.setCenterTextSize(15f)
+        binding.analysisPieChart.setCenterTextColor(ContextCompat.getColor(requireContext(),R.color.primaryTextColor))
         binding.analysisPieChart.isDrawHoleEnabled = true
         binding.analysisPieChart.setUsePercentValues(true)
-        binding.analysisPieChart.setEntryLabelTextSize(8f)
+        binding.analysisPieChart.setEntryLabelTextSize(10f)
         binding.analysisPieChart.holeRadius = 65f
         binding.analysisPieChart.isRotationEnabled = true
         binding.analysisPieChart.setEntryLabelColor(

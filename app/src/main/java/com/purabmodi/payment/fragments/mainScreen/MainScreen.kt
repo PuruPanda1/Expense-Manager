@@ -9,16 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.purabmodi.payment.R
-import com.purabmodi.payment.databinding.FragmentMainScreenBinding
-import com.purabmodi.payment.transactionDb.MyTypes
-import com.purabmodi.payment.userDb.UserViewModel
-import com.purabmodi.payment.viewModel.TransactionViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
+import com.purabmodi.payment.R
+import com.purabmodi.payment.databinding.FragmentMainScreenBinding
+import com.purabmodi.payment.transactionDb.MyTypes
+import com.purabmodi.payment.userDb.UserViewModel
+import com.purabmodi.payment.viewModel.TransactionViewModel
 import java.text.NumberFormat
 import java.util.*
 
@@ -74,12 +74,20 @@ class MainScreen : Fragment() {
         }
 
         binding.incomeBox.setOnClickListener {
-            val action = MainScreenDirections.actionMainScreenToIncomeExpenseView("INCOME",month,currency.value!!)
+            val action = MainScreenDirections.actionMainScreenToIncomeExpenseView(
+                "INCOME",
+                month,
+                currency.value!!
+            )
             Navigation.findNavController(binding.root).navigate(action)
         }
 
         binding.expenseBox.setOnClickListener {
-            val action = MainScreenDirections.actionMainScreenToIncomeExpenseView("EXPENSE",month,currency.value!!)
+            val action = MainScreenDirections.actionMainScreenToIncomeExpenseView(
+                "EXPENSE",
+                month,
+                currency.value!!
+            )
             Navigation.findNavController(binding.root).navigate(action)
         }
 
@@ -191,9 +199,13 @@ class MainScreen : Fragment() {
 
 
     private fun setupPieChart() {
+        binding.pieChart.minAngleForSlices = 40f
         binding.pieChart.isDrawHoleEnabled = true
+        binding.pieChart.centerText = "Expenses"
+        binding.pieChart.setCenterTextColor(ContextCompat.getColor(requireContext(),R.color.primaryTextColor))
+        binding.pieChart.setCenterTextSize(15f)
         binding.pieChart.setUsePercentValues(true)
-        binding.pieChart.setEntryLabelTextSize(8f)
+        binding.pieChart.setEntryLabelTextSize(10f)
         binding.pieChart.isRotationEnabled = true
         binding.pieChart.holeRadius = 65f
         binding.pieChart.setEntryLabelColor(

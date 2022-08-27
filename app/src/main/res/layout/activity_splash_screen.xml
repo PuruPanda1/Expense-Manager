@@ -17,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
+        app:lottie_enableMergePathsForKitKatAndAbove="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/budget" />
 
@@ -44,7 +45,7 @@
             android:layout_height="24dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:src="@drawable/love_icon"/>
+            android:src="@drawable/love_icon" />
 
         <TextView
             android:id="@+id/text2"
@@ -55,7 +56,7 @@
             android:fontFamily="@font/sf_pro"
             android:text="in"
             android:textColor="@color/buttonColor"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/india_flag"
@@ -63,7 +64,7 @@
             android:layout_height="24dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:src="@drawable/india_flag"/>
+            android:src="@drawable/india_flag" />
 
     </LinearLayout>
 
