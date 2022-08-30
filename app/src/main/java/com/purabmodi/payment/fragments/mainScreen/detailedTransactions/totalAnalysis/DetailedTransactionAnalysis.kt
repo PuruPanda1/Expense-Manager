@@ -178,7 +178,7 @@ class DetailedTransactionAnalysis : Fragment() {
             )
         )
         binding.analysisPieChart.legend.isEnabled = false
-        binding.analysisPieChart.setExtraOffsets(10f, 10f, 10f, 10f)
+        binding.analysisPieChart.setExtraOffsets(12f, 12f, 12f, 12f)
     }
 
     private fun updateChart(list: List<MyTypes>) {

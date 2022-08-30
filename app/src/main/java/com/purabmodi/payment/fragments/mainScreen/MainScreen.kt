@@ -219,7 +219,7 @@ class MainScreen : Fragment() {
         val cardColor = binding.monthlyBudgetCard.cardBackgroundColor.defaultColor
         binding.pieChart.setHoleColor(cardColor)
         binding.pieChart.legend.isEnabled = false
-        binding.pieChart.setExtraOffsets(10f, 10f, 10f, 10f)
+        binding.pieChart.setExtraOffsets(12f, 12f, 12f, 12f)
     }
 
 
