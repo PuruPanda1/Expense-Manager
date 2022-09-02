@@ -106,9 +106,6 @@
         <argument
             android:name="typeName"
             app:argType="string" />
-        <argument
-            android:name="month"
-            app:argType="string" />
         <action
             android:id="@+id/action_incomeExpenseView_to_MainScreen"
             app:destination="@id/MainScreen"

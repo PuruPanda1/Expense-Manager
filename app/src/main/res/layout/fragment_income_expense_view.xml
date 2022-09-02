@@ -52,24 +52,14 @@
         app:layout_constraintStart_toEndOf="@+id/backToMainScreen"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:id="@+id/transactionDuration"
-        android:textSize="12sp"
-        android:fontFamily="@font/sf_pro"
-        android:text="Transactions in %s month"
-        android:textColor="@color/primaryTextColor"
-        app:layout_constraintBottom_toTopOf="@id/numberOfTransactions"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
     <TextView
         android:id="@+id/numberOfTransactions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="-30dp"
+        android:layout_marginTop="-35dp"
         android:fontFamily="@font/sf_pro"
         android:text="%d Transactions"
         android:textColor="@color/primaryTextColor"
@@ -82,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="-30dp"
+        android:layout_marginTop="-35dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/sf_pro"
         android:text="@string/totalValue"

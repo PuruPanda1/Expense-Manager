@@ -7,9 +7,7 @@ class TransactionRepository(private val transactionDao: TransactionDao) {
     val readIncomeTransactions: LiveData<List<Transaction>> = transactionDao.getIncomeTransactions()
     val readExpenseTransactions: LiveData<List<Transaction>> =
         transactionDao.getExpenseTransactions()
-    val readSumByCategory: LiveData<List<MyTypes>> = transactionDao.getTotal()
     val differenceSum: LiveData<Float> = transactionDao.getDifferenceSum()
-    val monthlySpends: LiveData<Float> = transactionDao.getMonthlySpends()
     val incomeSum = transactionDao.getIncomeSum()
     val expenseSum = transactionDao.getExpenseSum()
     val readAccountDetails = transactionDao.getAccountDetails()
@@ -55,6 +53,14 @@ class TransactionRepository(private val transactionDao: TransactionDao) {
 
     fun readCategoriesByDuration(startDate: Long, endDate: Long): LiveData<List<MyTypes>> {
         return transactionDao.readCategoriesByDuration(startDate, endDate)
+    }
+
+    fun readMonthlySpends(month:Int):LiveData<Float>{
+        return transactionDao.getMonthlySpends(month)
+    }
+
+    fun readMonthlySumByCategory(month: Int):LiveData<List<MyTypes>>{
+        return transactionDao.getMonthlySpendByCategory(month)
     }
 
     fun getSingleTransactionType(

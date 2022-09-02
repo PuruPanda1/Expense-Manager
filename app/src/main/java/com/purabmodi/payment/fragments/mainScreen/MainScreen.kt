@@ -40,12 +40,11 @@ class MainScreen : Fragment() {
         "November",
         "December"
     )
-    private lateinit var viewModel: TransactionViewModel
+    private lateinit var transactionViewModel: TransactionViewModel
     private lateinit var userViewModel: UserViewModel
     private val binding get() = _binding!!
     private var balanceAmount = 0f
     private var monthlyAmount = 0f
-    private val month = months[Calendar.getInstance().get(Calendar.MONTH)]
     private var budget = 4000
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +52,23 @@ class MainScreen : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentMainScreenBinding.inflate(inflater, container, false)
+
+        transactionViewModel =
+            ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+
+        transactionViewModel.month.observe(viewLifecycleOwner) {
+            val month = months[it!! - 1]
+            binding.monthlyDuration.text = String.format(getString(R.string.monthlyDuration, month))
+        }
+
+        binding.previousMonth.setOnClickListener {
+            transactionViewModel.month.value = transactionViewModel.month.value!!.minus(1)
+        }
+
+        binding.nextMonth.setOnClickListener {
+            transactionViewModel.month.value = transactionViewModel.month.value!!.plus(1)
+        }
 
 //        setting the greeting text
         when (Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) {
@@ -76,7 +92,6 @@ class MainScreen : Fragment() {
         binding.incomeBox.setOnClickListener {
             val action = MainScreenDirections.actionMainScreenToIncomeExpenseView(
                 "INCOME",
-                month,
                 currency.value!!
             )
             Navigation.findNavController(binding.root).navigate(action)
@@ -85,7 +100,6 @@ class MainScreen : Fragment() {
         binding.expenseBox.setOnClickListener {
             val action = MainScreenDirections.actionMainScreenToIncomeExpenseView(
                 "EXPENSE",
-                month,
                 currency.value!!
             )
             Navigation.findNavController(binding.root).navigate(action)
@@ -101,9 +115,6 @@ class MainScreen : Fragment() {
             setAmount()
         }
 
-//        setting viewModel
-        viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
-        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
 
 //        Setting the userName
         userViewModel.userDetails.observe(viewLifecycleOwner) {
@@ -122,48 +133,31 @@ class MainScreen : Fragment() {
         }
 
 //        set balance amount
-        viewModel.readDifferenceSum.observe(viewLifecycleOwner) {
+        transactionViewModel.readDifferenceSum.observe(viewLifecycleOwner) {
             balanceAmount = it ?: 0f
             setAmount()
         }
 //        set income and expense amount
-        viewModel.incomeSum.observe(viewLifecycleOwner) {
+        transactionViewModel.incomeSum.observe(viewLifecycleOwner) {
             when {
                 it != null -> binding.incomeAmount.text = currencyFormatter.format(it)
                 else -> binding.incomeAmount.text = currencyFormatter.format(0)
             }
         }
 
-        viewModel.expenseSum.observe(viewLifecycleOwner) {
+        transactionViewModel.expenseSum.observe(viewLifecycleOwner) {
             when {
                 it != null -> binding.expenseAmount.text = currencyFormatter.format(it)
                 else -> binding.expenseAmount.text = currencyFormatter.format(0)
             }
         }
 
-//        set monthly balance amount
-        binding.monthlyDuration.text = String.format(getString(R.string.monthlyDuration, month))
+
 //        observer for balance
-        viewModel.readMonthlySpends.observe(viewLifecycleOwner) {
+        transactionViewModel.readMonthlySpends.observe(viewLifecycleOwner) {
             if (it != null) {
                 monthlyAmount = it
-                val per = ((it / budget) * 100).toInt().toString()
-                binding.expensePercentage.text = getString(R.string.percentageBudget, per)
-                if (it > budget) {
-                    binding.monthlyExpense.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.expense_color
-                        )
-                    )
-                } else {
-                    binding.monthlyExpense.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.primaryTextColor
-                        )
-                    )
-                }
+
             } else {
                 monthlyAmount = 0f
             }
@@ -173,21 +167,16 @@ class MainScreen : Fragment() {
 //         setting the pie chart
         setupPieChart()
 //        observer for pie chart
-        viewModel.readSumByCategory.observe(viewLifecycleOwner) {
+        transactionViewModel.readMonthlySumByCategory.observe(viewLifecycleOwner) {
             updateChart(it)
         }
 
 //      analysis button
         binding.checkDetailedAnalysisBtn.setOnClickListener {
-//            Toast.makeText(requireContext(), "Coming Soon", Toast.LENGTH_SHORT).show()
             Navigation.findNavController(binding.root)
                 .navigate(R.id.action_MainScreen_to_detailedTransactionAnalysis)
         }
 
-//      setting the data for the recent transactions
-//        viewModel.readAllTransaction.observe(viewLifecycleOwner) { transactionList ->
-//           left to implement
-//        }
         return binding.root
     }
 
@@ -195,6 +184,8 @@ class MainScreen : Fragment() {
         binding.monthlyExpense.text = currencyFormatter.format(monthlyAmount)
         binding.balanceAmount.text = currencyFormatter.format(balanceAmount)
         binding.userBudget.text = " / ${currencyFormatter.format(budget)}"
+        val per = ((monthlyAmount / budget) * 100).toInt().toString()
+        binding.expensePercentage.text = getString(R.string.percentageBudget, per)
     }
 
 
@@ -202,7 +193,12 @@ class MainScreen : Fragment() {
         binding.pieChart.minAngleForSlices = 40f
         binding.pieChart.isDrawHoleEnabled = true
         binding.pieChart.centerText = "Expenses"
-        binding.pieChart.setCenterTextColor(ContextCompat.getColor(requireContext(),R.color.primaryTextColor))
+        binding.pieChart.setCenterTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.primaryTextColor
+            )
+        )
         binding.pieChart.setCenterTextSize(15f)
         binding.pieChart.setUsePercentValues(true)
         binding.pieChart.setEntryLabelTextSize(10f)

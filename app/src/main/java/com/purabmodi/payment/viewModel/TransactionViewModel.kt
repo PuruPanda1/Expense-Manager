@@ -7,14 +7,13 @@ import com.purabmodi.payment.modals.customData
 import com.purabmodi.payment.transactionDb.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 class TransactionViewModel(application: Application) : AndroidViewModel(application) {
     var readAllTransaction: LiveData<List<Transaction>>
     var readAllIncomeTransaction: LiveData<List<Transaction>>
     var readAllExpenseTransaction: LiveData<List<Transaction>>
-    var readSumByCategory: LiveData<List<MyTypes>>
     var readDifferenceSum: LiveData<Float>
-    var readMonthlySpends: LiveData<Float>
     var incomeSum: LiveData<Float>
     var expenseSum: LiveData<Float>
     var readAccountDetails: LiveData<List<AccountDetails>>
@@ -27,14 +26,25 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
         readAllIncomeTransaction = repository.readIncomeTransactions
         readAllExpenseTransaction = repository.readExpenseTransactions
         readDifferenceSum = repository.differenceSum
-        readMonthlySpends = repository.monthlySpends
         incomeSum = repository.incomeSum
         expenseSum = repository.expenseSum
-        readSumByCategory = repository.readSumByCategory
         readAccountDetails = repository.readAccountDetails
     }
 
     val dates: MutableLiveData<List<Long>> = MutableLiveData()
+    val month: MutableLiveData<Int> = MutableLiveData(Calendar.getInstance().get(Calendar.MONTH)+1)
+
+    fun setMonth(month:Int){
+        this.month.value = month
+    }
+
+    val readMonthlySpends : LiveData<Float> = Transformations.switchMap(month){
+        repository.readMonthlySpends(it)
+    }
+
+    val readMonthlySumByCategory: LiveData<List<MyTypes>> = Transformations.switchMap(month){
+        repository.readMonthlySumByCategory(it)
+    }
 
     val readCategoriesByDuration: LiveData<List<MyTypes>> = Transformations.switchMap(dates) {
         repository.readCategoriesByDuration(it[0], it[1])

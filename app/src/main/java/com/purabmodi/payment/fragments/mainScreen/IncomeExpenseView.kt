@@ -36,7 +36,6 @@ class IncomeExpenseView : Fragment() {
         currencyFormater.maximumFractionDigits = 1
 
         binding.typeName.text = args.typeName
-        binding.transactionDuration.text = "Transactions in ${args.month}"
         binding.transactionTotalAmount.text = currencyFormater.format(0)
         binding.numberOfTransactions.text = "0 Transactions"
         val adapter = IncomeExpenseTransactionsAdapter(args.currency)

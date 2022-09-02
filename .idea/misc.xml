@@ -23,7 +23,9 @@
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.2985" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2985" />
         <entry key="app/src/main/res/drawable/ic_menu_icon.xml" value="0.2985" />
+        <entry key="app/src/main/res/drawable/ic_next.xml" value="0.2505" />
         <entry key="app/src/main/res/drawable/ic_notification.xml" value="0.352" />
+        <entry key="app/src/main/res/drawable/ic_previous.xml" value="0.2505" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.2985" />
         <entry key="app/src/main/res/drawable/ic_rupee.xml" value="0.352" />
         <entry key="app/src/main/res/drawable/ic_scanner.xml" value="0.3545" />

@@ -15,7 +15,6 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.purabmodi.payment.R
 import com.purabmodi.payment.databinding.FragmentDetailedTransactionAnalysisBinding
 import com.purabmodi.payment.rcAdapter.TransactionTypeAdapter
@@ -23,7 +22,6 @@ import com.purabmodi.payment.transactionDb.MyTypes
 import com.purabmodi.payment.userDb.UserViewModel
 import com.purabmodi.payment.viewModel.TransactionViewModel
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 class DetailedTransactionAnalysis : Fragment() {
@@ -40,6 +38,7 @@ class DetailedTransactionAnalysis : Fragment() {
         "July",
         "August",
         "September",
+        "October",
         "November",
         "December"
     )
@@ -47,7 +46,7 @@ class DetailedTransactionAnalysis : Fragment() {
     private var currency = MutableLiveData("INR")
     private var currencyFormatter = NumberFormat.getCurrencyInstance()
     private lateinit var userViewModel: UserViewModel
-    private lateinit var viewModel: TransactionViewModel
+    private lateinit var transactionViewModel: TransactionViewModel
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,6 +55,24 @@ class DetailedTransactionAnalysis : Fragment() {
         // Inflate the layout for this fragment
         _binding =
             FragmentDetailedTransactionAnalysisBinding.inflate(layoutInflater, container, false)
+
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        transactionViewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+
+        transactionViewModel.month.observe(viewLifecycleOwner) {
+            val month = months[it!! - 1]
+            binding.detailedMonthlyDuration.text =
+                String.format(getString(R.string.monthlyDuration, month))
+        }
+
+        binding.previousMonth.setOnClickListener {
+            transactionViewModel.month.value = transactionViewModel.month.value!!.minus(1)
+        }
+
+        binding.nextMonth.setOnClickListener {
+            transactionViewModel.month.value = transactionViewModel.month.value!!.plus(1)
+        }
+
 
 //        setting up the back button
         binding.backToMainScreen.setOnClickListener {
@@ -72,16 +89,10 @@ class DetailedTransactionAnalysis : Fragment() {
             setAmount()
         }
 
-//      setting the viewModels
-        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
-        viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
 
-//        set monthly balance amount
-        val month = months[Calendar.getInstance().get(Calendar.MONTH)]
-        binding.detailedMonthlyDuration.text =
-            String.format(getString(R.string.monthlyDuration, month))
+
 //        observer for balance
-        viewModel.readMonthlySpends.observe(viewLifecycleOwner) {
+        transactionViewModel.readMonthlySpends.observe(viewLifecycleOwner) {
             amount = it ?: 0f
             setAmount()
         }
@@ -96,12 +107,7 @@ class DetailedTransactionAnalysis : Fragment() {
             binding.transactionTypeRC.adapter = adapter
         }
 
-
-//        setting the rangePicker
-        binding.rangePicker.setOnClickListener {
-            openRangePicker(adapter)
-        }
-        viewModel.readSumByCategory.observe(viewLifecycleOwner) {
+        transactionViewModel.readMonthlySumByCategory.observe(viewLifecycleOwner) {
             adapter.submitList(it)
             updateChart(it)
         }
@@ -116,48 +122,16 @@ class DetailedTransactionAnalysis : Fragment() {
         binding.detailedmonthlyExpense.text = currencyFormatter.format(amount)
     }
 
-    private fun openRangePicker(adapter: TransactionTypeAdapter) {
-        val simpleDateFormat = SimpleDateFormat("dd MMM YY")
-        val dateRangePicker = MaterialDatePicker.Builder
-            .dateRangePicker()
-            .setTitleText("Choose duration")
-            .build()
-
-        dateRangePicker.show(requireActivity().supportFragmentManager, "datepicker")
-
-        dateRangePicker.addOnPositiveButtonClickListener {
-            startDate = it.first
-            endDate = it.second
-            viewModel.setCustomDurationData(listOf(it.first, (it.second + 86400000)))
-        }
-        viewModel.readSumByCategory.removeObservers(viewLifecycleOwner)
-        viewModel.readMonthlySpends.removeObservers(viewLifecycleOwner)
-        //        calender icon
-        viewModel.readCategoriesByDuration.observe(viewLifecycleOwner) { list ->
-            adapter.submitList(list)
-            updateChart(list)
-        }
-        viewModel.readExpenseSumByDuration.observe(viewLifecycleOwner) {
-            if (it == null) {
-                binding.detailedmonthlyExpense.text = currencyFormatter.format(0)
-            } else {
-                binding.detailedmonthlyExpense.text = currencyFormatter.format(it)
-            }
-        }
-//        setting the duration in the card view
-        viewModel.dates.observe(viewLifecycleOwner) {
-            binding.detailedMonthlyDuration.text = getString(
-                R.string.monthlyDuration,
-                "${simpleDateFormat.format(it[0])} - ${simpleDateFormat.format(it[1])}"
-            )
-        }
-    }
-
     private fun setupAnalysisPieChart() {
         binding.analysisPieChart.minAngleForSlices = 40f
         binding.analysisPieChart.centerText = "Expenses"
         binding.analysisPieChart.setCenterTextSize(15f)
-        binding.analysisPieChart.setCenterTextColor(ContextCompat.getColor(requireContext(),R.color.primaryTextColor))
+        binding.analysisPieChart.setCenterTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.primaryTextColor
+            )
+        )
         binding.analysisPieChart.isDrawHoleEnabled = true
         binding.analysisPieChart.setUsePercentValues(true)
         binding.analysisPieChart.setEntryLabelTextSize(10f)
