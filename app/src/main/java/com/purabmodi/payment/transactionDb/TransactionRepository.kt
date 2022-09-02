@@ -55,12 +55,12 @@ class TransactionRepository(private val transactionDao: TransactionDao) {
         return transactionDao.readCategoriesByDuration(startDate, endDate)
     }
 
-    fun readMonthlySpends(month:Int):LiveData<Float>{
-        return transactionDao.getMonthlySpends(month)
+    fun readMonthlySpends(month:Int,year:Int):LiveData<Float>{
+        return transactionDao.getMonthlySpends(month,year)
     }
 
-    fun readMonthlySumByCategory(month: Int):LiveData<List<MyTypes>>{
-        return transactionDao.getMonthlySpendByCategory(month)
+    fun readMonthlySumByCategory(month: Int,year: Int):LiveData<List<MyTypes>>{
+        return transactionDao.getMonthlySpendByCategory(month,year)
     }
 
     fun getSingleTransactionType(

@@ -33,6 +33,7 @@ class AddTransaction : Fragment() {
     private var day: Int = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
     private var week: Int = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1
     private var month: Int = Calendar.getInstance().get(Calendar.MONTH) + 1
+    private var year: Int = Calendar.getInstance().get(Calendar.YEAR)
     private var incomeAmount = 0f
     private var expenseAmount = 0f
     private val cal: Calendar = Calendar.getInstance()
@@ -59,7 +60,7 @@ class AddTransaction : Fragment() {
     private var _binding: FragmentAddTransactionBinding? = null
     private lateinit var viewModel: TransactionViewModel
     private lateinit var accountViewModel: AccountViewModel
-    private lateinit var userViewModel:UserViewModel
+    private lateinit var userViewModel: UserViewModel
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,7 +72,7 @@ class AddTransaction : Fragment() {
         date = cal.timeInMillis
 
 //        currency
-        currency.observe(viewLifecycleOwner){
+        currency.observe(viewLifecycleOwner) {
             binding.currencyDisplay.text = Currency.getInstance(currency.value).symbol
         }
 
@@ -84,8 +85,8 @@ class AddTransaction : Fragment() {
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
 
 //        getting the currency
-        userViewModel.userDetails.observe(viewLifecycleOwner){
-            if(it!=null){
+        userViewModel.userDetails.observe(viewLifecycleOwner) {
+            if (it != null) {
                 currency.value = it.userCurrency
             }
         }
@@ -93,15 +94,21 @@ class AddTransaction : Fragment() {
 //        getting the accounts
         val accountsAdapter = AccountsAdapter(this)
         binding.accountsRecyclerView.adapter = accountsAdapter
-        binding.accountsRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        binding.accountsRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         accountViewModel.readAllAccounts.observe(viewLifecycleOwner) {
-            if(it.isNotEmpty()){
-                modeOfPayment = it[0].name
+            if (it.isNotEmpty()) {
                 accountsAdapter.setData(it)
-                accountsAdapter.setSelectedItem(it[0].name)
-            } else{
-                accountViewModel.insertAccount(Accounts(0,"CASH"))
-                accountViewModel.insertAccount(Accounts(0,"BANK"))
+                if (args.transaction.id == -1) {
+                    accountsAdapter.setSelectedItem(it[0].name)
+                    modeOfPayment = it[0].name
+                } else {
+                    accountsAdapter.setSelectedItem(args.transaction.modeOfPayment)
+                    modeOfPayment = args.transaction.modeOfPayment
+                }
+            } else {
+                accountViewModel.insertAccount(Accounts(0, "CASH"))
+                accountViewModel.insertAccount(Accounts(0, "BANK"))
             }
         }
 
@@ -113,6 +120,7 @@ class AddTransaction : Fragment() {
 
 //        edit mode
         if (args.transaction.id != -1) {
+            year = args.transaction.year
             if (args.transaction.isExpense) {
                 binding.transactionAmount.setText(args.transaction.expenseAmount.toString())
                 binding.isExpenseSwitch.isChecked = true
@@ -123,7 +131,6 @@ class AddTransaction : Fragment() {
             binding.transactionDescription.setText(args.transaction.tDescription)
             binding.transactionType.setText(args.transaction.transactionType)
             date = args.transaction.date
-            accountsAdapter.setSelectedItem(args.transaction.modeOfPayment)
             binding.addExpenseBtn.setOnClickListener {
                 updateTransaction()
             }
@@ -131,7 +138,6 @@ class AddTransaction : Fragment() {
             binding.addExpenseBtn.setOnClickListener {
                 insertTransaction()
             }
-            accountsAdapter.setSelectedItem("CASH")
         }
 
 //      setting autoComplete textview for transaction type
@@ -195,6 +201,7 @@ class AddTransaction : Fragment() {
                     day,
                     week,
                     month,
+                    year,
                     expenseAmount,
                     modeOfPayment
                 )
@@ -225,6 +232,7 @@ class AddTransaction : Fragment() {
                 day = d
                 week = cal.get(Calendar.WEEK_OF_YEAR) - 1
                 month = cal.get(Calendar.MONTH) + 1
+                this.year = cal.get(Calendar.YEAR)
             },
             y,
             m,
@@ -257,6 +265,7 @@ class AddTransaction : Fragment() {
                     day,
                     week,
                     month,
+                    year,
                     expenseAmount,
                     modeOfPayment
                 )

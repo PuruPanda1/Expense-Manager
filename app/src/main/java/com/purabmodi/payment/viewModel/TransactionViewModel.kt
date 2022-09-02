@@ -32,18 +32,18 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     val dates: MutableLiveData<List<Long>> = MutableLiveData()
-    val month: MutableLiveData<Int> = MutableLiveData(Calendar.getInstance().get(Calendar.MONTH)+1)
+    var monthYear: MutableLiveData<List<Int>> = MutableLiveData(listOf(Calendar.getInstance().get(Calendar.MONTH)+1,Calendar.getInstance().get(Calendar.YEAR)))
 
-    fun setMonth(month:Int){
-        this.month.value = month
+    fun setMonthYear(monthYear:List<Int>){
+        this.monthYear.value = monthYear
     }
 
-    val readMonthlySpends : LiveData<Float> = Transformations.switchMap(month){
-        repository.readMonthlySpends(it)
+    val readMonthlySpends : LiveData<Float> = Transformations.switchMap(monthYear){
+        repository.readMonthlySpends(it[0],it[1])
     }
 
-    val readMonthlySumByCategory: LiveData<List<MyTypes>> = Transformations.switchMap(month){
-        repository.readMonthlySumByCategory(it)
+    val readMonthlySumByCategory: LiveData<List<MyTypes>> = Transformations.switchMap(monthYear){
+        repository.readMonthlySumByCategory(it[0],it[1])
     }
 
     val readCategoriesByDuration: LiveData<List<MyTypes>> = Transformations.switchMap(dates) {

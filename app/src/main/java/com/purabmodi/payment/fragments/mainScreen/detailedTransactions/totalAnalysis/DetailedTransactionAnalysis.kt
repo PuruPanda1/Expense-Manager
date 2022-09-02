@@ -29,24 +29,26 @@ class DetailedTransactionAnalysis : Fragment() {
     var endDate: Long = 0
     private var _binding: FragmentDetailedTransactionAnalysisBinding? = null
     private val months = listOf(
-        "January",
-        "February",
-        "March",
-        "April",
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
         "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
     )
     private var amount = 0f
     private var currency = MutableLiveData("INR")
     private var currencyFormatter = NumberFormat.getCurrencyInstance()
     private lateinit var userViewModel: UserViewModel
     private lateinit var transactionViewModel: TransactionViewModel
+    private var month :Int = 0
+    private var year :Int = 0
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,18 +61,32 @@ class DetailedTransactionAnalysis : Fragment() {
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         transactionViewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
 
-        transactionViewModel.month.observe(viewLifecycleOwner) {
-            val month = months[it!! - 1]
+        transactionViewModel.monthYear.observe(viewLifecycleOwner) {
+            month = it[0]
+            year = it[1]
+            val month = months[it[0] - 1]
             binding.detailedMonthlyDuration.text =
-                String.format(getString(R.string.monthlyDuration, month))
+                String.format(getString(R.string.monthlyDuration, month,year.toString()))
         }
 
         binding.previousMonth.setOnClickListener {
-            transactionViewModel.month.value = transactionViewModel.month.value!!.minus(1)
+            if(month == 1){
+                --year;
+                month = 12
+            } else {
+                --month
+            }
+            transactionViewModel.setMonthYear(listOf(month,year))
         }
 
         binding.nextMonth.setOnClickListener {
-            transactionViewModel.month.value = transactionViewModel.month.value!!.plus(1)
+            if(month == 12){
+                ++year;
+                month = 1
+            } else {
+                ++month
+            }
+            transactionViewModel.setMonthYear(listOf(month,year))
         }
 
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -27,18 +28,18 @@ class MainScreen : Fragment() {
     private var currency: MutableLiveData<String> = MutableLiveData("INR")
     private val currencyFormatter = NumberFormat.getCurrencyInstance()
     private val months = listOf(
-        "January",
-        "February",
-        "March",
-        "April",
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
         "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
     )
     private lateinit var transactionViewModel: TransactionViewModel
     private lateinit var userViewModel: UserViewModel
@@ -46,6 +47,8 @@ class MainScreen : Fragment() {
     private var balanceAmount = 0f
     private var monthlyAmount = 0f
     private var budget = 4000
+    var month : Int = 0
+    var year : Int = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,17 +60,31 @@ class MainScreen : Fragment() {
             ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
 
-        transactionViewModel.month.observe(viewLifecycleOwner) {
-            val month = months[it!! - 1]
-            binding.monthlyDuration.text = String.format(getString(R.string.monthlyDuration, month))
+        transactionViewModel.monthYear.observe(viewLifecycleOwner) {
+            month = it[0]
+            year = it[1]
+            val month = months[it[0] - 1]
+            binding.monthlyDuration.text = String.format(getString(R.string.monthlyDuration, month,year.toString()))
         }
 
         binding.previousMonth.setOnClickListener {
-            transactionViewModel.month.value = transactionViewModel.month.value!!.minus(1)
+            if(month == 1){
+                --year
+                month = 12
+            } else {
+                --month
+            }
+            transactionViewModel.setMonthYear(listOf(month,year))
         }
 
         binding.nextMonth.setOnClickListener {
-            transactionViewModel.month.value = transactionViewModel.month.value!!.plus(1)
+            if(month == 12){
+                ++year
+                month = 1
+            } else {
+                ++month
+            }
+            transactionViewModel.setMonthYear(listOf(month,year))
         }
 
 //        setting the greeting text
@@ -168,6 +185,9 @@ class MainScreen : Fragment() {
         setupPieChart()
 //        observer for pie chart
         transactionViewModel.readMonthlySumByCategory.observe(viewLifecycleOwner) {
+            binding.alertText.isVisible = it.isEmpty()
+            binding.checkDetailedAnalysisBtn.isEnabled = it.isNotEmpty()
+            binding.pieChart.isVisible = it.isNotEmpty()
             updateChart(it)
         }
 

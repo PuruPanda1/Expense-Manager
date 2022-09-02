@@ -19,6 +19,7 @@ data class Transaction(
     val day:Int,
     val week:Int,
     val month:Int,
+    val year:Int,
     val expenseAmount: Float,
     val modeOfPayment: String
 ):Parcelable {
@@ -29,6 +30,7 @@ data class Transaction(
         parcel.readByte() != 0.toByte(),
         parcel.readLong(),
         parcel.readString()!!,
+        parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),

@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.purabmodi.payment.R
 import com.purabmodi.payment.accountsDb.Accounts
 import com.purabmodi.payment.databinding.FragmentWalletBinding
@@ -20,7 +22,6 @@ import com.purabmodi.payment.transactionDb.Transaction
 import com.purabmodi.payment.userDb.UserViewModel
 import com.purabmodi.payment.viewModel.AccountViewModel
 import com.purabmodi.payment.viewModel.TransactionViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.util.*
 
 class Wallet : Fragment() {
@@ -42,7 +43,7 @@ class Wallet : Fragment() {
             ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         accountViewModel = ViewModelProvider(requireActivity())[AccountViewModel::class.java]
 
-         var adapter = WalletAccountDetailsAdapter(currency.value!!,this)
+        var adapter = WalletAccountDetailsAdapter(currency.value!!, this)
 
         userViewModel.userDetails.observe(viewLifecycleOwner) {
             if (it != null) {
@@ -55,9 +56,8 @@ class Wallet : Fragment() {
         }
 
         transactionViewModel.readAccountDetails.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                adapter.submitList(it)
-            }
+            binding.alertText.isVisible = it.isEmpty()
+            adapter.submitList(it)
         }
 
         binding.addAccount.setOnClickListener {
@@ -102,6 +102,7 @@ class Wallet : Fragment() {
                             d,
                             (cal.get(Calendar.WEEK_OF_YEAR) - 1),
                             (m + 1),
+                            y,
                             0f,
                             aName
                         )
