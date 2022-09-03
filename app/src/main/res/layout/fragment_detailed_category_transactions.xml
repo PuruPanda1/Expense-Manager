@@ -52,29 +52,6 @@
         app:layout_constraintStart_toEndOf="@+id/backToSummary"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/categoryRangePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_calender"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/buttonColor" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:id="@+id/categoryDuration"
-        android:textSize="12sp"
-        android:fontFamily="@font/sf_pro"
-        android:text="@string/monthlyDuration"
-        android:textColor="@color/primaryTextColor"
-        app:layout_constraintBottom_toTopOf="@id/categoryNumberOfExpenses"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/categoryNumberOfExpenses"
         android:layout_width="wrap_content"

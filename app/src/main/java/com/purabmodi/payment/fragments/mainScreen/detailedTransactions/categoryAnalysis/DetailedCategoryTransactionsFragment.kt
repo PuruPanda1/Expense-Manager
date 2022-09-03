@@ -8,9 +8,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.purabmodi.payment.MainActivity
 import com.purabmodi.payment.R
 import com.purabmodi.payment.databinding.FragmentDetailedCategoryTransactionsBinding
 import com.purabmodi.payment.rcAdapter.TransactionsCategoryWiseAdapter
@@ -18,26 +20,25 @@ import com.purabmodi.payment.transactionDb.Transaction
 import com.purabmodi.payment.userDb.UserViewModel
 import com.purabmodi.payment.viewModel.TransactionTypeData
 import com.purabmodi.payment.viewModel.TransactionViewModel
-import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 class DetailedCategoryTransactionsFragment : Fragment() {
     private val months = listOf(
-        "January",
-        "February",
-        "March",
-        "April",
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
         "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "November",
-        "December"
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
     )
-    private lateinit var viewModel: TransactionViewModel
+    private lateinit var transactionViewModel: TransactionViewModel
     private lateinit var userViewModel: UserViewModel
     private var _binding: FragmentDetailedCategoryTransactionsBinding? = null
     private val args by navArgs<DetailedCategoryTransactionsFragmentArgs>()
@@ -52,6 +53,9 @@ class DetailedCategoryTransactionsFragment : Fragment() {
         _binding =
             FragmentDetailedCategoryTransactionsBinding.inflate(layoutInflater, container, false)
 
+        transactionViewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+
 //        setting the back button
         binding.backToSummary.setOnClickListener {
             Navigation.findNavController(binding.root)
@@ -63,7 +67,7 @@ class DetailedCategoryTransactionsFragment : Fragment() {
         currencyFormatter.currency = Currency.getInstance(currency.value)
 
 //        observer for currency change
-        lateinit var adapter : TransactionsCategoryWiseAdapter
+        lateinit var adapter: TransactionsCategoryWiseAdapter
         currency.observe(viewLifecycleOwner) {
             currencyFormatter.currency = Currency.getInstance(it!!)
             adapter = TransactionsCategoryWiseAdapter(this, it)
@@ -72,27 +76,7 @@ class DetailedCategoryTransactionsFragment : Fragment() {
             setAmount()
         }
 
-//        onclick for the calender icon
-        binding.categoryRangePicker.setOnClickListener {
-            openRangePicker()
-        }
 
-//        setting the month
-        if (args.startDate == 0L) {
-            val month = months[Calendar.getInstance().get(Calendar.MONTH)]
-            binding.categoryDuration.text =
-                String.format(getString(R.string.monthlyDuration, month))
-        } else {
-            val simpleDateFormat = SimpleDateFormat("dd MMM YY")
-            binding.categoryDuration.text = getString(
-                R.string.monthlyDuration,
-                "${simpleDateFormat.format(args.startDate)} - ${simpleDateFormat.format(args.endDate)}"
-            )
-        }
-
-
-        viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
-        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         binding.categoryName.text = args.categoryName
 
 //        setting the adapter with the user viewModel for the currency
@@ -102,9 +86,7 @@ class DetailedCategoryTransactionsFragment : Fragment() {
             }
         }
 
-
-
-        viewModel.setTransactionTypeData(
+        transactionViewModel.setTransactionTypeData(
             TransactionTypeData(
                 args.categoryName,
                 args.startDate,
@@ -112,7 +94,7 @@ class DetailedCategoryTransactionsFragment : Fragment() {
             )
         )
 
-        viewModel.readSingleTransactionType.observe(viewLifecycleOwner) {
+        transactionViewModel.readSingleTransactionType.observe(viewLifecycleOwner) {
             if (it != null) {
                 amount = it.amount
                 if (it.count > 1) {
@@ -128,7 +110,7 @@ class DetailedCategoryTransactionsFragment : Fragment() {
             }
             setAmount()
         }
-        viewModel.readTransactionsByCategory.observe(viewLifecycleOwner) {
+        transactionViewModel.readTransactionsByCategory.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
 
@@ -141,40 +123,8 @@ class DetailedCategoryTransactionsFragment : Fragment() {
         binding.categoryTotalAmount.text = "Total: ${currencyFormatter.format(amount)}"
     }
 
-    private fun openRangePicker() {
-        val simpleDateFormat = SimpleDateFormat("dd MMM YY")
-        val dateRangePicker = MaterialDatePicker.Builder
-            .dateRangePicker()
-            .setTitleText("Choose duration")
-            .build()
-
-        dateRangePicker.show(requireActivity().supportFragmentManager, "datepicker")
-
-        dateRangePicker.addOnPositiveButtonClickListener {
-            viewModel.setTransactionTypeData(
-                TransactionTypeData(
-                    args.categoryName,
-                    it.first,
-                    (it.second + 86400000)
-                )
-            )
-        }
-        viewModel.readExpenseSumByDuration.observe(viewLifecycleOwner) {
-            amount = it ?: 0f
-            setAmount()
-        }
-//        setting the duration in the card view
-        viewModel.transactionTypeDetails.observe(viewLifecycleOwner) {
-            binding.categoryDuration.text = getString(
-                R.string.monthlyDuration,
-                "${simpleDateFormat.format(it.startDate)} - ${simpleDateFormat.format(it.endDate - 86400000)}"
-            )
-        }
-    }
-
-
     fun deleteTransaction(transaction: Transaction) {
-        viewModel.deleteTransaction(transaction)
+        transactionViewModel.deleteTransaction(transaction)
         Toast.makeText(requireContext(), "Deleted", Toast.LENGTH_SHORT).show()
     }
 

@@ -74,18 +74,27 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/totalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/sf_pro"
+                android:text="Total Amount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/detailedmonthlyExpense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:fontFamily="@font/autour_one"
                 android:text="@string/amountInRupee"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="18sp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/totalText" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/previousMonth"
@@ -98,11 +107,11 @@
 
             <TextView
                 android:id="@+id/detailedMonthlyDuration"
-                android:layout_width="120dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sf_pro"
                 android:gravity="center"
-                android:text="December"
+                android:text="Dec 2021"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@id/nextMonth"
