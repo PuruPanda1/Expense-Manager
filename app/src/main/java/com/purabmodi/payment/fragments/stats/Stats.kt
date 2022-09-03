@@ -137,7 +137,7 @@ class Stats : Fragment() {
                     -1,
                     "",
                     0f,
-                    true,
+                    1,
                     0L,
                     "",
                     0,

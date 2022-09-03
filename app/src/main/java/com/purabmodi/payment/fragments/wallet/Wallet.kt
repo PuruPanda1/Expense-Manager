@@ -96,7 +96,7 @@ class Wallet : Fragment() {
                             0,
                             "Updated Balance",
                             aBalance.toFloat(),
-                            false,
+                            0,
                             date,
                             "Updated Balance",
                             d,

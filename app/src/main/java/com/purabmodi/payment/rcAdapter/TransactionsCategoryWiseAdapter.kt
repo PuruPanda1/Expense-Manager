@@ -69,7 +69,7 @@ class TransactionsCategoryWiseAdapter(
             date.text = dateString
             category.text = item.transactionType
 
-            if (item.isExpense) {
+            if (item.isExpense==1) {
                 amount.setTextColor(
                     ContextCompat.getColor(
                         amount.context,

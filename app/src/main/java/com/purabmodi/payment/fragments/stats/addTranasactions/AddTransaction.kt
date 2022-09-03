@@ -43,7 +43,7 @@ class AddTransaction : Fragment() {
     private val d = cal.get(Calendar.DAY_OF_MONTH)
     private var date: MutableLiveData<Long> = MutableLiveData(cal.timeInMillis)
     private var currency = MutableLiveData("INR")
-    private var isExpense = true
+    private var isExpense = 1
     private val expenseCategory = listOf(
         "Credit Card Due",
         "Bills",
@@ -124,7 +124,7 @@ class AddTransaction : Fragment() {
 //        edit mode
         if (args.transaction.id != -1) {
             year = args.transaction.year
-            if (args.transaction.isExpense) {
+            if (args.transaction.isExpense == 1) {
                 binding.transactionAmount.setText(args.transaction.expenseAmount.toString())
                 binding.isExpenseSwitch.isChecked = true
             } else {
@@ -161,7 +161,11 @@ class AddTransaction : Fragment() {
 
 //        switch for isExpense
         binding.isExpenseSwitch.setOnCheckedChangeListener { _, isChecked ->
-            isExpense = isChecked
+            isExpense = if (isChecked) {
+                1
+            } else {
+                0
+            }
         }
 
         binding.transactionType.setOnFocusChangeListener { view, b ->
@@ -188,7 +192,7 @@ class AddTransaction : Fragment() {
         val tAmount = binding.transactionAmount.text.toString()
         val transactionType = binding.transactionType.text.toString()
         if (check(tDescription, tAmount, transactionType, date.value!!)) {
-            if (isExpense) {
+            if (isExpense==1) {
                 expenseAmount = tAmount.toFloat()
             } else {
                 incomeAmount = tAmount.toFloat()
@@ -252,7 +256,7 @@ class AddTransaction : Fragment() {
         val transactionType = binding.transactionType.text.toString()
 //        logic left to be written for remaining Amount
         if (check(tDescription, tAmount, transactionType, date.value!!)) {
-            if (isExpense) {
+            if (isExpense==1) {
                 expenseAmount = tAmount.toFloat()
             } else {
                 incomeAmount = tAmount.toFloat()
