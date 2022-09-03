@@ -65,6 +65,7 @@ class Profile : Fragment() {
         binding.changeProfilePhoto.setOnClickListener {
             ImagePicker.with(this)
                 .compress(1024)         //Final image size will be less than 1 MB(Optional)
+                .crop()
                 .maxResultSize(
                     620,
                     620

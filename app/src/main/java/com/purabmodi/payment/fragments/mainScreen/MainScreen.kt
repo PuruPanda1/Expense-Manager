@@ -273,6 +273,11 @@ class MainScreen : Fragment() {
         binding.pieChart.animateY(1400, Easing.EaseInOutQuad)
     }
 
+    override fun onResume() {
+        super.onResume()
+        val cal = Calendar.getInstance()
+        transactionViewModel.setMonthYear(listOf((cal.get(Calendar.MONTH)+1),cal.get(Calendar.YEAR)))
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

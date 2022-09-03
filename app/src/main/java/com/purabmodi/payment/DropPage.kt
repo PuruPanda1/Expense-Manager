@@ -1,16 +1,14 @@
 package com.purabmodi.payment
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.icu.util.Currency
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -20,9 +18,9 @@ import com.purabmodi.payment.userDb.User
 import com.purabmodi.payment.userDb.UserViewModel
 
 class DropPage : AppCompatActivity() {
-    private lateinit var binding : ActivityDropPageBinding
+    private lateinit var binding: ActivityDropPageBinding
     private lateinit var userViewModel: UserViewModel
-    private lateinit var userPhoto:Uri
+    private lateinit var userPhoto: Uri
     private var currencyCode: String = "INR"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +54,7 @@ class DropPage : AppCompatActivity() {
         binding.changeProfilePhoto.setOnClickListener {
             ImagePicker.with(this)
                 .compress(1024)
+                .crop()
                 .maxResultSize(
                     620,
                     620
@@ -67,7 +66,7 @@ class DropPage : AppCompatActivity() {
 
         binding.userCurrency.setOnClickListener {
             val picker = CurrencyPicker.newInstance("Select Currency")  // dialog title
-            picker.setListener{ _, code, _, _ ->
+            picker.setListener { _, code, _, _ ->
                 currencyCode = code
                 val currencyName = Currency.getInstance(currencyCode).displayName
                 val currencySymbol = Currency.getInstance(currencyCode).symbol
@@ -82,8 +81,11 @@ class DropPage : AppCompatActivity() {
     private fun setUserDetails() {
         val userName = binding.userName.text.toString()
         val budget = binding.userBudget.text.toString()
-        val description = binding.userBio.text.toString()
-        if(check(userName,budget,description)){
+        var description: String = binding.userBio.text.toString()
+        if (check(userName, budget)) {
+            if (description.isEmpty()) {
+                description = "Hey i am using BudgetWise"
+            }
             userViewModel.insertUser(
                 User(
                     1,
@@ -94,15 +96,15 @@ class DropPage : AppCompatActivity() {
                     currencyCode
                 )
             )
-            startActivity(Intent(this,MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
-        } else{
+        } else {
             Toast.makeText(this, "Fields can not be empty!", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun check(userName: String, budget: String, description: String): Boolean {
-        if(userName.isNullOrEmpty() || budget.isNullOrBlank() || description.isNullOrEmpty()){
+    private fun check(userName: String, budget: String): Boolean {
+        if (userName.isNullOrEmpty() || budget.isNullOrBlank()) {
             return false
         }
         return true

@@ -81,7 +81,7 @@ class Wallet : Fragment() {
             submitButton.setOnClickListener {
                 val aName = accountName.text.toString()
                 val aBalance = accountBalance.text.toString()
-                if (aBalance.isBlank() && aName.isBlank()) {
+                if (aBalance.isBlank() || aName.isBlank()) {
                     Toast.makeText(context, "Fields can not be empty", Toast.LENGTH_SHORT).show()
                 } else {
                     val cal = Calendar.getInstance()
