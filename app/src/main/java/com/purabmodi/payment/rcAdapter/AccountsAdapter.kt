@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.purabmodi.payment.R
@@ -24,10 +25,10 @@ class AccountsAdapter(val fragment: AddTransaction) : RecyclerView.Adapter<Accou
         val item = data[position]
         holder.name.text = item.name
         if(selectedItem == item.name){
-            holder.layout.setBackgroundColor(holder.layout.context.getColor(R.color.primary_blue))
             holder.name.setTextColor(holder.layout.context.getColor(R.color.white))
+            holder.layout.setCardBackgroundColor(holder.layout.context.getColor(R.color.primary_blue))
         } else {
-            holder.layout.setBackgroundColor(holder.layout.context.getColor(R.color.optionsBackground))
+            holder.layout.setCardBackgroundColor(holder.layout.context.getColor(R.color.optionsBackground))
             holder.name.setTextColor(holder.layout.context.getColor(R.color.black))
         }
 
@@ -39,7 +40,6 @@ class AccountsAdapter(val fragment: AddTransaction) : RecyclerView.Adapter<Accou
     }
 
     override fun getItemCount(): Int {
-        // return the size of the list
         return data.size
     }
 
@@ -56,5 +56,5 @@ class AccountsAdapter(val fragment: AddTransaction) : RecyclerView.Adapter<Accou
 
 class AccountsHolder(val view: View) : RecyclerView.ViewHolder(view) {
     val name: TextView = view.findViewById(R.id.accountNameRC)
-    val layout: ConstraintLayout = view.findViewById(R.id.accountLayoutRC)
+    val layout: CardView = view.findViewById(R.id.accountLayoutRC)
 }

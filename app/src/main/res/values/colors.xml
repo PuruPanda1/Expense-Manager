@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primary_blue">#5F5BC8</color>
+    <color name="translucent_primary">#205F5BC8</color>
     <color name="splash_screen">#5F5BC8</color>
     <color name="GrayText">#B4B8C1</color>
     <color name="buttonColor">#FFFFFFFF</color>

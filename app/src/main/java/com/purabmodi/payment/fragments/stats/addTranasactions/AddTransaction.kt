@@ -2,6 +2,7 @@ package com.purabmodi.payment.fragments.stats.addTranasactions
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -40,7 +41,7 @@ class AddTransaction : Fragment() {
     private val y = cal.get(Calendar.YEAR)
     private val m = cal.get(Calendar.MONTH)
     private val d = cal.get(Calendar.DAY_OF_MONTH)
-    private var date: Long = 0L
+    private var date: MutableLiveData<Long> = MutableLiveData(cal.timeInMillis)
     private var currency = MutableLiveData("INR")
     private var isExpense = true
     private val expenseCategory = listOf(
@@ -67,9 +68,11 @@ class AddTransaction : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-//        setting the today's date
-        cal.set(y, m, d)
-        date = cal.timeInMillis
+        date.observe(viewLifecycleOwner) {
+            val simpleDateFormat = SimpleDateFormat("dd/MM/YY")
+            val dateString = simpleDateFormat.format(it)
+            binding.transactionDate.text = getString(R.string.transaction_date, dateString)
+        }
 
 //        currency
         currency.observe(viewLifecycleOwner) {
@@ -99,12 +102,12 @@ class AddTransaction : Fragment() {
         accountViewModel.readAllAccounts.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 accountsAdapter.setData(it)
-                if (args.transaction.id == -1) {
+                modeOfPayment = if (args.transaction.id == -1) {
                     accountsAdapter.setSelectedItem(it[0].name)
-                    modeOfPayment = it[0].name
+                    it[0].name
                 } else {
                     accountsAdapter.setSelectedItem(args.transaction.modeOfPayment)
-                    modeOfPayment = args.transaction.modeOfPayment
+                    args.transaction.modeOfPayment
                 }
             } else {
                 accountViewModel.insertAccount(Accounts(0, "CASH"))
@@ -130,7 +133,7 @@ class AddTransaction : Fragment() {
             }
             binding.transactionDescription.setText(args.transaction.tDescription)
             binding.transactionType.setText(args.transaction.transactionType)
-            date = args.transaction.date
+            date.value = args.transaction.date
             binding.addExpenseBtn.setOnClickListener {
                 updateTransaction()
             }
@@ -184,7 +187,7 @@ class AddTransaction : Fragment() {
         val tDescription = binding.transactionDescription.text.toString()
         val tAmount = binding.transactionAmount.text.toString()
         val transactionType = binding.transactionType.text.toString()
-        if (check(tDescription, tAmount, transactionType, date)) {
+        if (check(tDescription, tAmount, transactionType, date.value!!)) {
             if (isExpense) {
                 expenseAmount = tAmount.toFloat()
             } else {
@@ -196,7 +199,7 @@ class AddTransaction : Fragment() {
                     tDescription,
                     incomeAmount,
                     isExpense,
-                    date,
+                    date.value!!,
                     transactionType,
                     day,
                     week,
@@ -209,7 +212,7 @@ class AddTransaction : Fragment() {
             Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT).show()
             Navigation.findNavController(binding.root).navigate(R.id.action_addTransaction_to_Stats)
         } else {
-            if (date == 0L) {
+            if (date.value!! == 0L) {
                 Toast.makeText(
                     requireContext(),
                     "Click on Calender to choose date",
@@ -228,7 +231,7 @@ class AddTransaction : Fragment() {
             { _, year, monthOfYear, dayOfMonth ->
                 // Display Selected date in textbox
                 cal.set(year, monthOfYear, dayOfMonth)
-                date = cal.timeInMillis
+                date.value = cal.timeInMillis
                 day = d
                 week = cal.get(Calendar.WEEK_OF_YEAR) - 1
                 month = cal.get(Calendar.MONTH) + 1
@@ -248,7 +251,7 @@ class AddTransaction : Fragment() {
         val tAmount = binding.transactionAmount.text.toString()
         val transactionType = binding.transactionType.text.toString()
 //        logic left to be written for remaining Amount
-        if (check(tDescription, tAmount, transactionType, date)) {
+        if (check(tDescription, tAmount, transactionType, date.value!!)) {
             if (isExpense) {
                 expenseAmount = tAmount.toFloat()
             } else {
@@ -260,7 +263,7 @@ class AddTransaction : Fragment() {
                     tDescription,
                     incomeAmount,
                     isExpense,
-                    date,
+                    date.value!!,
                     transactionType,
                     day,
                     week,
@@ -273,7 +276,7 @@ class AddTransaction : Fragment() {
             Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
             Navigation.findNavController(binding.root).navigate(R.id.action_addTransaction_to_Stats)
         } else {
-            if (date == 0L) {
+            if (date.value!! == 0L) {
                 Toast.makeText(
                     requireContext(),
                     "Click on Calender to choose date",

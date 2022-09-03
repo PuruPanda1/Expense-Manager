@@ -6,7 +6,6 @@
     <string name="monthlyExpensePercentage">%s</string>
     <string name="amountInRupee">₹%s</string>
     <string name="userBudget">/₹%s</string>
-    <string name="date_of_transaction">Date Of Transaction: %s</string>
     <string name="transactionTypeName">on %s</string>
     <string name="transactionTypeCount">%d Expenses</string>
     <string name="transactionTypeCountSingular">%d Expense</string>
@@ -26,4 +25,5 @@
     <string name="income">Income</string>
     <string name="total_balance">Total Balance</string>
     <string name="dev_name">PuruPanda</string>
+    <string name="transaction_date">Date: %s</string>
 </resources>

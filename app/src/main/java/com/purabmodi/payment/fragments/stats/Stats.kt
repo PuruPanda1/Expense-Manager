@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,8 +21,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.purabmodi.payment.R
 import com.purabmodi.payment.databinding.FragmentStatsBinding
+import com.purabmodi.payment.fragments.stats.StatsDirections.actionStatsToAddTransaction
 import com.purabmodi.payment.modals.CustomTimeData
 import com.purabmodi.payment.modals.customData
 import com.purabmodi.payment.rcAdapter.TransactionsAdapter
@@ -31,11 +35,37 @@ import com.purabmodi.payment.transactionDb.Transaction
 import com.purabmodi.payment.userDb.UserViewModel
 import com.purabmodi.payment.viewModel.AccountViewModel
 import com.purabmodi.payment.viewModel.TransactionViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.purabmodi.payment.fragments.stats.StatsDirections.actionStatsToAddTransaction
 
 class Stats : Fragment() {
     private var _binding: FragmentStatsBinding? = null
+
+    //    animation declaration
+    private val rotateOpen: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.rotate_open_anim
+        )
+    }
+    private val rotateClose: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.rotate_close_anim
+        )
+    }
+    private val fromBottom: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.from_bottom_anim
+        )
+    }
+    private val toBottom: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.to_bottom_anim
+        )
+    }
+    private var switchValue = false
+
     private lateinit var accountViewModel: AccountViewModel
     private val cal = Calendar.getInstance()
     private val y = cal.get(Calendar.YEAR)
@@ -81,8 +111,14 @@ class Stats : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         accountViewModel = ViewModelProvider(requireActivity())[AccountViewModel::class.java]
-
         lateinit var adapter: TransactionsAdapter
+
+//        Setting the animation
+        binding.toggleFAB.setOnClickListener {
+            switchValue = !switchValue
+            onToggleButtonClick()
+        }
+
 
 //        live data for currency
         userViewModel.userDetails.observe(viewLifecycleOwner) {
@@ -127,6 +163,36 @@ class Stats : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun onToggleButtonClick() {
+        setVisibility()
+        setAnimation()
+    }
+
+    private fun setVisibility() {
+        binding.addBtn.isVisible = switchValue
+        binding.transferFAB.isVisible = switchValue
+        binding.TransferTextview.isVisible = switchValue
+        binding.addTransactionTextView.isVisible = switchValue
+        binding.addBtn.isClickable = switchValue
+        binding.transferFAB.isClickable = switchValue
+    }
+
+    private fun setAnimation() {
+        if (switchValue) {
+            binding.toggleFAB.startAnimation(rotateOpen)
+            binding.addBtn.startAnimation(fromBottom)
+            binding.transferFAB.startAnimation(fromBottom)
+            binding.TransferTextview.startAnimation(fromBottom)
+            binding.addTransactionTextView.startAnimation(fromBottom)
+        } else {
+            binding.toggleFAB.startAnimation(rotateClose)
+            binding.addBtn.startAnimation(toBottom)
+            binding.transferFAB.startAnimation(toBottom)
+            binding.TransferTextview.startAnimation(toBottom)
+            binding.addTransactionTextView.startAnimation(toBottom)
+        }
     }
 
     private fun showBottomSheetFilter(context: Context, adapter: TransactionsAdapter) {
@@ -245,7 +311,7 @@ class Stats : Fragment() {
                     CustomTimeData(
                         categoryList,
                         accountList,
-                        startDate.value!!-86400000,
+                        startDate.value!! - 86400000,
                         endDate.value!!
                     )
                 )
