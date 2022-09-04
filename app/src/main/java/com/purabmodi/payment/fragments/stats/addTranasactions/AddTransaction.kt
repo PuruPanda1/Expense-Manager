@@ -50,16 +50,16 @@ class AddTransaction : Fragment() {
         "DineOut",
         "Entertainment",
         "Fuel",
+        "General",
         "Groceries",
         "Income",
         "Salary",
         "Shopping",
         "Stationary",
-        "General",
         "Transportation"
     )
     private var _binding: FragmentAddTransactionBinding? = null
-    private lateinit var viewModel: TransactionViewModel
+    private lateinit var transactionViewModel: TransactionViewModel
     private lateinit var accountViewModel: AccountViewModel
     private lateinit var userViewModel: UserViewModel
     private val binding get() = _binding!!
@@ -83,7 +83,7 @@ class AddTransaction : Fragment() {
         _binding = FragmentAddTransactionBinding.inflate(inflater, container, false)
 
 //        setting the viewmodel
-        viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+        transactionViewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         accountViewModel = ViewModelProvider(requireActivity())[AccountViewModel::class.java]
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
 
@@ -197,7 +197,7 @@ class AddTransaction : Fragment() {
             } else {
                 incomeAmount = tAmount.toFloat()
             }
-            viewModel.updateTransaction(
+            transactionViewModel.updateTransaction(
                 Transaction(
                     args.transaction.id,
                     tDescription,
@@ -210,7 +210,7 @@ class AddTransaction : Fragment() {
                     month,
                     year,
                     expenseAmount,
-                    modeOfPayment
+                    modeOfPayment,
                 )
             )
             Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT).show()
@@ -261,7 +261,7 @@ class AddTransaction : Fragment() {
             } else {
                 incomeAmount = tAmount.toFloat()
             }
-            viewModel.insertTransaction(
+            transactionViewModel.insertTransaction(
                 Transaction(
                     0,
                     tDescription,
@@ -274,7 +274,7 @@ class AddTransaction : Fragment() {
                     month,
                     year,
                     expenseAmount,
-                    modeOfPayment
+                    modeOfPayment,
                 )
             )
             Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()

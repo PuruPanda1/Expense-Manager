@@ -8,17 +8,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.purabmodi.payment.MainActivity
 import com.purabmodi.payment.R
 import com.purabmodi.payment.databinding.FragmentDetailedCategoryTransactionsBinding
 import com.purabmodi.payment.rcAdapter.TransactionsCategoryWiseAdapter
 import com.purabmodi.payment.transactionDb.Transaction
 import com.purabmodi.payment.userDb.UserViewModel
-import com.purabmodi.payment.viewModel.TransactionTypeData
 import com.purabmodi.payment.viewModel.TransactionViewModel
 import java.text.NumberFormat
 import java.util.*
@@ -53,7 +50,8 @@ class DetailedCategoryTransactionsFragment : Fragment() {
         _binding =
             FragmentDetailedCategoryTransactionsBinding.inflate(layoutInflater, container, false)
 
-        transactionViewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+        transactionViewModel =
+            ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
 
 //        setting the back button
@@ -76,22 +74,18 @@ class DetailedCategoryTransactionsFragment : Fragment() {
             setAmount()
         }
 
-
         binding.categoryName.text = args.categoryName
 
 //        setting the adapter with the user viewModel for the currency
-        userViewModel.userDetails.observe(viewLifecycleOwner){
-            if(it!=null){
+        userViewModel.userDetails.observe(viewLifecycleOwner) {
+            if (it != null) {
                 currency.value = it.userCurrency
             }
         }
 
-        transactionViewModel.setTransactionTypeData(
-            TransactionTypeData(
-                args.categoryName,
-                args.startDate,
-                args.endDate
-            )
+        val month = transactionViewModel.monthYear.value!![0]
+        transactionViewModel.setCategoryName(
+            args.categoryName
         )
 
         transactionViewModel.readSingleTransactionType.observe(viewLifecycleOwner) {

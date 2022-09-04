@@ -42,6 +42,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.incomeExpenseView -> {
                     navController.navigate(R.id.action_incomeExpenseView_to_MainScreen)
                 }
+                R.id.accountTransfer -> {
+                    navController.navigate(R.id.action_accountTransfer_to_Stats)
+                }
             }
             navController.popBackStack(reselectedDestinationId, inclusive = false)
         }

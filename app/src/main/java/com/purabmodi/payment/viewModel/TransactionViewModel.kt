@@ -31,56 +31,39 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
         readAccountDetails = repository.readAccountDetails
     }
 
-    val dates: MutableLiveData<List<Long>> = MutableLiveData()
-    var monthYear: MutableLiveData<List<Int>> = MutableLiveData(listOf(Calendar.getInstance().get(Calendar.MONTH)+1,Calendar.getInstance().get(Calendar.YEAR)))
+    var monthYear: MutableLiveData<List<Int>> = MutableLiveData(
+        listOf(
+            Calendar.getInstance().get(Calendar.MONTH) + 1,
+            Calendar.getInstance().get(Calendar.YEAR)
+        )
+    )
 
-    fun setMonthYear(monthYear:List<Int>){
+    fun setMonthYear(monthYear: List<Int>) {
         this.monthYear.value = monthYear
     }
 
-    val readMonthlySpends : LiveData<Float> = Transformations.switchMap(monthYear){
-        repository.readMonthlySpends(it[0],it[1])
+    val readMonthlySpends: LiveData<Float> = Transformations.switchMap(monthYear) {
+        repository.readMonthlySpends(it[0], it[1])
     }
 
-    val readMonthlySumByCategory: LiveData<List<MyTypes>> = Transformations.switchMap(monthYear){
-        repository.readMonthlySumByCategory(it[0],it[1])
+    val readMonthlySumByCategory: LiveData<List<MyTypes>> = Transformations.switchMap(monthYear) {
+        repository.readMonthlySumByCategory(it[0], it[1])
     }
 
-    val readCategoriesByDuration: LiveData<List<MyTypes>> = Transformations.switchMap(dates) {
-        repository.readCategoriesByDuration(it[0], it[1])
-    }
-    val readExpenseSumByDuration: LiveData<Float> = Transformations.switchMap(dates) {
-        repository.readExpenseSumByDuration(it[0], it[1])
-    }
-
-    var transactionTypeDetails: MutableLiveData<TransactionTypeData> = MutableLiveData()
+    var categoryName: MutableLiveData<String> = MutableLiveData()
 
     val readTransactionsByCategory: LiveData<List<Transaction>> =
-        Transformations.switchMap(transactionTypeDetails) {
-            if (it.startDate == 0L) {
-                repository.getTransactionsByCategory(it.transactionType)
-            } else {
-                repository.getRangeTransactionsData(it.transactionType, it.startDate, it.endDate)
-            }
+        Transformations.switchMap(categoryName) {
+            repository.getTransactionsByCategory(it, monthYear.value!!.get(0))
         }
 
     val readSingleTransactionType: LiveData<MyTypes> =
-        Transformations.switchMap(transactionTypeDetails) {
-            if (it.startDate == 0L) {
-                repository.getMonthlySingleTransactionType(
-                    it.transactionType
-                )
-            } else {
-                repository.getSingleTransactionType(it.transactionType, it.startDate, it.endDate)
-            }
+        Transformations.switchMap(categoryName) {
+            repository.getSingleTransactionType(it, monthYear.value!!.get(0))
         }
 
-    fun setTransactionTypeData(details: TransactionTypeData) {
-        transactionTypeDetails.value = details
-    }
-
-    fun setCustomDurationData(dates: List<Long>) {
-        this.dates.value = dates
+    fun setCategoryName(name: String) {
+        categoryName.value = name
     }
 
     private var customTimeData = MutableLiveData<CustomTimeData>()
@@ -138,6 +121,5 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
 
 data class TransactionTypeData(
     val transactionType: String,
-    val startDate: Long,
-    val endDate: Long
+    val month: Int
 )

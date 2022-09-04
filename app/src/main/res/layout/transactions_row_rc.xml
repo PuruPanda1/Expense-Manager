@@ -76,7 +76,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="42dp"
             android:fontFamily="@font/sf_pro"
             android:text="Pizza Dine out"
             android:textColor="@color/primaryTextColor"

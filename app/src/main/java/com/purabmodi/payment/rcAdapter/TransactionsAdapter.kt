@@ -92,6 +92,7 @@ class TransactionsAdapter(val fragment: Stats, private val currency: String) :
                 "Salary" -> image.setImageResource(R.drawable.salary_icon)
                 "Updated Balance" -> image.setImageResource(R.drawable.salary_icon)
                 "Income" -> image.setImageResource(R.drawable.income_icon)
+                "Transfer" -> image.setImageResource(R.drawable.transfer_icon)
                 else -> image.setImageResource(R.drawable.ic_entertainment)
             }
 

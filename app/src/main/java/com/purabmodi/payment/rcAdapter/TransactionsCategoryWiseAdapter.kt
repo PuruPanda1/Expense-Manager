@@ -1,13 +1,10 @@
 package com.purabmodi.payment.rcAdapter
 
-import android.app.AlertDialog
-import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -69,7 +66,7 @@ class TransactionsCategoryWiseAdapter(
             date.text = dateString
             category.text = item.transactionType
 
-            if (item.isExpense==1) {
+            if (item.isExpense == 1) {
                 amount.setTextColor(
                     ContextCompat.getColor(
                         amount.context,
@@ -102,50 +99,11 @@ class TransactionsCategoryWiseAdapter(
                 "Transportation" -> image.setImageResource(R.drawable.transportation_icon)
                 "Salary" -> image.setImageResource(R.drawable.salary_icon)
                 "Income" -> image.setImageResource(R.drawable.income_icon)
+                "Transfer" -> image.setImageResource(R.drawable.transfer_icon)
                 else -> image.setImageResource(R.drawable.ic_entertainment)
             }
-
-            layout.setOnLongClickListener {
-                popupMenus(it, layout.context, item, fragment)
-                true
-            }
-
         }
 
-        private fun popupMenus(
-            v: View,
-            c: Context,
-            item: Transaction,
-            fragment: DetailedCategoryTransactionsFragment
-        ) {
-            val popupMenus = PopupMenu(c, v)
-            popupMenus.inflate(R.menu.pop_up_menu)
-            popupMenus.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.editOption -> {
-//                    redirecting to add transaction page for editing
-//                    val action = DetailedCategoryTransactionsFragment.actionStatsToAddTransaction(item)
-//                    Navigation.findNavController(v).navigate(action)
-                        true
-                    }
-                    R.id.deleteOption -> {
-//                    Alert dialog box for confirmation
-                        val builder = AlertDialog.Builder(c)
-                        builder.setPositiveButton("Yes") { _, _ ->
-                            fragment.deleteTransaction(item)
-                        }
-                        builder.setNegativeButton("No") { _, _ ->
-                        }
-                        builder.setTitle("Delete Transaction")
-                        builder.setMessage("Are you sure to delete this transaction?")
-                        builder.create().show()
-                        true
-                    }
-                    else -> true
-                }
-            }
-            popupMenus.show()
-        }
     }
 
     class Comparator : DiffUtil.ItemCallback<Transaction>() {

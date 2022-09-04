@@ -18,35 +18,35 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions ORDER by date DESC")
     fun getAllTransaction(): LiveData<List<Transaction>>
 
-    @Query("SELECT * FROM transactions WHERE isExpense=0 ORDER BY date DESC")
-    fun getIncomeTransactions(): LiveData<List<Transaction>>
+    @Query("SELECT * FROM transactions WHERE isExpense=0 AND transactionType IN (:income) ORDER BY date DESC")
+    fun getIncomeTransactions(income:List<String>): LiveData<List<Transaction>>
 
-    @Query("SELECT * FROM transactions WHERE isExpense=1 ORDER BY date DESC")
-    fun getExpenseTransactions(): LiveData<List<Transaction>>
+    @Query("SELECT * FROM transactions WHERE isExpense=1 AND transactionType IN (:expense) ORDER BY date DESC")
+    fun getExpenseTransactions(expense:List<String>): LiveData<List<Transaction>>
 
     @Query("SELECT SUM(incomeAmount)-SUM(expenseAmount) FROM transactions")
     fun getDifferenceSum(): LiveData<Float>
 
-    @Query("SELECT SUM(expenseAmount) FROM transactions WHERE month = :month AND year = :year")
-    fun getMonthlySpends(month:Int,year:Int): LiveData<Float>
+    @Query("SELECT SUM(expenseAmount) FROM transactions WHERE month = :month AND year = :year AND transactionType IN (:expense)")
+    fun getMonthlySpends(month: Int, year: Int,expense: List<String>): LiveData<Float>
 
-    @Query("SELECT SUM(incomeAmount) FROM transactions")
-    fun getIncomeSum(): LiveData<Float>
+    @Query("SELECT SUM(incomeAmount)  FROM transactions WHERE transactionType IN (:income)")
+    fun getIncomeSum(income:List<String>): LiveData<Float>
 
-    @Query("SELECT SUM(expenseAmount) FROM transactions")
-    fun getExpenseSum(): LiveData<Float>
+    @Query("SELECT SUM(expenseAmount)  FROM transactions WHERE transactionType IN (:expense)")
+    fun getExpenseSum(expense: List<String>): LiveData<Float>
 
-    @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE isExpense=1 AND month = :month AND year = :year GROUP BY transactionType ORDER BY amount ASC")
-    fun getMonthlySpendByCategory(month: Int,year: Int): LiveData<List<MyTypes>>
+    @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE isExpense=1 AND month = :month AND year = :year AND transactionType IN (:expense) GROUP BY transactionType ORDER BY amount ASC")
+    fun getMonthlySpendByCategory(month: Int, year: Int,expense: List<String>): LiveData<List<MyTypes>>
 
-    @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE isExpense=1 AND date BETWEEN :startDate AND :endDate GROUP BY transactionType")
-    fun readCategoriesByDuration(startDate: Long, endDate: Long): LiveData<List<MyTypes>>
+    @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE isExpense=1 AND date BETWEEN :startDate AND :endDate AND transactionType IN (:expense) GROUP BY transactionType")
+    fun readCategoriesByDuration(startDate: Long, endDate: Long, expense: List<String>): LiveData<List<MyTypes>>
 
     @Query("SELECT SUM(expenseAmount) FROM transactions WHERE date BETWEEN :startDate AND :endDate")
     fun readExpenseSumByDuration(startDate: Long, endDate: Long): LiveData<Float>
 
-    @Query("SELECT * FROM transactions WHERE transactionType=:transactionType AND month = strftime('%m','now') ORDER BY date DESC")
-    fun getTransactionsByCategory(transactionType: String): LiveData<List<Transaction>>
+    @Query("SELECT * FROM transactions WHERE transactionType=:transactionType AND month = :month ORDER BY date DESC")
+    fun getTransactionsByCategory(transactionType: String, month: Int): LiveData<List<Transaction>>
 
     @Query("SELECT * FROM transactions WHERE transactionType=:transactionType AND date BETWEEN :startDate AND :endDate ORDER BY date DESC")
     fun getRangeTransactionsData(
@@ -55,11 +55,10 @@ interface TransactionDao {
         endDate: Long
     ): LiveData<List<Transaction>>
 
-    @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE transactionType = :transactionType AND date BETWEEN :startDate AND :endDate GROUP BY transactionType")
-    fun getSingleTransactionType(
+    @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE transactionType = :transactionType AND month = :month GROUP BY transactionType")
+    fun getSingleTransactionTypeByMonth(
         transactionType: String,
-        startDate: Long,
-        endDate: Long
+        month: Int
     ): LiveData<MyTypes>
 
     @Query("SELECT transactionType as name,Count(*) as count,SUM(expenseAmount) as amount FROM transactions WHERE transactionType = :transactionType AND month = strftime('%m','now') GROUP BY transactionType")

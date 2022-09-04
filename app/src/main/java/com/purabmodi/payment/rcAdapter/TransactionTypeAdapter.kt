@@ -10,16 +10,18 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.purabmodi.payment.fragments.mainScreen.detailedTransactions.totalAnalysis.DetailedTransactionAnalysis
 import com.purabmodi.payment.R
+import com.purabmodi.payment.fragments.mainScreen.detailedTransactions.totalAnalysis.DetailedTransactionAnalysis
 import com.purabmodi.payment.fragments.mainScreen.detailedTransactions.totalAnalysis.DetailedTransactionAnalysisDirections
 import com.purabmodi.payment.transactionDb.MyTypes
 import java.text.NumberFormat
 import java.util.*
 
-class TransactionTypeAdapter(val fragment: DetailedTransactionAnalysis, private val currency: String) :
+class TransactionTypeAdapter(
+    val fragment: DetailedTransactionAnalysis,
+    private val currency: String
+) :
     ListAdapter<MyTypes, TransactionTypeAdapter.TransactionTypeViewHolder>(Comparator()) {
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionTypeViewHolder {
@@ -69,6 +71,7 @@ class TransactionTypeAdapter(val fragment: DetailedTransactionAnalysis, private 
                 "Stationary" -> image.setImageResource(R.drawable.stationary_icon)
                 "General" -> image.setImageResource(R.drawable.general_icon)
                 "Transportation" -> image.setImageResource(R.drawable.transportation_icon)
+                "Transfer" -> image.setImageResource(R.drawable.transfer_icon)
                 else -> image.setImageResource(R.drawable.ic_entertainment)
             }
 //        setting the onclick listener

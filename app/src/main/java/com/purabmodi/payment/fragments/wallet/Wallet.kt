@@ -104,7 +104,7 @@ class Wallet : Fragment() {
                             (m + 1),
                             y,
                             0f,
-                            aName
+                            aName,
                         )
                     )
                     Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show()

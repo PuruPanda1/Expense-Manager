@@ -36,6 +36,11 @@
             app:destination="@id/addTransaction"
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/slide_down" />
+        <action
+            android:id="@+id/action_Stats_to_accountTransfer"
+            app:destination="@id/accountTransfer"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/Profile"
@@ -119,5 +124,19 @@
         <argument
             android:name="currency"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountTransfer"
+        android:name="com.purabmodi.payment.fragments.stats.accountTransfer.AccountTransfer"
+        android:label="fragment_account_transfer"
+        tools:layout="@layout/fragment_account_transfer" >
+        <action
+            android:id="@+id/action_accountTransfer_to_Stats"
+            app:destination="@id/Stats"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down" />
+        <argument
+            android:name="transaction"
+            app:argType="com.purabmodi.payment.transactionDb.Transaction" />
     </fragment>
 </navigation>

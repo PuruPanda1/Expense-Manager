@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.purabmodi.payment.R
@@ -17,13 +18,15 @@ class CategoryFilterAdapter(val fragment: Stats) :
         "DineOut",
         "Entertainment",
         "Fuel",
+        "General",
         "Groceries",
         "Income",
         "Salary",
         "Shopping",
         "Stationary",
-        "General",
-        "Transportation"
+        "Transportation",
+        "Transfer",
+        "Updated Balance"
     )
     private var selectedItem = ""
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
@@ -37,10 +40,10 @@ class CategoryFilterAdapter(val fragment: Stats) :
         val item = data[position]
         holder.name.text = item
         if (selectedItem == item) {
-            holder.layout.setBackgroundColor(holder.layout.context.getColor(R.color.primary_blue))
+            holder.layout.setCardBackgroundColor(holder.layout.context.getColor(R.color.primary_blue))
             holder.name.setTextColor(holder.layout.context.getColor(R.color.white))
         } else {
-            holder.layout.setBackgroundColor(holder.layout.context.getColor(R.color.optionsBackground))
+            holder.layout.setCardBackgroundColor(holder.layout.context.getColor(R.color.optionsBackground))
             holder.name.setTextColor(holder.layout.context.getColor(R.color.black))
         }
 
@@ -63,6 +66,6 @@ class CategoryFilterAdapter(val fragment: Stats) :
 
     class CategoryHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.accountNameRC)
-        val layout: ConstraintLayout = view.findViewById(R.id.accountLayoutRC)
+        val layout: CardView = view.findViewById(R.id.accountLayoutRC)
     }
 }

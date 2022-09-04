@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.purabmodi.payment.R
 import com.purabmodi.payment.databinding.FragmentStatsBinding
+import com.purabmodi.payment.fragments.stats.StatsDirections.actionStatsToAccountTransfer
 import com.purabmodi.payment.fragments.stats.StatsDirections.actionStatsToAddTransaction
 import com.purabmodi.payment.modals.CustomTimeData
 import com.purabmodi.payment.modals.customData
@@ -38,6 +39,10 @@ import com.purabmodi.payment.viewModel.TransactionViewModel
 
 class Stats : Fragment() {
     private var _binding: FragmentStatsBinding? = null
+
+    private val accountsAdapter = AccountFilterAdapter(this)
+    private val categoryAdapter = CategoryFilterAdapter(this)
+    private val monthAdapter = MonthFilterAdapter(this)
 
     //    animation declaration
     private val rotateOpen: Animation by lazy {
@@ -119,6 +124,25 @@ class Stats : Fragment() {
             onToggleButtonClick()
         }
 
+        binding.transferFAB.setOnClickListener {
+            val action = actionStatsToAccountTransfer(
+                Transaction(
+                    -1,
+                    "",
+                    0f,
+                    1,
+                    0L,
+                    "",
+                    0,
+                    0,
+                    0,
+                    0,
+                    0f,
+                    "",
+                )
+            )
+            Navigation.findNavController(binding.root).navigate(action)
+        }
 
 //        live data for currency
         userViewModel.userDetails.observe(viewLifecycleOwner) {
@@ -145,7 +169,7 @@ class Stats : Fragment() {
                     0,
                     0,
                     0f,
-                    ""
+                    "",
                 )
             )
             Navigation.findNavController(binding.root).navigate(action)
@@ -214,7 +238,7 @@ class Stats : Fragment() {
 //      setting accounts recycler view
         accountRC.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        val accountsAdapter = AccountFilterAdapter(this)
+
         accountRC.adapter = accountsAdapter
         accountViewModel.readAllAccounts.observe(viewLifecycleOwner) {
             accountsAdapter.setData(it)
@@ -224,13 +248,11 @@ class Stats : Fragment() {
         }
 //      setting month recycler view
         monthRC.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        val monthAdapter = MonthFilterAdapter(this)
         monthRC.adapter = monthAdapter
 
 //      setting category recycler view
         categoryRC.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        val categoryAdapter = CategoryFilterAdapter(this)
         categoryRC.adapter = categoryAdapter
 
 //        updating start and end date text view when month is selected
@@ -290,7 +312,7 @@ class Stats : Fragment() {
                     adapter.submitList(it)
                 }
             }
-
+            reDeclareValues()
             bottomsheet.dismiss()
         }
 
@@ -337,6 +359,9 @@ class Stats : Fragment() {
     }
 
     private fun reDeclareValues() {
+        accountsAdapter.setSelectedItem("")
+        categoryAdapter.setSelectedItem("")
+        monthAdapter.setSelectedItem(-1)
         startDate.value = 0L
         endDate.value = 0L
         monthSelected.value = false
@@ -356,7 +381,8 @@ class Stats : Fragment() {
             "Stationary",
             "General",
             "Updated Balance",
-            "Transportation"
+            "Transportation",
+            "Transfer"
         )
         accountViewModel.readAllAccounts.observe(viewLifecycleOwner) {
             it.forEach { account ->
