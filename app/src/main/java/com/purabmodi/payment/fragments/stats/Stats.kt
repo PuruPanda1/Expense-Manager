@@ -2,9 +2,10 @@ package com.purabmodi.payment.fragments.stats
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Context.VIBRATOR_SERVICE
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
-import android.os.Bundle
+import android.os.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -112,6 +113,15 @@ class Stats : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentStatsBinding.inflate(inflater, container, false)
 
+        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager =
+                requireActivity().getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vibratorManager.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            requireActivity().getSystemService(VIBRATOR_SERVICE) as Vibrator
+        }
+
 //        setting the viewModel
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
@@ -120,11 +130,14 @@ class Stats : Fragment() {
 
 //        Setting the animation
         binding.toggleFAB.setOnClickListener {
+            vibrator.vibrate(VibrationEffect.createOneShot(10, VibrationEffect.DEFAULT_AMPLITUDE))
             switchValue = !switchValue
             onToggleButtonClick()
         }
 
         binding.transferFAB.setOnClickListener {
+            vibrator.vibrate(VibrationEffect.createOneShot(10, VibrationEffect.DEFAULT_AMPLITUDE))
+            switchValue = !switchValue
             val action = actionStatsToAccountTransfer(
                 Transaction(
                     -1,
@@ -156,6 +169,8 @@ class Stats : Fragment() {
 
 //          add new transaction onclick listener
         binding.addBtn.setOnClickListener {
+            vibrator.vibrate(VibrationEffect.createOneShot(10, VibrationEffect.DEFAULT_AMPLITUDE))
+            switchValue = !switchValue
             val action = actionStatsToAddTransaction(
                 Transaction(
                     -1,
