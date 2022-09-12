@@ -142,7 +142,10 @@ class MainScreen : Fragment() {
                 currencyFormatter.currency = Currency.getInstance(currency.value)
                 binding.userName.text = it.username
                 budget = it.userBudget
-                val per = ((it.userBudget / budget) * 100).toString()
+                var per = 0.toString()
+                if(budget!=0){
+                    per = ((it.userBudget / budget) * 100).toString()
+                }
                 binding.expensePercentage.text = getString(R.string.percentageBudget, per)
             } else {
                 binding.expensePercentage.text = getString(R.string.percentageBudget, "0")
@@ -205,7 +208,10 @@ class MainScreen : Fragment() {
         binding.monthlyExpense.text = currencyFormatter.format(monthlyAmount)
         binding.balanceAmount.text = currencyFormatter.format(balanceAmount)
         binding.userBudget.text = " / ${currencyFormatter.format(budget)}"
-        val per = ((monthlyAmount / budget) * 100).toInt().toString()
+        var per = 0.toString()
+        if(budget!=0){
+             per = ((monthlyAmount / budget) * 100).toInt().toString()
+        }
         binding.expensePercentage.text = getString(R.string.percentageBudget, per)
     }
 

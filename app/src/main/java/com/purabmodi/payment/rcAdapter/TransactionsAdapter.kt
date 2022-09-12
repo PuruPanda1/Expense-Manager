@@ -22,10 +22,16 @@ import com.purabmodi.payment.transactionDb.Transaction
 import java.text.NumberFormat
 import java.util.*
 
-class TransactionsAdapter(val fragment: Stats, private val currency: String) :
+class TransactionsAdapter(val fragment: Stats, private var currency: String) :
     ListAdapter<Transaction, TransactionsAdapter.TransactionViewHolder>(
         Comparator()
     ) {
+
+    fun setCurrency(currency: String){
+        this.currency = currency
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.transactions_row_rc, parent, false)
@@ -132,6 +138,7 @@ class TransactionsAdapter(val fragment: Stats, private val currency: String) :
             }
             popupMenus.show()
         }
+
     }
 
     class Comparator : DiffUtil.ItemCallback<Transaction>() {

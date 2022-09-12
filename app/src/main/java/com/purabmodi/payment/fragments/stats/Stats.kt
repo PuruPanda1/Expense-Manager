@@ -126,7 +126,8 @@ class Stats : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         accountViewModel = ViewModelProvider(requireActivity())[AccountViewModel::class.java]
-        lateinit var adapter: TransactionsAdapter
+        var adapter = TransactionsAdapter(this, currency.value!!)
+
 
 //        Setting the animation
         binding.toggleFAB.setOnClickListener {
@@ -162,7 +163,7 @@ class Stats : Fragment() {
             if (it != null) {
                 currency.value = it.userCurrency
             }
-            adapter = TransactionsAdapter(this, currency.value!!)
+            adapter.setCurrency(currency.value!!)
             binding.transactionsRC.layoutManager = LinearLayoutManager(requireContext())
             binding.transactionsRC.adapter = adapter
         }
