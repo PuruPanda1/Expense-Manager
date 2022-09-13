@@ -11,7 +11,7 @@ android {
         applicationId "com.purabmodi.payment"
         minSdk 26
         targetSdk 32
-        versionCode 15
+        versionCode 16
         versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
