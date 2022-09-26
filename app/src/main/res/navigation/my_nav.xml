@@ -9,17 +9,21 @@
         android:id="@+id/MainScreen"
         android:name="com.purabmodi.payment.fragments.mainScreen.MainScreen"
         android:label="Home"
-        tools:layout="@layout/fragment_main_screen" >
+        tools:layout="@layout/fragment_main_screen">
         <action
             android:id="@+id/action_MainScreen_to_detailedTransactionAnalysis"
             app:destination="@id/detailedTransactionAnalysis"
             app:enterAnim="@anim/slide_up"
-            app:exitAnim="@anim/slide_down" />
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down"  />
         <action
             android:id="@+id/action_MainScreen_to_incomeExpenseView"
             app:destination="@id/incomeExpenseView"
             app:enterAnim="@anim/slide_up"
-            app:exitAnim="@anim/slide_down" />
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/Wallet"
@@ -30,17 +34,21 @@
         android:id="@+id/Stats"
         android:name="com.purabmodi.payment.fragments.stats.Stats"
         android:label="Stats"
-        tools:layout="@layout/fragment_stats" >
+        tools:layout="@layout/fragment_stats">
         <action
             android:id="@+id/action_Stats_to_addTransaction"
             app:destination="@id/addTransaction"
             app:enterAnim="@anim/slide_up"
-            app:exitAnim="@anim/slide_down" />
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
         <action
             android:id="@+id/action_Stats_to_accountTransfer"
             app:destination="@id/accountTransfer"
             app:enterAnim="@anim/slide_up"
-            app:exitAnim="@anim/slide_down" />
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/Profile"
@@ -51,12 +59,14 @@
         android:id="@+id/addTransaction"
         android:name="com.purabmodi.payment.fragments.stats.addTranasactions.AddTransaction"
         android:label="fragment_add_transaction"
-        tools:layout="@layout/fragment_add_transaction" >
+        tools:layout="@layout/fragment_add_transaction">
         <action
             android:id="@+id/action_addTransaction_to_Stats"
             app:destination="@id/Stats"
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down"
             app:popUpTo="@id/Stats"
             app:popUpToInclusive="true" />
         <argument
@@ -67,30 +77,36 @@
         android:id="@+id/detailedTransactionAnalysis"
         android:name="com.purabmodi.payment.fragments.mainScreen.detailedTransactions.totalAnalysis.DetailedTransactionAnalysis"
         android:label="fragment_detailed_transaction_analysis"
-        tools:layout="@layout/fragment_detailed_transaction_analysis" >
+        tools:layout="@layout/fragment_detailed_transaction_analysis">
         <action
             android:id="@+id/action_detailedTransactionAnalysis_to_MainScreen"
             app:destination="@id/MainScreen"
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down"
             app:popUpTo="@id/MainScreen"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_detailedTransactionAnalysis_to_detailedCategoryTransactionsFragment"
             app:destination="@id/detailedCategoryTransactionsFragment"
             app:enterAnim="@anim/slide_up"
-            app:exitAnim="@anim/slide_down" />
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/detailedCategoryTransactionsFragment"
         android:name="com.purabmodi.payment.fragments.mainScreen.detailedTransactions.categoryAnalysis.DetailedCategoryTransactionsFragment"
         android:label="fragment_detailed_category_transactions"
-        tools:layout="@layout/fragment_detailed_category_transactions" >
+        tools:layout="@layout/fragment_detailed_category_transactions">
         <action
             android:id="@+id/action_detailedCategoryTransactionsFragment_to_detailedTransactionAnalysis"
             app:destination="@id/detailedTransactionAnalysis"
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down"
             app:popUpTo="@id/detailedTransactionAnalysis"
             app:popUpToInclusive="true" />
         <argument
@@ -106,13 +122,15 @@
             android:id="@+id/action_detailedCategoryTransactionsFragment_to_MainScreen"
             app:destination="@id/MainScreen"
             app:enterAnim="@anim/slide_up"
-            app:exitAnim="@anim/slide_down" />
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/incomeExpenseView"
         android:name="com.purabmodi.payment.fragments.mainScreen.IncomeExpenseView"
         android:label="fragment_income_expense_view"
-        tools:layout="@layout/fragment_income_expense_view" >
+        tools:layout="@layout/fragment_income_expense_view">
         <argument
             android:name="typeName"
             app:argType="string" />
@@ -120,7 +138,9 @@
             android:id="@+id/action_incomeExpenseView_to_MainScreen"
             app:destination="@id/MainScreen"
             app:enterAnim="@anim/slide_up"
-            app:exitAnim="@anim/slide_down" />
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
         <argument
             android:name="currency"
             app:argType="string" />
@@ -129,12 +149,14 @@
         android:id="@+id/accountTransfer"
         android:name="com.purabmodi.payment.fragments.stats.accountTransfer.AccountTransfer"
         android:label="fragment_account_transfer"
-        tools:layout="@layout/fragment_account_transfer" >
+        tools:layout="@layout/fragment_account_transfer">
         <action
             android:id="@+id/action_accountTransfer_to_Stats"
             app:destination="@id/Stats"
             app:enterAnim="@anim/slide_up"
-            app:exitAnim="@anim/slide_down" />
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
         <argument
             android:name="transaction"
             app:argType="com.purabmodi.payment.transactionDb.Transaction" />
