@@ -51,6 +51,20 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
         repository.readTransactionsByDay(cal.get(Calendar.DAY_OF_MONTH),(cal.get(Calendar.MONTH)+1),cal.get(Calendar.YEAR))
     }
 
+    var readExpenseByDay:LiveData<Float> = Transformations.switchMap(dayOfYear){
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.DAY_OF_YEAR,it[0])
+        cal.set(Calendar.YEAR,it[1])
+        repository.readExpenseByDay(cal.get(Calendar.DAY_OF_MONTH),(cal.get(Calendar.MONTH)+1),cal.get(Calendar.YEAR))
+    }
+
+    var readIncomeByDay:LiveData<Float> = Transformations.switchMap(dayOfYear){
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.DAY_OF_YEAR,it[0])
+        cal.set(Calendar.YEAR,it[1])
+        repository.readIncomeByDay(cal.get(Calendar.DAY_OF_MONTH),(cal.get(Calendar.MONTH)+1),cal.get(Calendar.YEAR))
+    }
+
     fun setMonthYear(monthYear: List<Int>) {
         this.monthYear.value = monthYear
     }

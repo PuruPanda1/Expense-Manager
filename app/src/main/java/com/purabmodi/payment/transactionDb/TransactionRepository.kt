@@ -38,6 +38,14 @@ class TransactionRepository(private val transactionDao: TransactionDao) {
         return transactionDao.readTransactionsByDay(day, month, year)
     }
 
+    fun readExpenseByDay(day: Int,month: Int,year: Int):LiveData<Float>{
+        return transactionDao.readExpenseByDay(day, month, year)
+    }
+
+    fun readIncomeByDay(day: Int,month: Int,year: Int):LiveData<Float>{
+        return transactionDao.readIncomeByDay(day, month, year)
+    }
+
     fun readTransactionsByMonth(
         categoryList: List<String>,
         accountList: List<String>,

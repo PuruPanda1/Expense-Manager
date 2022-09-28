@@ -113,6 +113,21 @@ class Stats : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentStatsBinding.inflate(inflater, container, false)
 
+        binding.transactionsRC.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    binding.toggleFAB.hide()
+                    if(switchValue){
+                        switchValue = !switchValue
+                        onToggleButtonClick()
+                    }
+                } else {
+                    binding.toggleFAB.show()
+                }
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
+
         val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val vibratorManager =
                 requireActivity().getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
