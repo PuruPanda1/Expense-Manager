@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryBackground"
+    tools:context=".fragments.profile.detailedView.DetailedView">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/waveSquare"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/sqaure_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/wave"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="-10dp"
+        android:src="@drawable/ic_wave"
+        android:tint="@color/primary_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/waveSquare" />
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_back_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/buttonColor"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/autour_one"
+        android:gravity="bottom"
+        android:text="Daily Expense"
+        android:textColor="@color/buttonColor"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/previousDay"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_previous"
+        android:tint="@color/buttonColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backButton" />
+
+    <TextView
+        android:id="@+id/currentDay"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sf_pro"
+        android:gravity="center"
+        android:text="30 December"
+        android:textColor="@color/buttonColor"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/previousDay"
+        app:layout_constraintEnd_toEndOf="@id/nextDay"
+        app:layout_constraintStart_toStartOf="@id/previousDay"
+        app:layout_constraintTop_toTopOf="@id/previousDay" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/nextDay"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/ic_next"
+        android:tint="@color/buttonColor"
+        app:layout_constraintBottom_toBottomOf="@id/previousDay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/previousDay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="-20dp"
+        android:fontFamily="@font/sf_pro"
+        android:letterSpacing=".1"
+        android:text="Transactions"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wave" />
+
+    <TextView
+        android:id="@+id/incomeTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-20dp"
+        android:layout_marginEnd="25dp"
+        android:fontFamily="@font/sf_pro"
+        android:letterSpacing=".1"
+        android:text="$200"
+        android:textColor="@color/income_color"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@id/expenseTotal"
+        app:layout_constraintTop_toBottomOf="@id/wave" />
+    
+    <TextView
+        android:id="@+id/expenseTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-20dp"
+        android:layout_marginEnd="15dp"
+        android:fontFamily="@font/sf_pro"
+        android:letterSpacing=".1"
+        android:text="$200"
+        android:textColor="@color/expense_color"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wave" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/transactionsRC"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/expenseTotal"
+        tools:listitem="@layout/transactions_row_rc" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,6 +38,19 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
         )
     )
 
+    var dayOfYear: MutableLiveData<List<Int>> = MutableLiveData(listOf(Calendar.getInstance().get(Calendar.DAY_OF_YEAR),Calendar.getInstance().get(Calendar.YEAR)))
+
+    fun setDayOfYear(dayOfYear:List<Int>){
+        this.dayOfYear.value = dayOfYear
+    }
+
+    var readTransactionsByDay:LiveData<List<Transaction>> = Transformations.switchMap(dayOfYear){
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.DAY_OF_YEAR,it[0])
+        cal.set(Calendar.YEAR,it[1])
+        repository.readTransactionsByDay(cal.get(Calendar.DAY_OF_MONTH),(cal.get(Calendar.MONTH)+1),cal.get(Calendar.YEAR))
+    }
+
     fun setMonthYear(monthYear: List<Int>) {
         this.monthYear.value = monthYear
     }

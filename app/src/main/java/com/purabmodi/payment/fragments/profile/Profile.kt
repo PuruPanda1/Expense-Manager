@@ -16,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.purabmodi.payment.R
 import com.purabmodi.payment.databinding.FragmentProfileBinding
@@ -148,6 +149,11 @@ class Profile : Fragment() {
                 picker.dismiss()
             }
             picker.show(requireActivity().supportFragmentManager, "CURRENCY_PICKER")
+        }
+
+        binding.dailyViewText.setOnClickListener {
+            val action = ProfileDirections.actionProfileToDetailedView(currencyCode)
+            Navigation.findNavController(binding.root).navigate(action)
         }
 
         binding.instagramIcon.setOnClickListener {

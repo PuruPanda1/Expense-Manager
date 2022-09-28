@@ -54,7 +54,15 @@
         android:id="@+id/Profile"
         android:name="com.purabmodi.payment.fragments.profile.Profile"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_Profile_to_detailedView"
+            app:destination="@id/detailedView"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down"/>
+    </fragment>
     <fragment
         android:id="@+id/addTransaction"
         android:name="com.purabmodi.payment.fragments.stats.addTranasactions.AddTransaction"
@@ -153,5 +161,21 @@
         <argument
             android:name="transaction"
             app:argType="com.purabmodi.payment.transactionDb.Transaction" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailedView"
+        android:name="com.purabmodi.payment.fragments.profile.detailedView.DetailedView"
+        android:label="fragment_detailed_view"
+        tools:layout="@layout/fragment_detailed_view" >
+        <action
+            android:id="@+id/action_detailedView_to_Profile"
+            app:destination="@id/Profile"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down"/>
+        <argument
+            android:name="currency"
+            app:argType="string" />
     </fragment>
 </navigation>
