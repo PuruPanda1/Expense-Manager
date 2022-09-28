@@ -33,6 +33,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/waveSquare" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/autour_one"
+            android:gravity="bottom"
+            android:text="Profile"
+            android:textColor="@color/buttonColor"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/userPhoto"
@@ -93,20 +106,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/userName" />
 
+        <TextView
+            android:id="@+id/appSettingsTxt"
+            style="@style/TextAppearance.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/sf_pro"
+            android:text="Application Settings"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userBio" />
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/budgetCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
             app:cardElevation="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/userBio">
+            app:layout_constraintTop_toBottomOf="@id/appSettingsTxt"
+            app:strokeColor="@color/primary_blue"
+            app:strokeWidth="0.2dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/primaryBackground"
+                android:background="@color/cardBackground"
                 android:padding="10dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
@@ -114,8 +145,8 @@
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
                     android:src="@drawable/budget_icon"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:shapeAppearanceOverlay="@style/CircleImage" />
@@ -130,41 +161,45 @@
                     android:textColor="@color/primaryTextColor"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/budgetIcon"
                     app:layout_constraintStart_toEndOf="@id/budgetIcon"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@id/budgetIcon" />
 
                 <EditText
                     android:id="@+id/userBudget"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
+                    android:layout_marginEnd="10dp"
                     android:gravity="end"
                     android:inputType="number"
                     android:text="4000"
                     android:textColor="@color/primaryTextColor"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/budgetIcon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/budgetTextView"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@id/budgetIcon" />
+
+                <TextView
+                    android:id="@+id/userCurrency"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/sf_pro"
+                    android:gravity="center"
+                    android:text="Currency: Indian INR ( $ )"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="25sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/userBudget" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
-        <TextView
-            android:id="@+id/userCurrency"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/sf_pro"
-            android:gravity="center"
-            android:text="Currency: Indian INR ( $ )"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/budgetCardView" />
 
         <Button
             android:id="@+id/editButton"
@@ -177,92 +212,243 @@
             android:text="EDIT"
             android:textColor="@color/buttonColor"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/userCurrency" />
+            app:layout_constraintTop_toBottomOf="@id/budgetCardView" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/devDataCardView"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/newfeatures"
+            style="@style/TextAppearance.MaterialComponents.Button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="30dp"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/sf_pro"
+            android:text="New Features(Coming Soon)"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editButton">
+            app:layout_constraintTop_toBottomOf="@id/editButton" />
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/newFeaturesCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/newfeatures"
+            app:strokeColor="@color/primary_blue"
+            app:strokeWidth="0.2dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/devloperCard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/cardBackground"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/dailyViewText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_calender"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/primary_blue"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center_vertical"
+                    android:letterSpacing=".1"
+                    android:padding="10dp"
+                    android:text="Daily View"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/weeklyViewText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_calender"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/primary_blue"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center_vertical"
+                    android:letterSpacing=".1"
+                    android:padding="10dp"
+                    android:text="Weekly View"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dailyViewText" />
+
+                <TextView
+                    android:id="@+id/yearlyViewText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_calender"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/primary_blue"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center_vertical"
+                    android:letterSpacing=".1"
+                    android:padding="10dp"
+                    android:text="Weekly View"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/weeklyViewText" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/followDev"
+            style="@style/TextAppearance.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/sf_pro"
+            android:text="Follow Developer"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/newFeaturesCardView" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/followDevCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/followDev"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:strokeColor="@color/primary_blue"
+            app:strokeWidth="0.2dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/primary_blue"
                 android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/heading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/sf_pro"
-                    android:text="Follow Developer on :"
-                    android:textColor="@color/buttonColor"
-                    android:textSize="18sp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/instagram_icon"
+                    android:layout_width="45dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:src="@drawable/instagram_icon"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/CircleImage" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/instagramIconText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:weightSum="4"
-                    app:layout_constraintBottom_toBottomOf="@id/devloperCard"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center_vertical"
+                    android:letterSpacing=".1"
+                    android:padding="10dp"
+                    android:text="Instagram"
+                    android:textColor="@color/buttonColor"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/instagram_icon"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/instagram_icon"
+                    app:layout_constraintTop_toTopOf="@id/instagram_icon" />
+
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/twitter_icon"
+                    android:layout_width="45dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:src="@drawable/twitter_icon"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/heading">
+                    app:layout_constraintTop_toBottomOf="@id/instagram_icon"
+                    app:shapeAppearanceOverlay="@style/CircleImage" />
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/instagram_icon"
-                        android:layout_width="45dp"
-                        android:layout_height="55dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:src="@drawable/instagram_icon"
-                        app:shapeAppearanceOverlay="@style/CircleImage" />
+                <TextView
+                    android:id="@+id/twitterIconText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center_vertical"
+                    android:letterSpacing=".1"
+                    android:padding="10dp"
+                    android:text="Twitter"
+                    android:textColor="@color/buttonColor"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/twitter_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/twitter_icon"
+                    app:layout_constraintTop_toTopOf="@id/twitter_icon" />
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/twitter_icon"
-                        android:layout_width="45dp"
-                        android:layout_height="55dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:src="@drawable/twitter_icon"
-                        app:shapeAppearanceOverlay="@style/CircleImage" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/github_icon"
+                    android:layout_width="45dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:src="@drawable/github_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/twitter_icon"
+                    app:shapeAppearanceOverlay="@style/CircleImage" />
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/github_icon"
-                        android:layout_width="45dp"
-                        android:layout_height="55dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:src="@drawable/github_icon"
-                        app:shapeAppearanceOverlay="@style/CircleImage" />
+                <TextView
+                    android:id="@+id/githubIconText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center_vertical"
+                    android:letterSpacing=".1"
+                    android:padding="10dp"
+                    android:text="Github"
+                    android:textColor="@color/buttonColor"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/github_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/github_icon"
+                    app:layout_constraintTop_toTopOf="@id/github_icon" />
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/linkedIn_icon"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:src="@drawable/linkedin_icon"
-                        app:shapeAppearanceOverlay="@style/CircleImage" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/linkedIn_icon"
+                    android:layout_width="45dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:src="@drawable/linkedin_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/github_icon"
+                    app:shapeAppearanceOverlay="@style/CircleImage" />
 
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/linkedInIconText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center_vertical"
+                    android:letterSpacing=".1"
+                    android:padding="10dp"
+                    android:text="LinkedIn"
+                    android:textColor="@color/buttonColor"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/linkedIn_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/linkedIn_icon"
+                    app:layout_constraintTop_toTopOf="@id/linkedIn_icon" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

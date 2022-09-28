@@ -95,7 +95,7 @@ class Profile : Fragment() {
                 binding.userBio.setText(it.userBio)
                 val currencyName = Currency.getInstance(it.userCurrency).displayName
                 val currencySymbol = Currency.getInstance(it.userCurrency).symbol
-                binding.userCurrency.text = "$currencyName ( $currencySymbol )"
+                binding.userCurrency.text = "Currency: $currencyName ( $currencySymbol )"
                 currencyCode = it.userCurrency
                 userPhoto = Uri.parse(it.userPhoto)
                 Glide.with(requireContext())
@@ -144,7 +144,7 @@ class Profile : Fragment() {
                 currencyCode = code
                 val currencyName = Currency.getInstance(currencyCode).displayName
                 val currencySymbol = Currency.getInstance(currencyCode).symbol
-                binding.userCurrency.text = "$currencyName ( $currencySymbol )"
+                binding.userCurrency.text = "Currency: $currencyName ( $currencySymbol )"
                 picker.dismiss()
             }
             picker.show(requireActivity().supportFragmentManager, "CURRENCY_PICKER")
@@ -163,6 +163,22 @@ class Profile : Fragment() {
         }
 
         binding.linkedInIcon.setOnClickListener {
+            socialMediaLinks(4)
+        }
+
+        binding.instagramIconText.setOnClickListener {
+            socialMediaLinks(1)
+        }
+
+        binding.twitterIconText.setOnClickListener {
+            socialMediaLinks(2)
+        }
+
+        binding.githubIconText.setOnClickListener {
+            socialMediaLinks(3)
+        }
+
+        binding.linkedInIconText.setOnClickListener {
             socialMediaLinks(4)
         }
 

@@ -5,7 +5,7 @@
     <color name="purple_700">#4B70DD</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#1B1C1E</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primary_blue">#5F5BC8</color>
     <color name="translucent_primary">#205F5BC8</color>
@@ -15,8 +15,9 @@
     <color name="background">#F8F9FD</color>
     <color name="roundImage">#dbbfd4</color>
     <color name="ivory">#FFFFF0</color>
-    <color name="primaryTextColor">#FF000000</color>
+    <color name="primaryTextColor">#1B1C1E</color>
     <color name="primaryBackground">#E6E6FA</color>
+    <color name="cardBackground">#E6E6FA</color>
     <color name="optionsBackground">#E6E6FA</color>
     <color name="expense_color">#FF0000</color>
     <color name="income_color">#3EB489</color>

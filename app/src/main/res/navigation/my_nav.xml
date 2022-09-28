@@ -118,13 +118,6 @@
         <argument
             android:name="endDate"
             app:argType="long" />
-        <action
-            android:id="@+id/action_detailedCategoryTransactionsFragment_to_MainScreen"
-            app:destination="@id/MainScreen"
-            app:enterAnim="@anim/slide_up"
-            app:exitAnim="@anim/slide_down"
-            app:popEnterAnim="@anim/slide_up"
-            app:popExitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/incomeExpenseView"

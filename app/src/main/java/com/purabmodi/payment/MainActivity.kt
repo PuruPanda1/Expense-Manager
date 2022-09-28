@@ -30,24 +30,6 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavBar.setOnItemReselectedListener { item ->
             val reselectedDestinationId = item.itemId
-            val id = navController.currentDestination?.id
-            when (id) {
-                R.id.detailedTransactionAnalysis -> {
-                    navController.navigate(R.id.action_detailedTransactionAnalysis_to_MainScreen)
-                }
-                R.id.detailedCategoryTransactionsFragment -> {
-                    navController.navigate(R.id.action_detailedCategoryTransactionsFragment_to_MainScreen)
-                }
-                R.id.addTransaction -> {
-                    navController.navigate(R.id.action_addTransaction_to_Stats)
-                }
-                R.id.incomeExpenseView -> {
-                    navController.navigate(R.id.action_incomeExpenseView_to_MainScreen)
-                }
-                R.id.accountTransfer -> {
-                    navController.navigate(R.id.action_accountTransfer_to_Stats)
-                }
-            }
             navController.popBackStack(reselectedDestinationId, inclusive = false)
         }
     }
