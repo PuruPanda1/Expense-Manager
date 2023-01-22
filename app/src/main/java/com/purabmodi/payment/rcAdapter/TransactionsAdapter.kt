@@ -115,7 +115,7 @@ class TransactionsAdapter(val fragment: Stats, private var currency: String) :
                 when (it.itemId) {
                     R.id.editOption -> {
 //                    redirecting to add transaction page for editing
-                        val action = StatsDirections.actionStatsToAddTransaction(item)
+                        val action = StatsDirections.actionStatsToAddTransaction().setTransaction(item)
                         Navigation.findNavController(v).navigate(action)
                         true
                     }

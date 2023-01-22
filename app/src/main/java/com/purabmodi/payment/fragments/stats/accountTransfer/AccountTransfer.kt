@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.purabmodi.payment.R
@@ -53,7 +54,7 @@ class AccountTransfer : Fragment() {
         _binding = FragmentAccountTransferBinding.inflate(layoutInflater, container, false)
 
         binding.backButton.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_accountTransfer_to_Stats)
+            findNavController().navigateUp()
         }
 
         transactionViewModel =
@@ -88,14 +89,14 @@ class AccountTransfer : Fragment() {
         accountViewModel.readAllAccounts.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 fromBankAdapter.setData(it)
-                modeOfPayment = if (args.transaction.id == -1) {
+                modeOfPayment = if (args.transaction == null) {
                     fromBankAccount = it[0].name
 
                     fromBankAdapter.setSelectedItem(it[0].name)
                     it[0].name
                 } else {
-                    fromBankAdapter.setSelectedItem(args.transaction.modeOfPayment)
-                    args.transaction.modeOfPayment
+                    fromBankAdapter.setSelectedItem(args.transaction!!.modeOfPayment)
+                    args.transaction!!.modeOfPayment
                 }
             } else {
                 accountViewModel.insertAccount(Accounts(0, "CASH"))
@@ -110,13 +111,13 @@ class AccountTransfer : Fragment() {
         accountViewModel.readAllAccounts.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 toBankAdapter.setData(it)
-                modeOfPayment = if (args.transaction.id == -1) {
-                    toBankAccount = it[1].name
-                    toBankAdapter.setSelectedItem(it[1].name)
-                    it[1].name
+                modeOfPayment = if (args.transaction == null) {
+                    toBankAccount = it[0].name
+                    toBankAdapter.setSelectedItem(it[0].name)
+                    it[0].name
                 } else {
-                    toBankAdapter.setSelectedItem(args.transaction.modeOfPayment)
-                    args.transaction.modeOfPayment
+                    toBankAdapter.setSelectedItem(args.transaction!!.modeOfPayment)
+                    args.transaction!!.modeOfPayment
                 }
             } else {
                 accountViewModel.insertAccount(Accounts(0, "CASH"))
@@ -178,7 +179,8 @@ class AccountTransfer : Fragment() {
                         toBankAccount
                     )
                 )
-                Navigation.findNavController(binding.root).navigate(R.id.action_accountTransfer_to_Stats)
+                Navigation.findNavController(binding.root)
+                    .navigate(R.id.action_accountTransfer_to_Stats)
                 Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
             }
         }
