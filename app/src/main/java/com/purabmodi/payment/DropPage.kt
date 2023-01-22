@@ -13,13 +13,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.mynameismidori.currencypicker.CurrencyPicker
+import com.purabmodi.payment.accountsDb.Accounts
 import com.purabmodi.payment.databinding.ActivityDropPageBinding
 import com.purabmodi.payment.userDb.User
 import com.purabmodi.payment.userDb.UserViewModel
+import com.purabmodi.payment.viewModel.AccountViewModel
 
 class DropPage : AppCompatActivity() {
     private lateinit var binding: ActivityDropPageBinding
     private lateinit var userViewModel: UserViewModel
+    private lateinit var accountViewModel: AccountViewModel
     private lateinit var userPhoto: Uri
     private var currencyCode: String = "INR"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +49,8 @@ class DropPage : AppCompatActivity() {
             }
 
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        accountViewModel = ViewModelProvider(this)[AccountViewModel::class.java]
+
 
         binding.saveButton.setOnClickListener {
             setUserDetails()
@@ -96,6 +101,8 @@ class DropPage : AppCompatActivity() {
                     currencyCode
                 )
             )
+            accountViewModel.insertAccount(Accounts(0, "CASH"))
+            accountViewModel.insertAccount(Accounts(0, "BANK"))
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         } else {

@@ -1,66 +1,66 @@
-package com.purabmodi.payment.fragments.wallet
+package com.purabmodi.payment.fragments.bottomSheet
 
 import android.content.Context
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.Navigation
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.purabmodi.payment.R
 import com.purabmodi.payment.accountsDb.Accounts
-import com.purabmodi.payment.databinding.FragmentWalletBinding
-import com.purabmodi.payment.rcAdapter.WalletAccountDetailsAdapter
+import com.purabmodi.payment.databinding.FragmentAddNewBottomSheetDialogBinding
+import com.purabmodi.payment.fragments.stats.StatsDirections
 import com.purabmodi.payment.transactionDb.Transaction
-import com.purabmodi.payment.userDb.UserViewModel
 import com.purabmodi.payment.viewModel.AccountViewModel
 import com.purabmodi.payment.viewModel.TransactionViewModel
 import java.util.*
 
-class Wallet : Fragment() {
+
+class AddNewBottomSheetDialog(
+    private val openAddTransaction: () -> Unit,
+    private val openBankTransfer: () -> Unit
+) : BottomSheetDialogFragment() {
     private lateinit var transactionViewModel: TransactionViewModel
     private lateinit var accountViewModel: AccountViewModel
-    private lateinit var userViewModel: UserViewModel
-    private var _binding: FragmentWalletBinding? = null
+    private var _binding: FragmentAddNewBottomSheetDialogBinding? = null
     private val binding get() = _binding!!
-    private var currency: MutableLiveData<String> = MutableLiveData("INR")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-        _binding = FragmentWalletBinding.inflate(layoutInflater, container, false)
-
-        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        _binding = FragmentAddNewBottomSheetDialogBinding.inflate(inflater, container, false)
         transactionViewModel =
             ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         accountViewModel = ViewModelProvider(requireActivity())[AccountViewModel::class.java]
-
-        var adapter = WalletAccountDetailsAdapter(currency.value!!, this)
-
-        userViewModel.userDetails.observe(viewLifecycleOwner) {
-            if (it != null) {
-                currency.value = it.userCurrency
-            }
-            adapter = WalletAccountDetailsAdapter(currency.value!!, this)
-            binding.walletAccountsRecyclerView.adapter = adapter
-            binding.walletAccountsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        }
-
-        transactionViewModel.readAccountDetails.observe(viewLifecycleOwner) {
-            binding.alertText.isVisible = it.isEmpty()
-            adapter.submitList(it)
-        }
+        initUI()
 
         return binding.root
+    }
+
+    private fun initUI() {
+        binding.addTransactionLayout.setOnClickListener {
+            openAddTransaction()
+            dismiss()
+        }
+
+        binding.TransferLayout.setOnClickListener {
+            openBankTransfer()
+            dismiss()
+        }
+
+        binding.addBankLayout.setOnClickListener {
+            showBottomSheetLayout(binding.root.context)
+            dismiss()
+        }
+
     }
 
     private fun showBottomSheetLayout(context: Context) {
@@ -118,13 +118,8 @@ class Wallet : Fragment() {
         bottomSheet.show()
     }
 
-    fun deleteBankAccount(accountName: String) {
-        transactionViewModel.deleteAccountTransaction(accountName)
-        accountViewModel.deleteAccountWithName(accountName)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 }

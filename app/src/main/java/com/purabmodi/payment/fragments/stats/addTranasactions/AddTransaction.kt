@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.purabmodi.payment.R
@@ -102,38 +103,36 @@ class AddTransaction : Fragment() {
         accountViewModel.readAllAccounts.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 accountsAdapter.setData(it)
-                modeOfPayment = if (args.transaction.id == -1) {
+                modeOfPayment = if (args.transaction == null) {
                     accountsAdapter.setSelectedItem(it[0].name)
                     it[0].name
                 } else {
-                    accountsAdapter.setSelectedItem(args.transaction.modeOfPayment)
-                    args.transaction.modeOfPayment
+                    accountsAdapter.setSelectedItem(args.transaction!!.modeOfPayment)
+                    args.transaction!!.modeOfPayment
                 }
             } else {
-                accountViewModel.insertAccount(Accounts(0, "CASH"))
-                accountViewModel.insertAccount(Accounts(0, "BANK"))
+                Toast.makeText(requireContext(), "SOMETHING WENT WRONG", Toast.LENGTH_SHORT).show()
             }
         }
 
 //        handling back button
         binding.backButton.setOnClickListener {
-            Navigation.findNavController(binding.root)
-                .navigate(R.id.action_addTransaction_to_Stats)
+            findNavController().navigateUp()
         }
 
 //        edit mode
-        if (args.transaction.id != -1) {
-            year = args.transaction.year
-            if (args.transaction.isExpense == 1) {
-                binding.transactionAmount.setText(args.transaction.expenseAmount.toString())
+        if (args.transaction != null) {
+            year = args.transaction!!.year
+            if (args.transaction!!.isExpense == 1) {
+                binding.transactionAmount.setText(args.transaction!!.expenseAmount.toString())
                 binding.isExpenseSwitch.isChecked = true
             } else {
-                binding.transactionAmount.setText(args.transaction.incomeAmount.toString())
+                binding.transactionAmount.setText(args.transaction!!.incomeAmount.toString())
                 binding.isExpenseSwitch.isChecked = false
             }
-            binding.transactionDescription.setText(args.transaction.tDescription)
-            binding.transactionType.setText(args.transaction.transactionType)
-            date.value = args.transaction.date
+            binding.transactionDescription.setText(args.transaction!!.tDescription)
+            binding.transactionType.setText(args.transaction!!.transactionType)
+            date.value = args.transaction!!.date
             binding.addExpenseBtn.setOnClickListener {
                 updateTransaction()
             }
@@ -199,7 +198,7 @@ class AddTransaction : Fragment() {
             }
             transactionViewModel.updateTransaction(
                 Transaction(
-                    args.transaction.id,
+                    args.transaction!!.id,
                     tDescription,
                     incomeAmount,
                     isExpense,

@@ -113,65 +113,11 @@ class Stats : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentStatsBinding.inflate(inflater, container, false)
 
-        binding.transactionsRC.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) {
-                    binding.toggleFAB.hide()
-                    if(switchValue){
-                        switchValue = !switchValue
-                        onToggleButtonClick()
-                    }
-                } else {
-                    binding.toggleFAB.show()
-                }
-                super.onScrolled(recyclerView, dx, dy)
-            }
-        })
-
-        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val vibratorManager =
-                requireActivity().getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-            vibratorManager.defaultVibrator
-        } else {
-            @Suppress("DEPRECATION")
-            requireActivity().getSystemService(VIBRATOR_SERVICE) as Vibrator
-        }
-
 //        setting the viewModel
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         accountViewModel = ViewModelProvider(requireActivity())[AccountViewModel::class.java]
         var adapter = TransactionsAdapter(this, currency.value!!)
-
-
-//        Setting the animation
-        binding.toggleFAB.setOnClickListener {
-            vibrator.vibrate(VibrationEffect.createOneShot(10, VibrationEffect.DEFAULT_AMPLITUDE))
-            switchValue = !switchValue
-            onToggleButtonClick()
-        }
-
-        binding.transferFAB.setOnClickListener {
-            vibrator.vibrate(VibrationEffect.createOneShot(10, VibrationEffect.DEFAULT_AMPLITUDE))
-            switchValue = !switchValue
-            val action = actionStatsToAccountTransfer(
-                Transaction(
-                    -1,
-                    "",
-                    0f,
-                    1,
-                    0L,
-                    "",
-                    0,
-                    0,
-                    0,
-                    0,
-                    0f,
-                    "",
-                )
-            )
-            Navigation.findNavController(binding.root).navigate(action)
-        }
 
 //        live data for currency
         userViewModel.userDetails.observe(viewLifecycleOwner) {
@@ -181,29 +127,6 @@ class Stats : Fragment() {
             adapter.setCurrency(currency.value!!)
             binding.transactionsRC.layoutManager = LinearLayoutManager(requireContext())
             binding.transactionsRC.adapter = adapter
-        }
-
-//          add new transaction onclick listener
-        binding.addBtn.setOnClickListener {
-            vibrator.vibrate(VibrationEffect.createOneShot(10, VibrationEffect.DEFAULT_AMPLITUDE))
-            switchValue = !switchValue
-            val action = actionStatsToAddTransaction(
-                Transaction(
-                    -1,
-                    "",
-                    0f,
-                    1,
-                    0L,
-                    "",
-                    0,
-                    0,
-                    0,
-                    0,
-                    0f,
-                    "",
-                )
-            )
-            Navigation.findNavController(binding.root).navigate(action)
         }
 
 //        setting the observer
@@ -218,36 +141,6 @@ class Stats : Fragment() {
         }
 
         return binding.root
-    }
-
-    private fun onToggleButtonClick() {
-        setVisibility()
-        setAnimation()
-    }
-
-    private fun setVisibility() {
-        binding.addBtn.isVisible = switchValue
-        binding.transferFAB.isVisible = switchValue
-        binding.TransferTextview.isVisible = switchValue
-        binding.addTransactionTextView.isVisible = switchValue
-        binding.addBtn.isClickable = switchValue
-        binding.transferFAB.isClickable = switchValue
-    }
-
-    private fun setAnimation() {
-        if (switchValue) {
-            binding.toggleFAB.startAnimation(rotateOpen)
-            binding.addBtn.startAnimation(fromBottom)
-            binding.transferFAB.startAnimation(fromBottom)
-            binding.TransferTextview.startAnimation(fromBottom)
-            binding.addTransactionTextView.startAnimation(fromBottom)
-        } else {
-            binding.toggleFAB.startAnimation(rotateClose)
-            binding.addBtn.startAnimation(toBottom)
-            binding.transferFAB.startAnimation(toBottom)
-            binding.TransferTextview.startAnimation(toBottom)
-            binding.addTransactionTextView.startAnimation(toBottom)
-        }
     }
 
     private fun showBottomSheetFilter(context: Context, adapter: TransactionsAdapter) {

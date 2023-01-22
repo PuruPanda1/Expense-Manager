@@ -16,7 +16,7 @@
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/slide_down"
             app:popEnterAnim="@anim/slide_up"
-            app:popExitAnim="@anim/slide_down"  />
+            app:popExitAnim="@anim/slide_down" />
         <action
             android:id="@+id/action_MainScreen_to_incomeExpenseView"
             app:destination="@id/incomeExpenseView"
@@ -54,14 +54,14 @@
         android:id="@+id/Profile"
         android:name="com.purabmodi.payment.fragments.profile.Profile"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_Profile_to_detailedView"
             app:destination="@id/detailedView"
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/slide_down"
             app:popEnterAnim="@anim/slide_up"
-            app:popExitAnim="@anim/slide_down"/>
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/addTransaction"
@@ -79,7 +79,9 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="transaction"
-            app:argType="com.purabmodi.payment.transactionDb.Transaction" />
+            app:argType="com.purabmodi.payment.transactionDb.Transaction"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/detailedTransactionAnalysis"
@@ -160,22 +162,38 @@
             app:popExitAnim="@anim/slide_down" />
         <argument
             android:name="transaction"
-            app:argType="com.purabmodi.payment.transactionDb.Transaction" />
+            app:argType="com.purabmodi.payment.transactionDb.Transaction"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/detailedView"
         android:name="com.purabmodi.payment.fragments.profile.detailedView.DetailedView"
         android:label="fragment_detailed_view"
-        tools:layout="@layout/fragment_detailed_view" >
+        tools:layout="@layout/fragment_detailed_view">
         <action
             android:id="@+id/action_detailedView_to_Profile"
             app:destination="@id/Profile"
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/slide_down"
             app:popEnterAnim="@anim/slide_up"
-            app:popExitAnim="@anim/slide_down"/>
+            app:popExitAnim="@anim/slide_down" />
         <argument
             android:name="currency"
             app:argType="string" />
     </fragment>
+    <dialog
+        android:id="@+id/addNewBottomSheetDialog"
+        android:name="com.purabmodi.payment.fragments.bottomSheet.AddNewBottomSheetDialog"
+        android:label="fragment_add_new_bottom_sheet_dialog"
+        tools:layout="@layout/fragment_add_new_bottom_sheet_dialog">
+
+        <action
+            android:id="@+id/action_bottomBar_to_addTransaction"
+            app:destination="@id/addTransaction" />
+        <action
+            android:id="@+id/action_bottomBar_to_accountTransfer"
+            app:destination="@id/accountTransfer" />
+
+    </dialog>
 </navigation>
