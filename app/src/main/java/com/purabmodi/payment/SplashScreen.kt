@@ -17,11 +17,11 @@ import kotlinx.coroutines.launch
 
 class SplashScreen : AppCompatActivity() {
     private lateinit var userViewModel: UserViewModel
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash_screen)
+    var isPresent = false
 
-        var isPresent = false
+    override fun onStart() {
+        super.onStart()
+
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
         userViewModel.userDetails.observe(this){
@@ -29,6 +29,10 @@ class SplashScreen : AppCompatActivity() {
                 isPresent = true
             }
         }
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_splash_screen)
 
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this.window
@@ -42,7 +46,7 @@ class SplashScreen : AppCompatActivity() {
             if(isPresent){
                 startActivity(Intent(applicationContext,MainActivity::class.java))
             } else {
-                startActivity(Intent(applicationContext,DropPage::class.java))
+                startActivity(Intent(applicationContext,onBoardingActivity::class.java))
             }
 
             finish()

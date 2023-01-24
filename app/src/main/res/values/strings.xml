@@ -26,4 +26,12 @@
     <string name="total_balance">Total Balance</string>
     <string name="dev_name">PuruPanda</string>
     <string name="transaction_date">Date: %s</string>
+    <string name="introDesc1">Manage all your expenses and income in one place and get a clear picture of your financial health.</string>
+    <string name="introTitle1">Get Your Money \nUnder Control</string>
+    <string name="introTitle2"><![CDATA[Track Expenses &\n Budget Accordingly]]></string>
+    <string name="introDesc2">Track and record your expenses and income easily and set budget to control your balance.</string>
+    <string name="introDesc3">Set your budget and track your expenses to stay in control of your finances with BudgetWise.</string>
+    <string name="introTitle3">Stay wise\n with BudgetWise</string>
+    <string name="getStarted">Get Started</string>
+    <string name="next">Next</string>
 </resources>

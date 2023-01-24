@@ -17,6 +17,7 @@
     <color name="ivory">#FFFFF0</color>
     <color name="primaryTextColor">#1B1C1E</color>
     <color name="primaryBackground">#E6E6FA</color>
+    <color name="onBoardingBackground">#E6E6FA</color>
     <color name="cardBackground">#E6E6FA</color>
     <color name="optionsBackground">#E6E6FA</color>
     <color name="expense_color">#FF0000</color>

@@ -196,4 +196,9 @@
             app:destination="@id/accountTransfer" />
 
     </dialog>
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.purabmodi.payment.onBoardingScreen.OnBoardingFragment"
+        android:label="fragment_on_boarding"
+        tools:layout="@layout/fragment_on_boarding" />
 </navigation>
