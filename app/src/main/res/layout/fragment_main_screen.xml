@@ -373,18 +373,18 @@
                     app:layout_constraintTop_toBottomOf="@id/monthlyExpense"
                     app:layout_constraintVertical_bias="0.0" />
 
-                <TextView
+                <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/alertText"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:fontFamily="@font/sf_pro"
-                    android:gravity="center"
-                    android:text="Add Transactions to view chart"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"
+                    android:layout_height="0dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toTopOf="@id/checkDetailedAnalysisBtn"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/userBudget" />
+                    app:layout_constraintTop_toBottomOf="@id/monthlyExpense"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/emptygraph" />
 
                 <Button
                     android:id="@+id/checkDetailedAnalysisBtn"

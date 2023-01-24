@@ -131,6 +131,7 @@ class Stats : Fragment() {
 
 //        setting the observer
         viewModel.readAllTransaction.observe(viewLifecycleOwner) {
+            binding.alertText.isVisible = it.isEmpty()
             adapter.submitList(it) {
                 binding.transactionsRC.post { binding.transactionsRC.smoothScrollToPosition(0) }
             }
