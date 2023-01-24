@@ -5,8 +5,9 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.versionedparcelable.VersionedParcelize
+import kotlinx.parcelize.Parcelize
 
-@VersionedParcelize
+@Parcelize
 @Entity(tableName = "transactions")
 data class Transaction(
     @PrimaryKey(autoGenerate = true)
@@ -22,34 +23,4 @@ data class Transaction(
     val year:Int,
     val expenseAmount: Float,
     val modeOfPayment: String
-):Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readInt(),
-        parcel.readString()!!,
-        parcel.readFloat(),
-        parcel.readInt(),
-        parcel.readLong(),
-        parcel.readString()!!,
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readFloat(),
-        parcel.readString()!!
-    )
-    override fun describeContents(): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun writeToParcel(p0: Parcel?, p1: Int) = Unit
-
-    companion object CREATOR : Parcelable.Creator<Transaction> {
-        override fun createFromParcel(parcel: Parcel): Transaction {
-            return Transaction(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Transaction?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+):Parcelable

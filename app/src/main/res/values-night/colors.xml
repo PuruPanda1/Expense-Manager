@@ -17,6 +17,7 @@
     <color name="primaryTextColor">#FFFFFFFF</color>
     <color name="primaryBackground">#1B1C1E</color>
     <color name="cardBackground">#1F1F1F</color>
+    <color name="onBoardingBackground">#E6E6FA</color>
     <color name="expense_color">#FF0000</color>
     <color name="income_color">#3EB489</color>
     <color name="bottomSheetBackground">#414a4c</color>
