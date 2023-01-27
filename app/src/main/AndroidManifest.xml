@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.system.payment">
+    package="com.purabmodi.payment">
 
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -16,13 +16,13 @@
         android:theme="@style/Theme.Payment"
         tools:targetApi="31">
         <activity
-            android:name="com.system.payment.onBoardingActivity"
+            android:name=".onBoardingActivity"
             android:exported="false" />
         <activity
-            android:name="com.system.payment.DropPage"
+            android:name=".DropPage"
             android:exported="false" />
         <activity
-            android:name="com.system.payment.SplashScreen"
+            android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.system.payment.MainActivity"
+            android:name=".MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
 
