@@ -430,6 +430,7 @@
             android:fontFamily="@font/sf_pro"
             android:gravity="center"
             android:text="See All"
+            android:drawableTint="@color/splash_screen"
             android:textColor="@color/splash_screen"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
