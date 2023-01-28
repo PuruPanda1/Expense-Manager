@@ -48,8 +48,8 @@ class DetailedTransactionAnalysis : Fragment() {
     private var currencyFormatter = NumberFormat.getCurrencyInstance()
     private lateinit var userViewModel: UserViewModel
     private lateinit var transactionViewModel: TransactionViewModel
-    private var month :Int = 0
-    private var year :Int = 0
+    private var month: Int = 0
+    private var year: Int = 0
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,34 +60,35 @@ class DetailedTransactionAnalysis : Fragment() {
             FragmentDetailedTransactionAnalysisBinding.inflate(layoutInflater, container, false)
 
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
-        transactionViewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+        transactionViewModel =
+            ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
 
         transactionViewModel.monthYear.observe(viewLifecycleOwner) {
             month = it[0]
             year = it[1]
             val month = months[it[0] - 1]
             binding.detailedMonthlyDuration.text =
-                String.format(getString(R.string.monthlyDuration, month,year.toString()))
+                String.format(getString(R.string.monthlyDuration, month, year.toString()))
         }
 
         binding.previousMonth.setOnClickListener {
-            if(month == 1){
+            if (month == 1) {
                 --year;
                 month = 12
             } else {
                 --month
             }
-            transactionViewModel.setMonthYear(listOf(month,year))
+            transactionViewModel.setMonthYear(listOf(month, year))
         }
 
         binding.nextMonth.setOnClickListener {
-            if(month == 12){
+            if (month == 12) {
                 ++year;
                 month = 1
             } else {
                 ++month
             }
-            transactionViewModel.setMonthYear(listOf(month,year))
+            transactionViewModel.setMonthYear(listOf(month, year))
         }
 
 
@@ -105,7 +106,6 @@ class DetailedTransactionAnalysis : Fragment() {
             currencyFormatter.currency = Currency.getInstance(currency.value)
             setAmount()
         }
-
 
 
 //        observer for balance
@@ -152,7 +152,7 @@ class DetailedTransactionAnalysis : Fragment() {
         binding.analysisPieChart.isDrawHoleEnabled = true
         binding.analysisPieChart.setUsePercentValues(true)
         binding.analysisPieChart.setEntryLabelTextSize(10f)
-        binding.analysisPieChart.holeRadius = 65f
+        binding.analysisPieChart.holeRadius = 75f
         binding.analysisPieChart.isRotationEnabled = true
         binding.analysisPieChart.setEntryLabelColor(
             ContextCompat.getColor(

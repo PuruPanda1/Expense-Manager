@@ -16,7 +16,7 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/waveSquare"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="120dp"
             android:src="@drawable/sqaure_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -186,7 +186,7 @@
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/sf_pro"
                         android:text="$4000"
-                        android:textColor="@color/primaryTextColor"
+                        android:textColor="@color/income_color"
                         android:textSize="20sp"
                         android:textStyle="normal"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -237,7 +237,7 @@
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/sf_pro"
                         android:text="$4000"
-                        android:textColor="@color/primaryTextColor"
+                        android:textColor="@color/expense_color"
                         android:textSize="20sp"
                         android:textStyle="normal"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -259,6 +259,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:fontFamily="@font/sf_pro"
             android:gravity="center"
             android:text="Your Spends"
             android:textColor="@color/splash_screen"
@@ -309,7 +310,6 @@
             android:layout_marginBottom="72dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/cardView"
             app:layout_constraintStart_toStartOf="@id/cardView"
             app:layout_constraintTop_toBottomOf="@+id/textview1">
@@ -403,6 +403,46 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
+
+        <TextView
+            android:id="@+id/transactiotextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/sf_pro"
+            android:gravity="center"
+            android:text="Latest Transactions"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/monthlyBudgetCard" />
+
+        <TextView
+            android:id="@+id/seeAllBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:drawableEnd="@drawable/ic_next"
+            android:drawablePadding="-5dp"
+            android:fontFamily="@font/sf_pro"
+            android:gravity="center"
+            android:text="See All"
+            android:textColor="@color/splash_screen"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/monthlyBudgetCard" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/latestTransactionsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            app:layout_constraintTop_toBottomOf="@id/seeAllBtn"
+            tools:itemCount="3"
+            tools:listitem="@layout/transactions_row_rc" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

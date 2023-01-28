@@ -17,6 +17,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     var incomeSum: LiveData<Float>
     var expenseSum: LiveData<Float>
     var readAccountDetails: LiveData<List<AccountDetails>>
+    var latestTransactionsList : LiveData<List<Transaction>>
     private val repository: TransactionRepository
 
     init {
@@ -29,6 +30,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
         incomeSum = repository.incomeSum
         expenseSum = repository.expenseSum
         readAccountDetails = repository.readAccountDetails
+        latestTransactionsList = repository.readLatestTransactions
     }
 
     var monthYear: MutableLiveData<List<Int>> = MutableLiveData(

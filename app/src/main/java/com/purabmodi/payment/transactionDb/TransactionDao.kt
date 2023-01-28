@@ -18,6 +18,9 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions ORDER by date DESC")
     fun getAllTransaction(): LiveData<List<Transaction>>
 
+    @Query("SELECT * FROM transactions ORDER by date DESC LIMIT 3")
+    fun readLatestTransactions(): LiveData<List<Transaction>>
+
     @Query("SELECT * FROM transactions WHERE day=:day AND month = :month AND year = :year ORDER BY date DESC")
     fun readTransactionsByDay(day: Int, month: Int, year: Int):LiveData<List<Transaction>>
 

@@ -16,18 +16,21 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.purabmodi.payment.R
-import com.purabmodi.payment.fragments.stats.Stats
 import com.purabmodi.payment.fragments.stats.StatsDirections
 import com.purabmodi.payment.transactionDb.Transaction
 import java.text.NumberFormat
 import java.util.*
 
-class TransactionsAdapter(val fragment: Stats, private var currency: String) :
+class TransactionsAdapter(
+    val deleteTransaction: (item: Transaction) -> Unit,
+    private var currency: String,
+    private val haveMenu: Boolean
+) :
     ListAdapter<Transaction, TransactionsAdapter.TransactionViewHolder>(
         Comparator()
     ) {
 
-    fun setCurrency(currency: String){
+    fun setCurrency(currency: String) {
         this.currency = currency
         notifyDataSetChanged()
     }
@@ -40,7 +43,7 @@ class TransactionsAdapter(val fragment: Stats, private var currency: String) :
 
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, fragment, currency)
+        holder.bind(item, currency, deleteTransaction, haveMenu)
     }
 
     class TransactionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -52,7 +55,12 @@ class TransactionsAdapter(val fragment: Stats, private var currency: String) :
         private val image: ImageView = view.findViewById(R.id.floatingTransactionIcon)
         private val account: TextView = view.findViewById(R.id.accountRC)
 
-        fun bind(item: Transaction, fragment: Stats, currency: String) {
+        fun bind(
+            item: Transaction,
+            currency: String,
+            deleteTransaction: (item: Transaction) -> Unit,
+            haveMenu: Boolean
+        ) {
             val currencyFormatter = NumberFormat.getCurrencyInstance()
             currencyFormatter.maximumFractionDigits = 1
             currencyFormatter.currency = Currency.getInstance(currency)
@@ -64,7 +72,7 @@ class TransactionsAdapter(val fragment: Stats, private var currency: String) :
             date.text = dateString
             category.text = item.transactionType
 
-            if (item.isExpense==1) {
+            if (item.isExpense == 1) {
                 amount.setTextColor(
                     ContextCompat.getColor(
                         amount.context,
@@ -103,19 +111,28 @@ class TransactionsAdapter(val fragment: Stats, private var currency: String) :
             }
 
             layout.setOnLongClickListener {
-                popupMenus(it, layout.context, item, fragment)
-                true
+                if (haveMenu) {
+                    popupMenus(it, layout.context, item, deleteTransaction)
+                    true
+                }
+                false
             }
         }
 
-        private fun popupMenus(v: View, c: Context, item: Transaction, fragment: Stats) {
+        private fun popupMenus(
+            v: View,
+            c: Context,
+            item: Transaction,
+            deleteTransaction: (item: Transaction) -> Unit
+        ) {
             val popupMenus = PopupMenu(c, v)
             popupMenus.inflate(R.menu.pop_up_menu)
             popupMenus.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.editOption -> {
 //                    redirecting to add transaction page for editing
-                        val action = StatsDirections.actionStatsToAddTransaction().setTransaction(item)
+                        val action =
+                            StatsDirections.actionStatsToAddTransaction().setTransaction(item)
                         Navigation.findNavController(v).navigate(action)
                         true
                     }
@@ -124,7 +141,7 @@ class TransactionsAdapter(val fragment: Stats, private var currency: String) :
                         val builder = AlertDialog.Builder(c)
                         builder.setPositiveButton("Yes") { _, _ ->
 //                        Toast.makeText(c, "yes", Toast.LENGTH_SHORT).show()
-                            fragment.deleteTransaction(item)
+                            deleteTransaction(item)
                         }
                         builder.setNegativeButton("No") { _, _ ->
                         }

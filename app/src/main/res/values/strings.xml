@@ -23,7 +23,7 @@
     <string name="see_expense_summary">See Expense Summary</string>
     <string name="expense">Expense</string>
     <string name="income">Income</string>
-    <string name="total_balance">Total Balance</string>
+    <string name="total_balance">Current Balance</string>
     <string name="dev_name">PuruPanda</string>
     <string name="transaction_date">Date: %s</string>
     <string name="introDesc1">Manage all your expenses and income in one place and get a clear picture of your financial health.</string>

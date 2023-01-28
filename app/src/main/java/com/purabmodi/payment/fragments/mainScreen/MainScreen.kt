@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -18,6 +21,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter
 import com.purabmodi.payment.MainActivity
 import com.purabmodi.payment.R
 import com.purabmodi.payment.databinding.FragmentMainScreenBinding
+import com.purabmodi.payment.rcAdapter.TransactionsAdapter
 import com.purabmodi.payment.transactionDb.MyTypes
 import com.purabmodi.payment.userDb.UserViewModel
 import com.purabmodi.payment.viewModel.TransactionViewModel
@@ -48,8 +52,8 @@ class MainScreen : Fragment() {
     private var balanceAmount = 0f
     private var monthlyAmount = 0f
     private var budget = 4000
-    var month : Int = 0
-    var year : Int = 0
+    var month: Int = 0
+    var year: Int = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,27 +69,28 @@ class MainScreen : Fragment() {
             month = it[0]
             year = it[1]
             val month = months[it[0] - 1]
-            binding.monthlyDuration.text = String.format(getString(R.string.monthlyDuration, month,year.toString()))
+            binding.monthlyDuration.text =
+                String.format(getString(R.string.monthlyDuration, month, year.toString()))
         }
 
         binding.previousMonth.setOnClickListener {
-            if(month == 1){
+            if (month == 1) {
                 --year
                 month = 12
             } else {
                 --month
             }
-            transactionViewModel.setMonthYear(listOf(month,year))
+            transactionViewModel.setMonthYear(listOf(month, year))
         }
 
         binding.nextMonth.setOnClickListener {
-            if(month == 12){
+            if (month == 12) {
                 ++year
                 month = 1
             } else {
                 ++month
             }
-            transactionViewModel.setMonthYear(listOf(month,year))
+            transactionViewModel.setMonthYear(listOf(month, year))
         }
 
 //        setting the greeting text
@@ -143,7 +148,7 @@ class MainScreen : Fragment() {
                 binding.userName.text = it.username
                 budget = it.userBudget
                 var per = 0.toString()
-                if(budget!=0){
+                if (budget != 0) {
                     per = ((it.userBudget / budget) * 100).toString()
                 }
                 binding.expensePercentage.text = getString(R.string.percentageBudget, per)
@@ -201,7 +206,29 @@ class MainScreen : Fragment() {
                 .navigate(R.id.action_MainScreen_to_detailedTransactionAnalysis)
         }
 
+        val latestTransactionsAdapter =
+            TransactionsAdapter(
+                deleteTransaction = { item -> deleteTransaction() },
+                currency.value ?: "INR",
+                false
+            )
+        binding.latestTransactionsList.layoutManager = LinearLayoutManager(requireContext())
+        binding.seeAllBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_MainScreen_to_stats)
+        }
+        binding.latestTransactionsList.adapter = latestTransactionsAdapter
+        transactionViewModel.latestTransactionsList.observe(viewLifecycleOwner) {
+            binding.latestTransactionsList.isVisible = it.isNotEmpty()
+            binding.seeAllBtn.isVisible = it.isNotEmpty()
+            binding.transactiotextView.isVisible = it.isNotEmpty()
+            latestTransactionsAdapter.submitList(it)
+        }
+
         return binding.root
+    }
+
+    private fun deleteTransaction() {
+        Toast.makeText(requireContext(), "Hihi delete nott possible", Toast.LENGTH_SHORT).show()
     }
 
     private fun setAmount() {
@@ -209,8 +236,8 @@ class MainScreen : Fragment() {
         binding.balanceAmount.text = currencyFormatter.format(balanceAmount)
         binding.userBudget.text = " / ${currencyFormatter.format(budget)}"
         var per = 0.toString()
-        if(budget!=0){
-             per = ((monthlyAmount / budget) * 100).toInt().toString()
+        if (budget != 0) {
+            per = ((monthlyAmount / budget) * 100).toInt().toString()
         }
         binding.expensePercentage.text = getString(R.string.percentageBudget, per)
     }
@@ -230,7 +257,7 @@ class MainScreen : Fragment() {
         binding.pieChart.setUsePercentValues(true)
         binding.pieChart.setEntryLabelTextSize(10f)
         binding.pieChart.isRotationEnabled = true
-        binding.pieChart.holeRadius = 65f
+        binding.pieChart.holeRadius = 75f
         binding.pieChart.setEntryLabelColor(
             ContextCompat.getColor(
                 requireContext(),
@@ -283,7 +310,12 @@ class MainScreen : Fragment() {
     override fun onResume() {
         super.onResume()
         val cal = Calendar.getInstance()
-        transactionViewModel.setMonthYear(listOf((cal.get(Calendar.MONTH)+1),cal.get(Calendar.YEAR)))
+        transactionViewModel.setMonthYear(
+            listOf(
+                (cal.get(Calendar.MONTH) + 1),
+                cal.get(Calendar.YEAR)
+            )
+        )
     }
 
     override fun onDestroyView() {

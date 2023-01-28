@@ -29,6 +29,7 @@ class TransactionRepository(private val transactionDao: TransactionDao) {
     val incomeSum = transactionDao.getIncomeSum(incomeList)
     val expenseSum = transactionDao.getExpenseSum(expensesList)
     val readAccountDetails = transactionDao.getAccountDetails()
+    val readLatestTransactions = transactionDao.readLatestTransactions()
 
     suspend fun deleteAccountTransactions(accountName: String) {
         transactionDao.deleteAccountTransactions(accountName)

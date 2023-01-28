@@ -117,7 +117,11 @@ class Stats : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         accountViewModel = ViewModelProvider(requireActivity())[AccountViewModel::class.java]
-        var adapter = TransactionsAdapter(this, currency.value!!)
+        var adapter = TransactionsAdapter(
+            deleteTransaction = { item -> deleteTransaction(item) },
+            currency.value!!,
+            true
+        )
 
 //        live data for currency
         userViewModel.userDetails.observe(viewLifecycleOwner) {
