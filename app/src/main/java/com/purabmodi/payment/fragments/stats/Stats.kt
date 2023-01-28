@@ -1,6 +1,5 @@
 package com.purabmodi.payment.fragments.stats
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Context.VIBRATOR_SERVICE
@@ -21,8 +20,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -38,7 +35,6 @@ import com.purabmodi.payment.rcAdapter.filterAdapters.CategoryFilterAdapter
 import com.purabmodi.payment.rcAdapter.filterAdapters.MonthFilterAdapter
 import com.purabmodi.payment.transactionDb.Transaction
 import com.purabmodi.payment.userDb.UserViewModel
-import com.purabmodi.payment.utility.SwipeGesture
 import com.purabmodi.payment.viewModel.AccountViewModel
 import com.purabmodi.payment.viewModel.TransactionViewModel
 
@@ -140,7 +136,6 @@ class Stats : Fragment() {
 //        setting the observer
         viewModel.readAllTransaction.observe(viewLifecycleOwner) {
             binding.alertText.isVisible = it.isEmpty()
-            swipeToGesture(binding.transactionsRC, it)
             adapter.submitList(it) {
                 binding.transactionsRC.post { binding.transactionsRC.smoothScrollToPosition(0) }
             }
@@ -359,48 +354,8 @@ class Stats : Fragment() {
         ).show()
     }
 
-    private fun swipeToGesture(
-        itemRv: RecyclerView?,
-        itemList: List<Transaction>,
-    ) {
-        val swipeGesture = object : SwipeGesture(requireContext()) {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.bindingAdapterPosition
-                try {
-                    when (direction) {
-//                      delete mode
-                        ItemTouchHelper.LEFT -> {
-                            val deleteItem = itemList[position]
-                            val builder = AlertDialog.Builder(requireContext())
-                            builder.setPositiveButton("Yes") { _, _ ->
-                                deleteTransaction(deleteItem)
-                            }
-                            builder.setNegativeButton("No") { _, _ ->
-                            }
-                            builder.setTitle("Delete Transaction")
-                            builder.setMessage("Are you sure to delete this transaction?")
-                            builder.create().show()
-                        }
 
-//                      edit mode
-                        ItemTouchHelper.RIGHT -> {
-                            val editItem = itemList[position]
-                            val action = StatsDirections.actionStatsToAddTransaction()
-                                .setTransaction(editItem)
-                            findNavController().navigate(action)
-                        }
-                    }
-                } catch (e: Exception) {
-                    Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-        val touchHelper = ItemTouchHelper(swipeGesture)
-        touchHelper.attachToRecyclerView(itemRv)
-
-    }
-
-    private fun deleteTransaction(transaction: Transaction) {
+    fun deleteTransaction(transaction: Transaction) {
         viewModel.deleteTransaction(transaction)
         Toast.makeText(requireContext(), "Deleted", Toast.LENGTH_SHORT).show()
     }

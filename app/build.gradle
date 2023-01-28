@@ -42,8 +42,6 @@ android {
 }
 
 dependencies {
-//    swipeRecyclerViewDecorator
-    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.4'
 //    lottifie animations
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"

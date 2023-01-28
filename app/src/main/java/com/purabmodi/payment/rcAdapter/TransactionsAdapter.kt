@@ -140,6 +140,7 @@ class TransactionsAdapter(
 //                    Alert dialog box for confirmation
                         val builder = AlertDialog.Builder(c)
                         builder.setPositiveButton("Yes") { _, _ ->
+//                        Toast.makeText(c, "yes", Toast.LENGTH_SHORT).show()
                             deleteTransaction(item)
                         }
                         builder.setNegativeButton("No") { _, _ ->
